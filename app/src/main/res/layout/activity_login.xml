@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_10sdp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_14ssp"
+        android:paddingLeft="@dimen/_2sdp"
+        android:fontFamily="@font/sfpro_regular"
+        android:text="@string/mobile_number">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/edtMobileNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_14ssp"
+        android:inputType="number"
+        android:imeOptions="actionDone"
+        android:paddingBottom="@dimen/_15sdp"
+        android:fontFamily="@font/sfpro_bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/_10sdp">
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/txtLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:padding="@dimen/_10sdp"
+        android:textSize="@dimen/_16ssp"
+        android:fontFamily="@font/sfpro_medium"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@drawable/rounded_corner_green">
+
+    </TextView>
+
+</LinearLayout>

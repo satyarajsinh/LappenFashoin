@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Lappen Fashion</string>
+    <string name="home">Home</string>
+    <string name="categories">Categories</string>
+    <string name="studio">Studio</string>
+    <string name="explore">Explore</string>
+    <string name="user">User</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="login">Login</string>
+    <string name="deals_of_the_day">Deals of the day</string>
+    <string name="profile">Profile</string>
+
+    <array name="rangeSliderValues">
+        <item>20</item>
+        <item>70</item>
+    </array>
+</resources>

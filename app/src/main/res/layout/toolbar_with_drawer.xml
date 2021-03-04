@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/_8sdp">
+
+    <ImageView
+        android:id="@+id/imgDrawer"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:src="@mipmap/ic_menu">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/imgCart"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_light_bag">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/imgLiked"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_toLeftOf="@id/imgCart"
+        android:src="@mipmap/ic_light_heart">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/imgNotification"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_toLeftOf="@id/imgLiked"
+        android:src="@mipmap/ic_light_notification">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/imgSearch"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_toLeftOf="@id/imgNotification"
+        android:src="@mipmap/ic_light_search">
+    </ImageView>
+
+</RelativeLayout>
