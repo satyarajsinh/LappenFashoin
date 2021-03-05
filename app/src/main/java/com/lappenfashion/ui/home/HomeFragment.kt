@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -27,6 +28,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var mContext: Context
     private lateinit var rootView: View
+    private lateinit var linearProfile : LinearLayout
+    private lateinit var linearCategories : LinearLayout
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -41,10 +44,23 @@ class HomeFragment : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
 
         setUpToolBarAction()
-
+        bottomNavigation()
         getCategories()
 
         return rootView
+    }
+
+    private fun bottomNavigation() {
+        linearProfile = rootView.findViewById(R.id.linearProfile)
+        linearCategories = rootView.findViewById(R.id.linearCategories)
+
+        linearProfile.setOnClickListener {
+            (mContext as MainActivity).navController.navigate(R.id.nav_profile)
+        }
+
+        linearCategories.setOnClickListener {
+            (mContext as MainActivity).navController.navigate(R.id.nav_category)
+        }
     }
 
     private fun getCategories() {

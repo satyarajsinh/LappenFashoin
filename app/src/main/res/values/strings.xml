@@ -8,9 +8,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mobile_number">Mobile Number</string>
-    <string name="login">Login</string>
     <string name="deals_of_the_day">Deals of the day</string>
     <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="track_order">Track Order</string>
+    <string name="cards">Cards</string>
+    <string name="logout">Logout</string>
+    <string name="signup">Signup</string>
+    <string name="or">or</string>
+    <string name="login">Login</string>
+    <string name="continue_">continue</string>
+    <string name="login_signup">Login/Signup</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

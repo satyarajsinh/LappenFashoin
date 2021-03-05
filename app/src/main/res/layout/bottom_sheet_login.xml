@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_20sdp">
+
+    <ImageView
+        android:id="@+id/imgClose"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_light_profile">
+
+    </ImageView>
+
+    <LinearLayout
+        android:id="@+id/linearText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgClose"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:fontFamily="@font/sfpro_bold"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:textSize="@dimen/_16ssp">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/or"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:fontFamily="@font/sfpro_medium"
+            android:textSize="@dimen/_14ssp">
+
+        </TextView>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signup"
+            android:fontFamily="@font/sfpro_bold"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:textSize="@dimen/_16ssp">
+
+        </TextView>
+
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeMain"
+        android:background="@drawable/rounded_border_grey"
+        android:layout_below="@id/linearText"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:paddingTop="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtCountryCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+91"
+            android:textSize="@dimen/_14ssp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:paddingLeft="@dimen/_10sdp"
+            >
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/edtPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@color/white"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:fontFamily="@font/sfpro_regular"
+            android:textSize="@dimen/_12ssp"
+            android:hint="Mobile Number *"
+            android:layout_toRightOf="@id/txtCountryCode">
+
+        </EditText>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txtLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeMain"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_14sdp"
+        android:background="@drawable/rounded_corner_green"
+        android:fontFamily="@font/sfpro_medium"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:textAllCaps="true"
+        android:text="@string/continue_"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp">
+
+    </TextView>
+</RelativeLayout>
