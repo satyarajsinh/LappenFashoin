@@ -20,7 +20,10 @@ import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.cart.CartActivity
+import com.lappenfashion.ui.checkout.CheckoutActivity
+import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
+import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -183,6 +186,8 @@ class HomeFragment : Fragment() {
     private fun setUpToolBarAction() {
         val imgDrawer = rootView.findViewById<ImageView>(R.id.imgDrawer)
         val imgCart = rootView.findViewById<ImageView>(R.id.imgCart)
+        val imgWishList = rootView.findViewById<ImageView>(R.id.imgLiked)
+        val imgSearch = rootView.findViewById<ImageView>(R.id.imgSearch)
 
         imgDrawer.setOnClickListener {
             (mContext as MainActivity).openDrawer()
@@ -192,6 +197,17 @@ class HomeFragment : Fragment() {
             var intent = Intent(mContext,CartActivity::class.java)
             startActivity(intent)
         }
+
+        imgSearch.setOnClickListener {
+            var intent = Intent(mContext,CheckoutActivity::class.java)
+            startActivity(intent)
+        }
+
+        imgWishList.setOnClickListener {
+            var intent = Intent(mContext,WishListActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 }

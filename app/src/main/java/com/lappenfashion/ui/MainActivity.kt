@@ -64,6 +64,10 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.nav_category)
         }
 
+        linearCategories.setOnClickListener {
+            navController.navigate(R.id.nav_category)
+        }
+
         linearHome.setOnClickListener {
             navController.navigate(R.id.nav_home)
         }

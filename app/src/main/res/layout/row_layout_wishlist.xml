@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/_10sdp"
+    android:layout_marginLeft="@dimen/_1sdp"
+    android:layout_marginRight="@dimen/_1sdp">
+
+    <ImageView
+        android:id="@+id/imgProudctImage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_230sdp"
+        android:background="@color/white"
+        android:scaleType="fitXY">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/txtProductName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="Hello Ronak"
+        android:paddingLeft="@dimen/_15sdp"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/black"
+        android:layout_below="@id/imgProudctImage">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtProductDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello Ronak"
+        android:paddingLeft="@dimen/_15sdp"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@color/wishlist_desc_color"
+        android:layout_below="@id/txtProductName">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="790"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:paddingLeft="@dimen/_15sdp"
+        android:fontFamily="@font/sfpro_bold"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/black"
+        android:layout_below="@id/txtProductDetails">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtMoveToBag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Move To Bag"
+        android:gravity="center"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/green"
+        android:fontFamily="@font/sfpro_regular"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/white"
+        android:padding="@dimen/_10sdp"
+        android:layout_below="@id/txtPrice">
+
+    </TextView>
+
+
+</RelativeLayout>

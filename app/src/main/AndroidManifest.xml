@@ -27,6 +27,8 @@
         <activity android:name=".ui.MainActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.filter.FilterActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.cart.CartActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.wishlist.WishListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.checkout.CheckoutActivity" android:screenOrientation="portrait" />
 
     </application>
 
