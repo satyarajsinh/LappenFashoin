@@ -1,6 +1,7 @@
 package com.lappenfashion.ui.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.lappenfashion.data.model.ResponseMain
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.ui.MainActivity
+import com.lappenfashion.ui.cart.CartActivity
 import com.lappenfashion.utils.Helper
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
@@ -44,23 +46,9 @@ class HomeFragment : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
 
         setUpToolBarAction()
-        bottomNavigation()
         getCategories()
 
         return rootView
-    }
-
-    private fun bottomNavigation() {
-        linearProfile = rootView.findViewById(R.id.linearProfile)
-        linearCategories = rootView.findViewById(R.id.linearCategories)
-
-        linearProfile.setOnClickListener {
-            (mContext as MainActivity).navController.navigate(R.id.nav_profile)
-        }
-
-        linearCategories.setOnClickListener {
-            (mContext as MainActivity).navController.navigate(R.id.nav_category)
-        }
     }
 
     private fun getCategories() {
@@ -194,9 +182,15 @@ class HomeFragment : Fragment() {
 
     private fun setUpToolBarAction() {
         val imgDrawer = rootView.findViewById<ImageView>(R.id.imgDrawer)
+        val imgCart = rootView.findViewById<ImageView>(R.id.imgCart)
 
         imgDrawer.setOnClickListener {
             (mContext as MainActivity).openDrawer()
+        }
+
+        imgCart.setOnClickListener {
+            var intent = Intent(mContext,CartActivity::class.java)
+            startActivity(intent)
         }
     }
 

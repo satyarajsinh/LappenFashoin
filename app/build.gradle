@@ -54,6 +54,7 @@ dependencies {
     implementation Dependencies.viewpager_indicator
     implementation Dependencies.dp
     implementation Dependencies.sp
+    implementation Dependencies.spinner
     implementation Dependencies.navigation_fragment
     implementation Dependencies.navigation_ui
     implementation Dependencies.rounded_imageview

@@ -17,7 +17,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/bottom"
         android:layout_below="@id/toolbar">
 
         <RelativeLayout
@@ -100,10 +99,4 @@
 
     </ScrollView>
 
-    <include
-        android:id="@+id/bottom"
-        layout="@layout/bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"></include>
-</RelativeLayout>
+    </RelativeLayout>

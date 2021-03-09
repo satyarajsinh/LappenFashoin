@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_8sdp"
+    android:background="@color/white"
+    android:layout_marginTop="@dimen/_8sdp">
+
+    <ImageView
+        android:id="@+id/imgProductImage"
+        android:layout_width="@dimen/_110sdp"
+        android:layout_height="@dimen/_110sdp"
+        android:scaleType="fitXY">
+
+    </ImageView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_marginLeft="@dimen/_8sdp"
+        android:layout_toRightOf="@id/imgProductImage">
+
+        <TextView
+            android:id="@+id/txtProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hello Ronak"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtProductPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="$1100"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@id/txtProductName"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/green"
+            android:fontFamily="sans-serif-medium">
+
+        </TextView>
+
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/spinnerSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_background"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@id/txtProductPrice"
+            android:hint="Size: 10"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:spinner_arrow_gravity="end"
+            app:spinner_arrow_padding="8dp"
+            app:spinner_divider_color="@color/white"
+            app:spinner_divider_show="true"
+            app:spinner_divider_size="0.4dp"
+            app:spinner_item_array="@array/size"
+            app:spinner_arrow_tint="@color/black"
+            app:spinner_popup_animation="dropdown"
+            app:spinner_popup_background="@color/background"
+            app:spinner_popup_elevation="14dp" />
+
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/spinnerQty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_background"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_toRightOf="@id/spinnerSize"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@id/txtProductPrice"
+            android:hint="Qty :1"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:spinner_arrow_gravity="end"
+            app:spinner_arrow_padding="8dp"
+            app:spinner_divider_color="@color/white"
+            app:spinner_divider_show="true"
+            app:spinner_divider_size="0.4dp"
+            app:spinner_item_array="@array/qty"
+            app:spinner_arrow_tint="@color/black"
+            app:spinner_popup_animation="dropdown"
+            app:spinner_popup_background="@color/background"
+            app:spinner_popup_elevation="14dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_background"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:layout_below="@id/spinnerSize">
+
+            <ImageView
+                android:id="@+id/imgAdd"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_plus">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/txtQty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_toRightOf="@id/imgAdd"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                android:padding="@dimen/_8sdp">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imgMinus"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/txtQty"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_minus">
+
+            </ImageView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txtRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_30sdp"
+        android:paddingRight="@dimen/_30sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:fontFamily="@font/sfpro_regular"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_below="@id/imgProductImage"
+        android:textColor="@color/green"
+        android:background="@drawable/border_green"
+        android:text="@string/remove">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtMoveToWishList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_30sdp"
+        android:paddingRight="@dimen/_30sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:gravity="center"
+        android:fontFamily="@font/sfpro_regular"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_toRightOf="@id/txtRemove"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_below="@id/imgProductImage"
+        android:textColor="@color/green"
+        android:background="@drawable/border_green"
+        android:text="@string/move_to_wishlist">
+
+    </TextView>
+</RelativeLayout>

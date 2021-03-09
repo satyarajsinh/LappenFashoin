@@ -20,9 +20,24 @@
     <string name="login">Login</string>
     <string name="continue_">continue</string>
     <string name="login_signup">Login/Signup</string>
+    <string name="shopping_bag">Shopping Bag</string>
+    <string name="remove">Remove</string>
+    <string name="move_to_wishlist">Move to wishlist</string>
 
     <array name="rangeSliderValues">
         <item>20</item>
         <item>70</item>
     </array>
+
+    <string-array name="size">
+        <item>Size :10</item>
+        <item>Size :20</item>
+        <item>Size :30</item>
+    </string-array>
+
+    <string-array name="qty">
+        <item>Qty :1</item>
+        <item>Qty :2</item>
+        <item>Qty :3</item>
+    </string-array>
 </resources>

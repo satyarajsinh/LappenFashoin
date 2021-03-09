@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.lappenfashion.ui.profile.CategoryFragment"
+        android:name="com.lappenfashion.ui.profile.ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 
     <fragment

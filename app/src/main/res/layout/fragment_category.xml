@@ -46,7 +46,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerCategories"
-        android:layout_above="@id/bottom"
         android:layout_below="@id/relativeToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,8 +53,4 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <include android:layout_alignParentBottom="true" android:id="@+id/bottom" layout="@layout/bottom_bar"
-        android:layout_height="wrap_content" android:layout_width="match_parent">
-
-    </include>
 </RelativeLayout>

@@ -20,6 +20,8 @@ object Dependencies {
 
     const val material_design = "com.google.android.material:material:1.2.0-rc01"
 
+    const val spinner = "com.github.skydoves:powerspinner:1.1.7"
+
     //progressbar
     const val progress_dialog = "com.github.ybq:Android-SpinKit:1.4.0"
 

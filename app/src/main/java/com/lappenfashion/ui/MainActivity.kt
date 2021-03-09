@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.lappenfashion.R
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.bottom_bar.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +36,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home
             ), drawerLayout
         )
+
+        bottomNavigation()
       /*  setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)*/
     }
@@ -50,5 +53,19 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun bottomNavigation() {
+        linearProfile.setOnClickListener {
+            navController.navigate(R.id.nav_profile)
+        }
+
+        linearCategories.setOnClickListener {
+            navController.navigate(R.id.nav_category)
+        }
+
+        linearHome.setOnClickListener {
+            navController.navigate(R.id.nav_home)
+        }
     }
 }
