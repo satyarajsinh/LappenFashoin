@@ -10,12 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
-import com.lappenfashion.data.model.ResponseMain
+import com.lappenfashion.data.model.ResponseMainHome
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.ui.MainActivity
@@ -23,7 +24,6 @@ import com.lappenfashion.ui.cart.CartActivity
 import com.lappenfashion.ui.checkout.CheckoutActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
-import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -60,31 +60,31 @@ class HomeFragment : Fragment() {
             Helper.showLoader(mContext)
 
             var api = MyApi()
-            val requestCall: Call<ResponseMain> = api.getCategories()
+            val requestCall: Call<ResponseMainHome> = api.getHome()
 
-            requestCall.enqueue(object : Callback<ResponseMain> {
-                override fun onResponse(call: Call<ResponseMain>, response: Response<ResponseMain>) {
+            requestCall.enqueue(object : Callback<ResponseMainHome> {
+                override fun onResponse(call: Call<ResponseMainHome>, response: Response<ResponseMainHome>) {
                     Helper.dismissLoader()
 
                     if (response.body() != null) {
                         recyclerCategories.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
                         recyclerCategories.setHasFixedSize(true)
-                        var adapter = SpaceAdapter(mContext, response)
+                        var adapter = HomeAdapter(mContext, response?.body()?.payload?.categoryList!!)
                         recyclerCategories.adapter = adapter
 
                         recyclerDealsOftheDay.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
                         recyclerDealsOftheDay.setHasFixedSize(true)
-                        var adapter1 = DealsOfTheDayAdapter(mContext, response)
+                        var adapter1 = DealsOfTheDayAdapter(mContext, response?.body()?.payload?.dealsOfTheDay!!)
                         recyclerDealsOftheDay.adapter = adapter1
 
 
-                        loadBanner(response.body()!!)
+                        loadBanner(response?.body()!!.payload?.exploreList!!)
                     } else {
 
                     }
                 }
 
-                override fun onFailure(call: Call<ResponseMain>, t: Throwable) {
+                override fun onFailure(call: Call<ResponseMainHome>, t: Throwable) {
                     Helper.dismissLoader()
                 }
 
@@ -100,7 +100,7 @@ class HomeFragment : Fragment() {
         private var NUM_PAGES = 0
     }
 
-    private fun loadBanner(body: ResponseMain) {
+    private fun loadBanner(body: List<ResponseMainHome.Payload.Explore?>) {
         mPager!!.adapter = SlidingImageAdapter(mContext, body)
 
         indicator.setViewPager(mPager)
@@ -146,8 +146,8 @@ class HomeFragment : Fragment() {
     }
 
     class SlidingImageAdapter(
-            private val mContext: Context,
-            private val imageModelArrayList: List<ResponseMain.ResponseMainItem>
+        private val mContext: Context,
+        private val imageModelArrayList: List<ResponseMainHome.Payload.Explore?>
     ) : PagerAdapter() {
 
         private val inflater: LayoutInflater = LayoutInflater.from(mContext)
@@ -162,12 +162,18 @@ class HomeFragment : Fragment() {
             val imageView = imageLayout
                     .findViewById(R.id.image) as ImageView
 
+            val txtBannerTitle = imageLayout
+                .findViewById(R.id.bannerTitle) as TextView
+
             imageView.setImageResource(0)
 
             imageView.scaleType = ImageView.ScaleType.FIT_XY
+
             Glide.with(mContext)
-                    .load(imageModelArrayList?.get(position)?.imageurl)
+                    .load(imageModelArrayList?.get(position)?.image)
                     .into(imageView)
+
+            txtBannerTitle.text = imageModelArrayList?.get(position)?.title
 
             view.addView(imageLayout, 0)
 

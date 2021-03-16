@@ -12,13 +12,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
-import com.lappenfashion.data.model.ResponseMain
-import retrofit2.Response
+import com.lappenfashion.data.model.ResponseMainHome
 
 
 class DealsOfTheDayAdapter(
     private val context: Context,
-    private val data: Response<ResponseMain>
+    private val data: List<ResponseMainHome.Payload.DealsOfTheDay?>?
 ) :
     RecyclerView.Adapter<DealsOfTheDayAdapter.ViewHolder>() {
 
@@ -37,17 +36,17 @@ class DealsOfTheDayAdapter(
     }
 
     override fun getItemCount(): Int {
-        return data.body()?.size!!
+        return data?.size!!
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val s = data.body()?.get(position)?.name + " &"
+        val s = data?.get(position)?.title + " &"
         var end = " more offers"
         val ss1 = SpannableString(s)
         val ss2 = SpannableString(end)
         ss1.setSpan(RelativeSizeSpan(1.5f), 0, s!!.length, 0) // set size
         holder.txtSpaceName.text = TextUtils.concat(ss1 ,ss2)
-        Glide.with(context).load(data.body()?.get(position)?.imageurl).into(holder.imgPosterImage)
+        Glide.with(context).load(data?.get(position)?.image).into(holder.imgPosterImage)
     }
 
 

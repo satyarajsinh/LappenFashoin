@@ -9,15 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
-import com.lappenfashion.data.model.ResponseMain
-import retrofit2.Response
+import com.lappenfashion.data.model.ResponseMainHome
 
-class SpaceAdapter(private val context: Context,
-                   private val data: Response<ResponseMain>) :
-    RecyclerView.Adapter<SpaceAdapter.ViewHolder>() {
+class HomeAdapter(private val context: Context,
+                  private val data: List<ResponseMainHome.Payload.Category?>?
+) :
+    RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     class ViewHolder(view : View):RecyclerView.ViewHolder(view) {
-        val txtSpaceName : TextView = view.findViewById(R.id.txtSpaceName)
+        val txtCategoryName : TextView = view.findViewById(R.id.txtCategoryName)
         val imgPosterImage : ImageView = view.findViewById(R.id.imgPosterImage)
     }
 
@@ -27,12 +27,12 @@ class SpaceAdapter(private val context: Context,
     }
 
     override fun getItemCount(): Int {
-        return data.body()?.size!!
+        return data?.size!!
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.txtSpaceName.text = data.body()?.get(position)?.name
-        Glide.with(context).load(data.body()?.get(position)?.imageurl).into(holder.imgPosterImage)
+        holder.txtCategoryName.text = data?.get(position)?.title
+        Glide.with(context).load(data?.get(position)?.image).into(holder.imgPosterImage)
     }
 
 

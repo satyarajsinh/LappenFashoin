@@ -28,11 +28,18 @@
     <string name="delivery">Delivery</string>
     <string name="address">Address</string>
     <string name="standard_delivery">Standard Delivery</string>
-    <string name="standard_delivery">Standard Delivery</string>
     <string name="place_your_order_before_6pm_and_your_items_will_be_delivered_the_next_day">Place your order before 6pm and your items will be delivered the next day</string>
     <string name="next_day_delivery">Next Day Delivery</string>
     <string name="pick_a_particular_date_from_the_calendar_and_order_will_be_delivered_on_selected_date">Pick a particular date from the calendar and order will be delivered on selected date</string>
-    <string name="next">Next</string>
+    <string name="next">NEXT</string>
+    <string name="nominated_delivery">Nominated Delivery</string>
+    <string name="billing_address_is_the_same_as_delivery_address">Billing address is the same as delivery address</string>
+    <string name="street_1">Street 1</string>
+    <string name="country">Country</string>
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="street_2">Street 2</string>
+    <string name="back">BACK</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

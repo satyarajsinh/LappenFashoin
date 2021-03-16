@@ -5,22 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.lappenfashion.R
-import com.lappenfashion.data.model.ResponseMain
+import com.lappenfashion.data.model.ResponseMainCategories
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.ui.category.CategoriesAdapter
-import com.lappenfashion.ui.home.DealsOfTheDayAdapter
-import com.lappenfashion.ui.home.SpaceAdapter
 import com.lappenfashion.utils.Helper
-import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,21 +52,21 @@ class CategoryFragment : Fragment() {
             Helper.showLoader(mContext)
 
             var api = MyApi()
-            val requestCall: Call<ResponseMain> = api.getCategories()
+            val requestCall: Call<ResponseMainCategories> = api.getCategories()
 
-            requestCall.enqueue(object : Callback<ResponseMain> {
-                override fun onResponse(call: Call<ResponseMain>, response: Response<ResponseMain>) {
+            requestCall.enqueue(object : Callback<ResponseMainCategories> {
+                override fun onResponse(call: Call<ResponseMainCategories>, response: Response<ResponseMainCategories>) {
                     Helper.dismissLoader()
 
                     if (response.body() != null) {
                         recyclerCategories.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
                         recyclerCategories.setHasFixedSize(true)
-                        var adapter = CategoriesAdapter(mContext, response)
+                        var adapter = CategoriesAdapter(mContext, response?.body()?.payload!!)
                         recyclerCategories.adapter = adapter
                     }
                 }
 
-                override fun onFailure(call: Call<ResponseMain>, t: Throwable) {
+                override fun onFailure(call: Call<ResponseMainCategories>, t: Throwable) {
                     Helper.dismissLoader()
                 }
 

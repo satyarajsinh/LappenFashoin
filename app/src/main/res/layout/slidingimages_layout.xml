@@ -14,4 +14,17 @@
 
     </ImageView>
 
+    <TextView
+        android:id="@+id/bannerTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:fontFamily="@font/sfpro_bold"
+        android:layout_marginBottom="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        android:textSize="@dimen/_16ssp">
+
+    </TextView>
+
 </RelativeLayout>

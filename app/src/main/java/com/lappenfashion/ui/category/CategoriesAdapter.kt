@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
-import com.lappenfashion.data.model.ResponseMain
-import retrofit2.Response
+import com.lappenfashion.data.model.ResponseMainCategories
 
 class CategoriesAdapter(private val context: Context,
-                        private val data: Response<ResponseMain>) :
+                        private val data: List<ResponseMainCategories.Payload?>?
+) :
     RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
     class ViewHolder(view : View):RecyclerView.ViewHolder(view) {
@@ -26,11 +25,11 @@ class CategoriesAdapter(private val context: Context,
     }
 
     override fun getItemCount(): Int {
-        return data.body()?.size!!
+        return data?.size!!
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(context).load(data.body()?.get(position)?.imageurl).into(holder.imgPosterImage)
+        Glide.with(context).load(data?.get(position)?.image).into(holder.imgPosterImage)
     }
 
 
