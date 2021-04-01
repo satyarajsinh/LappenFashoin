@@ -4,13 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -24,10 +25,12 @@ import com.lappenfashion.ui.cart.CartActivity
 import com.lappenfashion.ui.checkout.CheckoutActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
+import com.lappenfashion.utils.TranslateAnimationUtil
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class HomeFragment : Fragment() {
 
@@ -42,16 +45,23 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
-
-        setUpToolBarAction()
-        getCategories()
-
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpToolBarAction()
+        initData()
+        getCategories()
+    }
+
+    private fun initData() {
+        nestedScrollView.setOnTouchListener(TranslateAnimationUtil(mContext, recyclerCategories))
     }
 
     private fun getCategories() {
@@ -59,28 +69,66 @@ class HomeFragment : Fragment() {
         if (NetworkConnection.checkConnection(mContext)) {
             Helper.showLoader(mContext)
 
-            var api = MyApi()
+            var api = MyApi(mContext)
             val requestCall: Call<ResponseMainHome> = api.getHome()
 
             requestCall.enqueue(object : Callback<ResponseMainHome> {
-                override fun onResponse(call: Call<ResponseMainHome>, response: Response<ResponseMainHome>) {
+                override fun onResponse(
+                    call: Call<ResponseMainHome>,
+                    response: Response<ResponseMainHome>
+                ) {
                     Helper.dismissLoader()
 
                     if (response.body() != null) {
-                        recyclerCategories.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-                        recyclerCategories.setHasFixedSize(true)
-                        var adapter = HomeAdapter(mContext, response?.body()?.payload?.categoryList!!)
-                        recyclerCategories.adapter = adapter
+                        if (response?.body()?.payload != null && response?.body()?.payload?.categoryList!!.size > 0) {
+                            recyclerCategories.visibility = View.VISIBLE
+                            recyclerCategories.layoutManager =
+                                LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+                            recyclerCategories.setHasFixedSize(true)
+                            var adapter =
+                                HomeAdapter(mContext, response?.body()?.payload?.categoryList!!)
+                            recyclerCategories.adapter = adapter
+                        } else {
+                            recyclerCategories.visibility = View.GONE
+                        }
 
-                        recyclerDealsOftheDay.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-                        recyclerDealsOftheDay.setHasFixedSize(true)
-                        var adapter1 = DealsOfTheDayAdapter(mContext, response?.body()?.payload?.dealsOfTheDay!!)
-                        recyclerDealsOftheDay.adapter = adapter1
+
+                        if (response?.body()?.payload != null && response?.body()?.payload?.dealsOfTheDay!!.size > 0) {
+                            linearDealsOfTheDay.visibility = View.VISIBLE
+                            recyclerDealsOftheDay.layoutManager = LinearLayoutManager(
+                                mContext,
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
+                            recyclerDealsOftheDay.setHasFixedSize(true)
+                            var dealsOfTheDayAdapter = DealsOfTheDayAdapter(
+                                mContext,
+                                response?.body()?.payload?.dealsOfTheDay!!
+                            )
+                            recyclerDealsOftheDay.adapter = dealsOfTheDayAdapter
+
+                            recyclerCategoriesSecond.setLayoutManager(GridLayoutManager(mContext, 2))
+                            recyclerCategoriesSecond.setHasFixedSize(true)
+                            var categoriesSecondAdapter = CategoriesSecondAdapter(
+                                mContext,
+                                response?.body()?.payload?.dealsOfTheDay!!
+                            )
+                            recyclerCategoriesSecond.adapter = categoriesSecondAdapter
+
+                        } else {
+                            linearDealsOfTheDay.visibility = View.GONE
+                        }
+
+                        if (response?.body()?.payload != null && response?.body()?.payload?.exploreList!!.size > 0) {
+                            linearViewPager.visibility = View.VISIBLE
+                            loadBanner(response?.body()!!.payload?.exploreList!!)
+                        } else {
+                            linearViewPager.visibility = View.GONE
+                        }
 
 
-                        loadBanner(response?.body()!!.payload?.exploreList!!)
                     } else {
-
+                        Helper.showTost(mContext, "No Data Found")
                     }
                 }
 
@@ -200,17 +248,17 @@ class HomeFragment : Fragment() {
         }
 
         imgCart.setOnClickListener {
-            var intent = Intent(mContext,CartActivity::class.java)
+            var intent = Intent(mContext, CartActivity::class.java)
             startActivity(intent)
         }
 
         imgSearch.setOnClickListener {
-            var intent = Intent(mContext,CheckoutActivity::class.java)
+            var intent = Intent(mContext, CheckoutActivity::class.java)
             startActivity(intent)
         }
 
         imgWishList.setOnClickListener {
-            var intent = Intent(mContext,WishListActivity::class.java)
+            var intent = Intent(mContext, WishListActivity::class.java)
             startActivity(intent)
         }
 

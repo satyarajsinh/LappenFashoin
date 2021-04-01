@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/_100sdp"
+    android:layout_width="@dimen/_60sdp"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_5sdp"
     android:orientation="vertical">
@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imgPosterImage"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
         android:layout_gravity="center"
         android:scaleType="fitXY" />
 
@@ -18,9 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="@dimen/_8sdp"
+        android:fontFamily="@font/sfpro_medium"
         android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp">
+        android:textSize="@dimen/_10ssp">
 
     </TextView>
 </LinearLayout>

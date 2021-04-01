@@ -51,7 +51,7 @@ class CategoryFragment : Fragment() {
         if (NetworkConnection.checkConnection(mContext)) {
             Helper.showLoader(mContext)
 
-            var api = MyApi()
+            var api = MyApi(mContext)
             val requestCall: Call<ResponseMainCategories> = api.getCategories()
 
             requestCall.enqueue(object : Callback<ResponseMainCategories> {
