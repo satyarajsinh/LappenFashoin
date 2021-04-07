@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,28 +17,37 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.lappenfashion.R
+import com.lappenfashion.`interface`.CategoriesInterface
 import com.lappenfashion.data.model.ResponseMainHome
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
+import com.lappenfashion.sqlitedb.DBManager
 import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.cart.CartActivity
+import com.lappenfashion.ui.categoriesDetails.CategoriesDetailsActivity
 import com.lappenfashion.ui.checkout.CheckoutActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
-import com.lappenfashion.utils.TranslateAnimationUtil
+import com.lappenfashion.utils.SpacesItemDecoration
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),CategoriesInterface {
 
+    private var localDbId: String = ""
     private lateinit var mContext: Context
     private lateinit var rootView: View
-    private lateinit var linearProfile : LinearLayout
-    private lateinit var linearCategories : LinearLayout
+    private lateinit var linearProfile: LinearLayout
+    private lateinit var linearCategories: LinearLayout
+    private lateinit var linearTrending: LinearLayout
+    private lateinit var dbManager: DBManager
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -57,89 +67,206 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpToolBarAction()
         initData()
-        getCategories()
+//        getCategories(localDbId)
     }
 
     private fun initData() {
-        nestedScrollView.setOnTouchListener(TranslateAnimationUtil(mContext, recyclerCategories))
+//        nestedScrollView.setOnTouchListener(TranslateAnimationUtil(mContext, recyclerCategories))
+        dbManager = DBManager(mContext)
+        dbManager.open()
+
+        val cursor = dbManager.fetch()
+        if (cursor != null) {
+            cursor.moveToFirst()
+            if (cursor.count > 0) {
+                var resposne = cursor.getString(1)
+                localDbId = cursor.getString(0)
+                val jsonObject = JSONObject(resposne);
+
+                val gson = Gson()
+                val homeResponse: ResponseMainHome = gson.fromJson(
+                    jsonObject.toString(),
+                    ResponseMainHome::class.java
+                )
+                setHomeData(homeResponse)
+                if (NetworkConnection.checkConnection(mContext)) {
+                    getHomeData(localDbId)
+                }
+                Log.e("Message", "Message : " + homeResponse.message)
+            } else {
+                if (NetworkConnection.checkConnection(mContext)) {
+                    Helper.showLoader(mContext)
+                    getHomeData(localDbId)
+                } else {
+                    Helper.showTost(mContext, "No internet connection")
+                }
+            }
+        }
     }
 
-    private fun getCategories() {
+    private fun setHomeData(homeResponse: ResponseMainHome) {
 
-        if (NetworkConnection.checkConnection(mContext)) {
-            Helper.showLoader(mContext)
-
-            var api = MyApi(mContext)
-            val requestCall: Call<ResponseMainHome> = api.getHome()
-
-            requestCall.enqueue(object : Callback<ResponseMainHome> {
-                override fun onResponse(
-                    call: Call<ResponseMainHome>,
-                    response: Response<ResponseMainHome>
-                ) {
-                    Helper.dismissLoader()
-
-                    if (response.body() != null) {
-                        if (response?.body()?.payload != null && response?.body()?.payload?.categoryList!!.size > 0) {
-                            recyclerCategories.visibility = View.VISIBLE
-                            recyclerCategories.layoutManager =
-                                LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-                            recyclerCategories.setHasFixedSize(true)
-                            var adapter =
-                                HomeAdapter(mContext, response?.body()?.payload?.categoryList!!)
-                            recyclerCategories.adapter = adapter
-                        } else {
-                            recyclerCategories.visibility = View.GONE
-                        }
-
-
-                        if (response?.body()?.payload != null && response?.body()?.payload?.dealsOfTheDay!!.size > 0) {
-                            linearDealsOfTheDay.visibility = View.VISIBLE
-                            recyclerDealsOftheDay.layoutManager = LinearLayoutManager(
-                                mContext,
-                                LinearLayoutManager.HORIZONTAL,
-                                false
-                            )
-                            recyclerDealsOftheDay.setHasFixedSize(true)
-                            var dealsOfTheDayAdapter = DealsOfTheDayAdapter(
-                                mContext,
-                                response?.body()?.payload?.dealsOfTheDay!!
-                            )
-                            recyclerDealsOftheDay.adapter = dealsOfTheDayAdapter
-
-                            recyclerCategoriesSecond.setLayoutManager(GridLayoutManager(mContext, 2))
-                            recyclerCategoriesSecond.setHasFixedSize(true)
-                            var categoriesSecondAdapter = CategoriesSecondAdapter(
-                                mContext,
-                                response?.body()?.payload?.dealsOfTheDay!!
-                            )
-                            recyclerCategoriesSecond.adapter = categoriesSecondAdapter
-
-                        } else {
-                            linearDealsOfTheDay.visibility = View.GONE
-                        }
-
-                        if (response?.body()?.payload != null && response?.body()?.payload?.exploreList!!.size > 0) {
-                            linearViewPager.visibility = View.VISIBLE
-                            loadBanner(response?.body()!!.payload?.exploreList!!)
-                        } else {
-                            linearViewPager.visibility = View.GONE
-                        }
-
-
-                    } else {
-                        Helper.showTost(mContext, "No Data Found")
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseMainHome>, t: Throwable) {
-                    Helper.dismissLoader()
-                }
-
-            })
+        //main categories
+        if (homeResponse?.payload != null && homeResponse?.payload?.categoryList!!.size > 0) {
+            recyclerCategories.visibility = View.VISIBLE
+            recyclerCategories.layoutManager =
+                LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+            recyclerCategories.setHasFixedSize(true)
+            var adapter =
+                CategoriesAdapter(mContext, homeResponse?.payload?.categoryList!!,this)
+            recyclerCategories.adapter = adapter
         } else {
-            Helper.showTost(mContext, "No internet connection")
+            recyclerCategories.visibility = View.GONE
         }
+
+
+        //deals of the day
+        if (homeResponse?.payload != null && homeResponse?.payload?.dealsOfTheDay!!.size > 0) {
+            linearDealsOfTheDay.visibility = View.VISIBLE
+            recyclerDealsOftheDay.layoutManager = LinearLayoutManager(
+                mContext,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            recyclerDealsOftheDay.setHasFixedSize(true)
+            var dealsOfTheDayAdapter = DealsOfTheDayAdapter(
+                mContext,
+                homeResponse?.payload?.dealsOfTheDay!!
+            )
+            recyclerDealsOftheDay.adapter = dealsOfTheDayAdapter
+
+        } else {
+            linearDealsOfTheDay.visibility = View.GONE
+        }
+
+        //second categories
+        recyclerCategoriesSecond.setLayoutManager(
+            GridLayoutManager(
+                mContext,
+                2
+            )
+        )
+
+        var spaceIterator : SpacesItemDecoration = SpacesItemDecoration(10)
+        recyclerCategoriesSecond.addItemDecoration(spaceIterator);
+        recyclerCategoriesSecond.setHasFixedSize(true)
+
+
+        var categoriesSecondAdapter = CategoriesSecondAdapter(
+            mContext,
+            homeResponse?.payload?.dealsOfTheDay!!
+        )
+        recyclerCategoriesSecond.adapter = categoriesSecondAdapter
+
+
+        //banners
+        if (homeResponse?.payload != null && homeResponse?.payload?.exploreList!!.size > 0) {
+            linearViewPager.visibility = View.VISIBLE
+            loadBanner(homeResponse!!.payload?.exploreList!!)
+        } else {
+            linearViewPager.visibility = View.GONE
+        }
+
+
+        //trending images
+        recyclerTrending.setLayoutManager(
+            GridLayoutManager(
+                mContext,
+                3
+            )
+        )
+        recyclerTrending.setHasFixedSize(true)
+
+
+        var trendingAdapter = TrendingAdapter(
+            mContext,
+            homeResponse.payload?.trending
+        )
+        recyclerTrending.adapter = trendingAdapter
+
+
+        //offer banners
+        recyclerOffers.layoutManager = LinearLayoutManager(
+            mContext,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        recyclerOffers.setHasFixedSize(true)
+        var offersAdapter = OffersAdapter(
+            mContext,
+            homeResponse.payload?.offerPoster
+        )
+        recyclerOffers.adapter = offersAdapter
+
+        //Accessories
+        recyclerAccessories.setLayoutManager(
+            GridLayoutManager(
+                mContext,
+                3
+            )
+        )
+        recyclerAccessories.setHasFixedSize(true)
+
+        var accessoriesAdapter = AccessoriesAdapter(
+            mContext,
+            homeResponse.payload?.accessories
+        )
+        recyclerAccessories.adapter = accessoriesAdapter
+
+        //other banners
+        recyclerOtherOffers.layoutManager = LinearLayoutManager(
+            mContext,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        recyclerOtherOffers.setHasFixedSize(true)
+        var otherOffersAdapter = OtherOffersAdapter(
+            mContext,
+            homeResponse.payload?.otherPoster
+        )
+        recyclerOtherOffers.adapter = otherOffersAdapter
+
+
+
+    }
+
+    private fun getHomeData(localDbId: String) {
+
+        var api = MyApi(mContext)
+        val requestCall: Call<JsonObject> = api.getHome()
+
+        requestCall.enqueue(object : Callback<JsonObject> {
+            override fun onResponse(
+                call: Call<JsonObject>,
+                response: Response<JsonObject>
+            ) {
+                Helper.dismissLoader()
+
+                if (response.body() != null) {
+
+                    if (localDbId != "") {
+                        dbManager.delete(id.toLong())
+                    }
+
+                    dbManager.insert(response.body().toString())
+
+                    val gson = Gson()
+                    val homeResponse: ResponseMainHome = gson.fromJson(
+                        response.body(),
+                        ResponseMainHome::class.java
+                    )
+                    setHomeData(homeResponse)
+
+                } else {
+                    Helper.showTost(mContext, "No Data Found")
+                }
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                Helper.dismissLoader()
+            }
+
+        })
     }
 
     companion object {
@@ -208,7 +335,7 @@ class HomeFragment : Fragment() {
             val imageLayout = inflater.inflate(R.layout.slidingimages_layout, view, false)!!
 
             val imageView = imageLayout
-                    .findViewById(R.id.image) as ImageView
+                .findViewById(R.id.image) as ImageView
 
             val txtBannerTitle = imageLayout
                 .findViewById(R.id.bannerTitle) as TextView
@@ -218,8 +345,8 @@ class HomeFragment : Fragment() {
             imageView.scaleType = ImageView.ScaleType.FIT_XY
 
             Glide.with(mContext)
-                    .load(imageModelArrayList?.get(position)?.image)
-                    .into(imageView)
+                .load(imageModelArrayList?.get(position)?.image)
+                .into(imageView)
 
             txtBannerTitle.text = imageModelArrayList?.get(position)?.title
 
@@ -262,6 +389,12 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+    }
+
+    override fun goToSubCategories(data: ResponseMainHome.Payload.Category?) {
+        var intent = Intent(mContext,CategoriesDetailsActivity::class.java)
+        intent.putExtra("subCategories",data)
+        startActivity(intent)
     }
 
 }

@@ -1,17 +1,17 @@
 package com.lappenfashion.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
-import android.view.Menu
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.lappenfashion.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         bottomNavigation()
+        setHomeColor()
       /*  setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)*/
     }
@@ -64,12 +65,26 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.nav_category)
         }
 
-        linearCategories.setOnClickListener {
+        linearStudio.setOnClickListener {
+            navController.navigate(R.id.nav_category)
+        }
+
+        linearExplore.setOnClickListener {
             navController.navigate(R.id.nav_category)
         }
 
         linearHome.setOnClickListener {
             navController.navigate(R.id.nav_home)
         }
+    }
+
+    @SuppressLint("ResourceType")
+    public fun setHomeColor(){
+        imgHome.setColorFilter(
+            ContextCompat.getColor(this, R.color.pink),
+            android.graphics.PorterDuff.Mode.MULTIPLY
+        )
+        txtHome.setTextColor(resources.getColor(R.color.pink))
+
     }
 }

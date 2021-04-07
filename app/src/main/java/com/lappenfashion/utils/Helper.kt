@@ -7,23 +7,25 @@ import android.graphics.drawable.ColorDrawable
 import android.widget.Toast
 import com.lappenfashion.R
 
-lateinit var dialog : Dialog
 
 object Helper {
 
+    var dialog : Dialog? = null
     fun showLoader(context: Context){
-        dialog = Dialog(context)
-        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setContentView(R.layout.loader_view)
-        dialog.show()
-        dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        if(dialog!=null) {
+            dialog = Dialog(context)
+            dialog?.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+            dialog?.setCancelable(false)
+            dialog?.setCanceledOnTouchOutside(false)
+            dialog?.setContentView(R.layout.loader_view)
+            dialog?.show()
+            dialog?.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
     }
 
     fun dismissLoader(){
-        if(dialog.isShowing){
-            dialog.dismiss()
+        if(dialog!=null && dialog!!.isShowing){
+            dialog!!.dismiss()
         }
     }
 

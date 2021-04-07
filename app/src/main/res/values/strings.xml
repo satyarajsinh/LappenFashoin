@@ -40,6 +40,9 @@
     <string name="city">City</string>
     <string name="street_2">Street 2</string>
     <string name="back">BACK</string>
+    <string name="trending">Trending</string>
+    <string name="you_may_also_like">You may also like</string>
+    <string name="accessories_for_you">Accessories for you</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

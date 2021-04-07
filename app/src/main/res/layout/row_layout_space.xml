@@ -3,8 +3,8 @@
     android:layout_width="@dimen/_60sdp"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_5sdp"
+    android:id="@+id/linearMain"
     android:orientation="vertical">
-
 
     <ImageView
         android:id="@+id/imgPosterImage"

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_8sdp"
+    android:orientation="horizontal"
+    android:background="@drawable/bottom_shadow">
+
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_8sdp"
+        android:src="@mipmap/ic_light_arrow">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/imgCart"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_8sdp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_light_bag">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/imgLiked"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_8sdp"
+        android:layout_toLeftOf="@id/imgCart"
+        android:src="@mipmap/ic_light_heart">
+
+    </ImageView>
+    <TextView
+        android:id="@+id/txtTitle"
+        android:text="Filter"
+        android:visibility="gone"
+        android:paddingLeft="@dimen/_10sdp"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/sfpro_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+
+    </TextView>
+
+
+</RelativeLayout>

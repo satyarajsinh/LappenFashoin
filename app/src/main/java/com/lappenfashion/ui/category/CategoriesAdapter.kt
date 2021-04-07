@@ -29,7 +29,7 @@ class CategoriesAdapter(private val context: Context,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(context).load(data?.get(position)?.image).into(holder.imgPosterImage)
+        Glide.with(context).load(data?.get(position)?.banner).into(holder.imgPosterImage)
     }
 
 

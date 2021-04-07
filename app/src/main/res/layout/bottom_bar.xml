@@ -17,12 +17,14 @@
         android:layout_weight="1">
 
         <ImageView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:id="@+id/imgHome"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:src="@mipmap/ic_bulk_home">
         </ImageView>
 
         <TextView
+            android:id="@+id/txtHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -44,8 +46,8 @@
         android:layout_weight="1">
 
         <ImageView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:src="@mipmap/ic_light_category">
         </ImageView>
 
@@ -62,6 +64,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearStudio"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -70,8 +73,8 @@
         android:layout_weight="1">
 
         <ImageView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:src="@mipmap/ic_light_camera">
         </ImageView>
 
@@ -88,6 +91,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearExplore"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -96,8 +100,8 @@
         android:layout_weight="1">
 
         <ImageView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:src="@mipmap/ic_light_chart">
         </ImageView>
 
@@ -123,8 +127,8 @@
         android:layout_weight="1">
 
         <ImageView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:src="@mipmap/ic_light_profile">
         </ImageView>
 

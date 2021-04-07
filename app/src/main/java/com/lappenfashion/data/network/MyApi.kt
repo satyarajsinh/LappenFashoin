@@ -2,8 +2,8 @@ package com.lappenfashion.data.network
 
 import android.content.Context
 import com.example.simplemvvm.utils.Constants
+import com.google.gson.JsonObject
 import com.lappenfashion.data.model.ResponseMainCategories
-import com.lappenfashion.data.model.ResponseMainHome
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -19,7 +19,7 @@ interface MyApi {
     fun getCategories(): Call<ResponseMain>
 */
     @GET(Constants.END_POINT_HOME)
-    fun getHome(): Call<ResponseMainHome>
+    fun getHome(): Call<JsonObject>
 
     @GET(Constants.END_POINT_CATEGORY)
     fun getCategories(): Call<ResponseMainCategories>
