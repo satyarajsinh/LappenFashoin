@@ -1,22 +1,21 @@
-package com.lappenfashion.ui.categoriesDetails
+package com.lappenfashion.ui.category
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lappenfashion.R
+import com.lappenfashion.data.model.ResponseMainCategories
 import com.lappenfashion.data.model.ResponseMainHome
 
-class ProductCategoriesAdapter : RecyclerView.Adapter<ProductCategoriesAdapter.ViewHolder> {
+class ProductCategoriesCatAdapter : RecyclerView.Adapter<ProductCategoriesCatAdapter.ViewHolder> {
 
-    lateinit var context: CategoriesDetailsActivity
-    var data: List<ResponseMainHome.Payload.Category.SubCategory.ProductCategory?>?
+    lateinit var context: Context
+    var data: List<ResponseMainCategories.Payload.SubCategory.ProductCategory?>?
 
-    constructor(context: CategoriesDetailsActivity, data: List<ResponseMainHome.Payload.Category.SubCategory.ProductCategory?>?) {
+    constructor(context: Context, data: List<ResponseMainCategories.Payload.SubCategory.ProductCategory?>?) {
         this.context = context
         this.data = data
     }
@@ -36,9 +35,7 @@ class ProductCategoriesAdapter : RecyclerView.Adapter<ProductCategoriesAdapter.V
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtProductCategoryName.text = data?.get(position)?.title
-        holder.txtProductCategoryName.setOnClickListener {
-            context.goToProducts(data?.get(position))
-        }
+
     }
 
 }

@@ -11,7 +11,7 @@ import com.lappenfashion.R
 object Helper {
 
     var dialog : Dialog? = null
-    fun showLoader(context: Context){
+    fun showLoader(context: Context) {
         if(dialog!=null) {
             dialog = Dialog(context)
             dialog?.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)

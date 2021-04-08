@@ -91,6 +91,8 @@ class HomeFragment : Fragment(),CategoriesInterface {
                 setHomeData(homeResponse)
                 if (NetworkConnection.checkConnection(mContext)) {
                     getHomeData(localDbId)
+                }else {
+                    Helper.showTost(mContext, "No internet connection")
                 }
                 Log.e("Message", "Message : " + homeResponse.message)
             } else {

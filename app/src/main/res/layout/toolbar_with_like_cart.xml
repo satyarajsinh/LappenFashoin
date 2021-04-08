@@ -44,8 +44,10 @@
         android:textColor="@color/black"
         android:fontFamily="@font/sfpro_medium"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical">
+        android:layout_toLeftOf="@id/imgLiked"
+        android:layout_toRightOf="@id/imgBack"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_height="wrap_content">
 
     </TextView>
 

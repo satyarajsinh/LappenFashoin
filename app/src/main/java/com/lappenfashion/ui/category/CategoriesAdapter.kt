@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
@@ -15,8 +16,11 @@ class CategoriesAdapter(private val context: Context,
 ) :
     RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
+    private var isClicked: Boolean = false
+
     class ViewHolder(view : View):RecyclerView.ViewHolder(view) {
         val imgPosterImage : ImageView = view.findViewById(R.id.imgPosterImage)
+        val recyclerSubCategories : RecyclerView = view.findViewById(R.id.recyclerSubCategories)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,6 +34,28 @@ class CategoriesAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(context).load(data?.get(position)?.banner).into(holder.imgPosterImage)
+
+        holder.imgPosterImage.setOnClickListener {
+            if(!isClicked) {
+                isClicked = true
+                holder.recyclerSubCategories.visibility = View.VISIBLE
+                holder.recyclerSubCategories.layoutManager = LinearLayoutManager(
+                    context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+                holder.recyclerSubCategories.setHasFixedSize(true)
+                var offersAdapter = SubCategoriesCatAdapter(
+                    context,
+                    data?.get(position)?.subCategory
+                )
+                holder.recyclerSubCategories.adapter = offersAdapter
+            }else{
+                isClicked = false
+                holder.recyclerSubCategories.visibility = View.GONE
+            }
+        }
+
     }
 
 

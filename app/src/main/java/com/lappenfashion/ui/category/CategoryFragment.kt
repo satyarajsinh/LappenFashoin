@@ -14,6 +14,7 @@ import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.ui.category.CategoriesAdapter
 import com.lappenfashion.utils.Helper
+import kotlinx.android.synthetic.main.fragment_category.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +24,7 @@ class CategoryFragment : Fragment() {
 
     private lateinit var rootView : View
     private lateinit var mContext : Context
-    private lateinit var recyclerCategories : RecyclerView
+    private lateinit var recyclerCategoriesBottom : RecyclerView
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -36,10 +37,13 @@ class CategoryFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         rootView =  inflater.inflate(R.layout.fragment_category, container, false)
+        return rootView
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initData()
         clickListener()
-        return rootView
     }
 
     private fun clickListener() {
@@ -59,10 +63,10 @@ class CategoryFragment : Fragment() {
                     Helper.dismissLoader()
 
                     if (response.body() != null) {
-                        recyclerCategories.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
-                        recyclerCategories.setHasFixedSize(true)
+                        recyclerCategoriesBottom.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
+                        recyclerCategoriesBottom.setHasFixedSize(true)
                         var adapter = CategoriesAdapter(mContext, response?.body()?.payload!!)
-                        recyclerCategories.adapter = adapter
+                        recyclerCategoriesBottom.adapter = adapter
                     }
                 }
 
@@ -77,7 +81,7 @@ class CategoryFragment : Fragment() {
     }
 
     private fun initData() {
-        recyclerCategories = rootView.findViewById(R.id.recyclerCategories)
+        recyclerCategoriesBottom = rootView.findViewById(R.id.recyclerCategoriesBottom)
 
         getCategories()
     }

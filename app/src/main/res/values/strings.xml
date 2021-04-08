@@ -43,6 +43,11 @@
     <string name="trending">Trending</string>
     <string name="you_may_also_like">You may also like</string>
     <string name="accessories_for_you">Accessories for you</string>
+    <string name="sort">SORT</string>
+    <string name="filter">FILTER</string>
+    <string name="details">Details</string>
+    <string name="color">Color</string>
+    <string name="size">Size</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

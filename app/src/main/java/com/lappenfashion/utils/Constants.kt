@@ -8,5 +8,6 @@ object Constants {
     const val END_POINT = BASE_URL+"spacecrafts.json"
 
     const val END_POINT_HOME = "home"
+    const val END_POINT_PRODUCTS = "products"
     const val END_POINT_CATEGORY = "category"
 }

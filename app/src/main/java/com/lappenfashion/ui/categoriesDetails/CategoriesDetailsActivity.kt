@@ -1,11 +1,13 @@
 package com.lappenfashion.ui.categoriesDetails
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainHome
+import com.lappenfashion.ui.products.ProductsByProductCategoryActivity
 import kotlinx.android.synthetic.main.activity_categories_details.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.recyclerCategories
@@ -45,7 +47,7 @@ class CategoriesDetailsActivity : AppCompatActivity() {
 
         if (subCategoriesData != null) {
             recyclerCategories.layoutManager = LinearLayoutManager(
-                this,
+                this@CategoriesDetailsActivity,
                 LinearLayoutManager.VERTICAL,
                 false
             )
@@ -56,6 +58,13 @@ class CategoriesDetailsActivity : AppCompatActivity() {
             )
             recyclerCategories.adapter = offersAdapter
         }
+    }
+
+    fun goToProducts(data: ResponseMainHome.Payload.Category.SubCategory.ProductCategory?) {
+        var intent = Intent(this,ProductsByProductCategoryActivity::class.java)
+        intent.putExtra("id",data?.productCategoryId.toString())
+        intent.putExtra("name",data?.title.toString())
+        startActivity(intent)
     }
 
 }

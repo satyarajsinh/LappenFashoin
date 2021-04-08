@@ -1,4 +1,4 @@
-package com.lappenfashion.ui.categoriesDetails
+package com.lappenfashion.ui.category
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,14 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lappenfashion.R
+import com.lappenfashion.data.model.ResponseMainCategories
 import com.lappenfashion.data.model.ResponseMainHome
 
-class SubCategoriesAdapter : RecyclerView.Adapter<SubCategoriesAdapter.ViewHolder> {
+class SubCategoriesCatAdapter : RecyclerView.Adapter<SubCategoriesCatAdapter.ViewHolder> {
 
-    lateinit var context: CategoriesDetailsActivity
-    var data: List<ResponseMainHome.Payload.Category.SubCategory?>?
+    lateinit var context: Context
+    var data:  List<ResponseMainCategories.Payload.SubCategory?>?
 
-    constructor(context: CategoriesDetailsActivity, data: List<ResponseMainHome.Payload.Category.SubCategory?>?) {
+    constructor(context: Context, data: List<ResponseMainCategories.Payload.SubCategory?>?) {
         this.context = context
         this.data = data
     }
@@ -25,6 +26,7 @@ class SubCategoriesAdapter : RecyclerView.Adapter<SubCategoriesAdapter.ViewHolde
         val txtSubCategoryName : TextView = view.findViewById(R.id.txtSubCategoryName)
         val imgDown : ImageView = view.findViewById(R.id.imgDown)
         val recyclerProductCategory : RecyclerView = view.findViewById(R.id.recyclerProductCategories)
+        val view : View = view.findViewById(R.id.view)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,7 +40,7 @@ class SubCategoriesAdapter : RecyclerView.Adapter<SubCategoriesAdapter.ViewHolde
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtSubCategoryName.text = data?.get(position)?.title
-
+        holder.view.visibility = View.GONE
         holder.txtSubCategoryName.setOnClickListener {
             if(holder.imgDown.rotation == 360f){
                 holder.imgDown.rotation = 180f
@@ -49,7 +51,7 @@ class SubCategoriesAdapter : RecyclerView.Adapter<SubCategoriesAdapter.ViewHolde
                     false
                 )
                 holder.recyclerProductCategory.setHasFixedSize(true)
-                var offersAdapter = ProductCategoriesAdapter(
+                var offersAdapter = ProductCategoriesCatAdapter(
                     context,
                     data?.get(position)?.productCategory
                 )

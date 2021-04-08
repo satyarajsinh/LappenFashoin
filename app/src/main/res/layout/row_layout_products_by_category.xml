@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_grey"
+    android:paddingBottom="@dimen/_2sdp"
+    android:paddingTop="@dimen/_2ssp"
+    android:layout_marginLeft="@dimen/_2sdp"
+    android:layout_marginRight="@dimen/_2sdp"
+    android:id="@+id/relativeMain">
+
+    <ImageView
+        android:id="@+id/imgProudctImage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_230sdp"
+        android:background="@color/white"
+        android:scaleType="fitXY">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/txtProductName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="Hello Ronak"
+        android:layout_toLeftOf="@id/imgLiked"
+        android:paddingLeft="@dimen/_15sdp"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/black"
+        android:layout_below="@id/imgProudctImage">
+
+    </TextView>
+
+    <ImageView
+        android:id="@+id/imgLiked"
+        android:layout_width="@dimen/_15sdp"
+        android:layout_height="@dimen/_15sdp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_below="@id/imgProudctImage"
+        android:src="@mipmap/ic_light_heart"
+        android:scaleType="fitXY">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/txtProductDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello Ronak"
+        android:paddingLeft="@dimen/_15sdp"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@color/wishlist_desc_color"
+        android:layout_below="@id/txtProductName">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="790"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:paddingLeft="@dimen/_15sdp"
+        android:fontFamily="@font/sfpro_bold"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/black"
+        android:layout_below="@id/txtProductDetails">
+
+    </TextView>
+
+</RelativeLayout>
