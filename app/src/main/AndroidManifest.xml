@@ -25,7 +25,8 @@
         </activity>
 
         <activity android:name=".ui.login.LoginActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.products.ProductDetailsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.editProfile.EditProfileActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.address.AddAddressActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.products.ProductsByProductCategoryActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.categoriesDetails.CategoriesDetailsActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.filter.FilterActivity" android:screenOrientation="portrait" />

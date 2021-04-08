@@ -10,6 +10,8 @@
         android:id="@+id/imgDrawer"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
+        android:padding="@dimen/_5sdp"
+        android:rotation="180"
         android:src="@mipmap/ic_menu">
     </ImageView>
 
@@ -17,6 +19,7 @@
         android:id="@+id/imgCart"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
+        android:padding="@dimen/_5sdp"
         android:layout_alignParentRight="true"
         android:src="@mipmap/ic_light_bag">
     </ImageView>
@@ -25,6 +28,7 @@
         android:id="@+id/imgLiked"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
+        android:padding="@dimen/_5sdp"
         android:layout_marginRight="@dimen/_5sdp"
         android:layout_toLeftOf="@id/imgCart"
         android:src="@mipmap/ic_light_heart">
@@ -32,8 +36,9 @@
 
     <ImageView
         android:id="@+id/imgNotification"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:padding="@dimen/_5sdp"
         android:layout_marginRight="@dimen/_5sdp"
         android:layout_toLeftOf="@id/imgLiked"
         android:src="@mipmap/ic_light_notification">
@@ -41,8 +46,8 @@
 
     <ImageView
         android:id="@+id/imgSearch"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
         android:padding="@dimen/_5sdp"
         android:layout_marginRight="@dimen/_5sdp"
         android:layout_toLeftOf="@id/imgNotification"

@@ -48,6 +48,21 @@
     <string name="details">Details</string>
     <string name="color">Color</string>
     <string name="size">Size</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="birthday">Birthday</string>
+    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="save_profile">SAVE PROFILE</string>
+    <string name="cancel">CANCEL</string>
+    <string name="save">SAVE</string>
+    <string name="name">Name *</string>
+    <string name="pincode">Pincode *</string>
+    <string name="state_comp">State *</string>
+    <string name="address_street">Address (House No, Building, Street, Area) *</string>
+    <string name="locality_town">Locality / Town *</string>
+    <string name="city_district">City / District *</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

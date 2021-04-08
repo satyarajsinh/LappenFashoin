@@ -3,24 +3,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/_8sdp"
     android:orientation="horizontal"
-    android:background="@drawable/bottom_shadow">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/imgBack"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:padding="@dimen/_8sdp"
-        android:src="@mipmap/ic_light_arrow">
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:padding="@dimen/_5sdp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_light_arrow">
 
     </ImageView>
 
     <ImageView
         android:id="@+id/imgCart"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:padding="@dimen/_8sdp"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_alignParentRight="true"
         android:src="@mipmap/ic_light_bag">
 
@@ -28,9 +31,11 @@
 
     <ImageView
         android:id="@+id/imgLiked"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:padding="@dimen/_8sdp"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/imgCart"
         android:src="@mipmap/ic_light_heart">
 

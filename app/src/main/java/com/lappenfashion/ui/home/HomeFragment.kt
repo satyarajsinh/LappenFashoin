@@ -110,15 +110,19 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
         //main categories
         if (homeResponse?.payload != null && homeResponse?.payload?.categoryList!!.size > 0) {
-            recyclerCategories.visibility = View.VISIBLE
-            recyclerCategories.layoutManager =
-                LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-            recyclerCategories.setHasFixedSize(true)
-            var adapter =
-                CategoriesAdapter(mContext, homeResponse?.payload?.categoryList!!,this)
-            recyclerCategories.adapter = adapter
+            if(recyclerCategories!=null) {
+                recyclerCategories.visibility = View.VISIBLE
+                recyclerCategories.layoutManager =
+                    LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+                recyclerCategories.setHasFixedSize(true)
+                var adapter =
+                    CategoriesAdapter(mContext, homeResponse?.payload?.categoryList!!, this)
+                recyclerCategories.adapter = adapter
+            }
         } else {
-            recyclerCategories.visibility = View.GONE
+            if(recyclerCategories!=null) {
+                recyclerCategories.visibility = View.GONE
+            }
         }
 
 
