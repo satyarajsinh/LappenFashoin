@@ -12,6 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        app:SpinKit_Color="@color/black" />
+        app:SpinKit_Color="@color/colorAccent" />
 
 </RelativeLayout>

@@ -43,15 +43,17 @@
                     android:id="@+id/imgProfile"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_100sdp"
-                    android:src="@mipmap/ic_launcher_round">
+                    android:src="@mipmap/ic_user_placeholder">
 
                 </com.makeramen.roundedimageview.RoundedImageView>
 
                 <RelativeLayout
+                    android:id="@+id/relativeProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
                     android:layout_toRightOf="@id/imgProfile">
 
                     <TextView
@@ -100,6 +102,23 @@
 
 
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/_10ssp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:fontFamily="@font/sfpro_regular"
+                    android:textColor="@color/white"
+                    android:background="@color/colorAccent"
+                    android:text="Login / Signup"
+                    android:layout_toRightOf="@id/imgProfile">
+
+                </TextView>
 
             </RelativeLayout>
 
@@ -228,7 +247,7 @@
                     android:textSize="@dimen/_10ssp"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:background="@drawable/rounded_corner_pink"
+                    android:background="@drawable/rounded_corner_accent"
                     android:fontFamily="@font/sfpro_bold"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/txtWishList"
@@ -251,6 +270,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relativeTrackOrder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_15sdp"

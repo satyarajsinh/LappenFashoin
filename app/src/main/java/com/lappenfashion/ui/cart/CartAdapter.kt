@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseCart
+import com.lappenfashion.data.model.ResponseMainAddress
 
 
 class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {

@@ -1,48 +1,116 @@
 package com.lappenfashion.ui.wishlist
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
-import com.lappenfashion.data.model.ResponseCart
-import com.lappenfashion.data.model.ResponseWishlist
-import com.lappenfashion.ui.cart.CartAdapter
+import com.lappenfashion.data.model.ResponseMainLogin
+import com.lappenfashion.data.model.ResponseMainWishList
+import com.lappenfashion.data.network.MyApi
+import com.lappenfashion.data.network.NetworkConnection
+import com.lappenfashion.utils.Helper
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_cart.imgBack
-import kotlinx.android.synthetic.main.activity_cart.recyclerCart
 import kotlinx.android.synthetic.main.activity_wishlist.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class WishListActivity : AppCompatActivity() {
 
-    private var wishList : ArrayList<ResponseWishlist> = arrayListOf()
+
+    private lateinit var adapter: WishlistAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wishlist)
 
+        initData()
         clicklisteners()
 
-        var list1 = ResponseWishlist("https://rukminim1.flixcart.com/image/880/1056/kf1fo280hlty2aw-0/t-shirt/w/s/e/-original-imafdfvvr8hqdu65.jpeg?q=50","Scarlet Headphone","Best product","1100")
-        var list2 = ResponseWishlist("https://rukminim1.flixcart.com/image/580/696/kjom6q80-0/t-shirt/f/j/b/l-aff-1048black-adiba-fashion-factory-original-imafz6uenneexbf7.jpeg?q=50","Apple Watch","Best product","5000")
-        var list3 = ResponseWishlist("https://rukminim1.flixcart.com/image/580/696/kg9qbgw0-0/t-shirt/c/0/7/s-shp395402-shapphr-original-imafwjx7tnbqqqhz.jpeg?q=50","Adidas Perfume","Best product","50")
 
-        wishList.add(list1)
-        wishList.add(list2)
-        wishList.add(list3)
 
-        recyclerWishList.layoutManager = GridLayoutManager(this@WishListActivity, 2)
-        var adapter = WishlistAdapter(
-            this@WishListActivity,
-            wishList
-        )
-        recyclerWishList.adapter = adapter
+    }
 
+    private fun initData() {
+        if (NetworkConnection.checkConnection(this@WishListActivity)) {
+            Helper.showLoader(this@WishListActivity)
+            getWishList()
+        }
+    }
+
+    private fun getWishList() {
+        var api = MyApi(this@WishListActivity)
+        val requestCall: Call<ResponseMainWishList> = api.getWishList("Bearer "+ Prefs.getString(
+            Constants.PREF_TOKEN, ""))
+
+        requestCall.enqueue(object : Callback<ResponseMainWishList> {
+            override fun onResponse(
+                call: Call<ResponseMainWishList>,
+                response: Response<ResponseMainWishList>
+            ) {
+                Helper.dismissLoader()
+                if (response.body() != null && response.body()!!.payload?.size!! >0) {
+                    relativeNoData.visibility = View.GONE
+                    recyclerWishList.visibility = View.VISIBLE
+                    recyclerWishList.layoutManager = GridLayoutManager(this@WishListActivity, 2)
+                    adapter = WishlistAdapter(
+                        this@WishListActivity,
+                        response.body()!!.payload as ArrayList<ResponseMainWishList.Payload?>?
+                    )
+                    recyclerWishList.adapter = adapter
+                }else{
+                    relativeNoData.visibility = View.VISIBLE
+                    recyclerWishList.visibility = View.GONE
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMainWishList>, t: Throwable) {
+                Helper.dismissLoader()
+            }
+
+        })
     }
 
     private fun clicklisteners() {
         imgBack.setOnClickListener {
             finish()
         }
+    }
+
+    fun removeFromWishList(data: ResponseMainWishList.Payload?, position: Int) {
+        if (NetworkConnection.checkConnection(this@WishListActivity)) {
+            Helper.showLoader(this@WishListActivity)
+            var api = MyApi(this@WishListActivity)
+            val requestCall: Call<ResponseMainLogin> = api.deleteWishList("Bearer "+ Prefs.getString(
+                Constants.PREF_TOKEN, ""), data?.wishListId!!
+            )
+
+            requestCall.enqueue(object : Callback<ResponseMainLogin> {
+                override fun onResponse(
+                    call: Call<ResponseMainLogin>,
+                    response: Response<ResponseMainLogin>
+                ) {
+                    Helper.dismissLoader()
+                    if (response.body() != null && response.body()!!.result == true) {
+                        adapter.removeData(position)
+                        Helper.showTost(this@WishListActivity, response.body()!!.message!!)
+                    }else{
+                        Helper.showTost(this@WishListActivity, response.body()!!.message!!)
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                    Helper.dismissLoader()
+                }
+
+            })
+        }else{
+            Helper.showTost(this@WishListActivity,getString(R.string.no_internet))
+        }
+
     }
 }

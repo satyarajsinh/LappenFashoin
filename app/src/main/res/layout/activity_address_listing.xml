@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include android:id="@+id/toolbar" layout="@layout/toolbar_with_back_button" android:layout_width="match_parent" android:layout_height="wrap_content"></include>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:padding="@dimen/_10sdp"
+        android:scrollbars="none">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/txtAddAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/_35ssp"
+        android:layout_marginRight="@dimen/_35sdp"
+        android:fontFamily="@font/sfpro_regular"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"
+        android:text="@string/add_address">
+
+    </TextView>
+</RelativeLayout>

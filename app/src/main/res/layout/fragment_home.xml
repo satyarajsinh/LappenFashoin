@@ -79,7 +79,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/linearViewPager"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:padding="@dimen/_10sdp">
@@ -109,7 +108,6 @@
                     android:id="@+id/linearCategoriesSecond"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:padding="@dimen/_10sdp">
@@ -139,7 +137,6 @@
                     android:id="@+id/linearTrending"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:padding="@dimen/_10sdp">
@@ -169,7 +166,6 @@
                     android:id="@+id/linearOffers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:padding="@dimen/_10sdp">
@@ -199,7 +195,6 @@
                     android:id="@+id/linearAccessories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:padding="@dimen/_10sdp">
@@ -229,7 +224,6 @@
                     android:id="@+id/linearOtherOffers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:padding="@dimen/_10sdp">

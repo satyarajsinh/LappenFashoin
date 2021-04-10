@@ -1,28 +1,23 @@
 package com.lappenfashion.ui.wishlist
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
-import com.lappenfashion.data.model.ResponseCart
-import com.lappenfashion.data.model.ResponseWishlist
+import com.lappenfashion.data.model.ResponseMainWishList
 
 
 class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
-    lateinit var context : Context
-    lateinit var data : ArrayList<ResponseWishlist>
+    lateinit var context : WishListActivity
+    var data : ArrayList<ResponseMainWishList.Payload?>?
 
     constructor(
-        context: Context,
-        advertisementList: ArrayList<ResponseWishlist>,
+        context: WishListActivity,
+        advertisementList: ArrayList<ResponseMainWishList.Payload?>?,
     ) {
         this.context = context
         this.data = advertisementList
@@ -30,6 +25,7 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
 
     class ViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         var productImage = itemview.findViewById<ImageView>(R.id.imgProudctImage)
+        var imgClose = itemview.findViewById<ImageView>(R.id.imgClose)
         var productName = itemview.findViewById<TextView>(R.id.txtProductName)
         var productDetails = itemview.findViewById<TextView>(R.id.txtProductDetails)
         var productPrice = itemview.findViewById<TextView>(R.id.txtPrice)
@@ -43,17 +39,24 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        Glide.with(context).load(data[position].image).into(holder.productImage)
+        Glide.with(context).load(data?.get(position)?.product?.mainImageName).into(holder.productImage)
 
-        holder.productName.text = data[position].productName
-        holder.productDetails.text = data[position].productDetail
+        holder.productName.text = data?.get(position)?.product?.productName
+        holder.productDetails.text = data?.get(position)?.product?.description
 
-        holder.productPrice.text = "₹"+data[position].price
+        holder.productPrice.text = "₹"+data?.get(position)?.product?.salePrice
 
+        holder.imgClose.setOnClickListener {
+            context.removeFromWishList(data?.get(position),position)
+        }
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return data?.size!!
     }
 
+    fun removeData(position: Int){
+        data!!.removeAt(position)
+        notifyDataSetChanged()
+    }
 }

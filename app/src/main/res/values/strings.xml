@@ -59,10 +59,15 @@
     <string name="save">SAVE</string>
     <string name="name">Name *</string>
     <string name="pincode">Pincode *</string>
+    <string name="some_thing_happend_wrong">Some thing happend wrong</string>
     <string name="state_comp">State *</string>
     <string name="address_street">Address (House No, Building, Street, Area) *</string>
     <string name="locality_town">Locality / Town *</string>
     <string name="city_district">City / District *</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="no_data_found">No Data Found</string>
+    <string name="add_address">Add Address</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

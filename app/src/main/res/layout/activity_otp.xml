@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:padding="@dimen/_5sdp"
+        android:visibility="visible"
+        android:layout_margin="@dimen/_10sdp"
+        android:src="@drawable/ic_light_arrow">
+
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/sfpro_medium"
+            android:text="Verification Code">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:textColor="@color/wishlist_desc_color"
+            android:fontFamily="@font/sfpro_medium"
+            android:text="Please type the verification code sent to your mobile number">
+
+        </TextView>
+
+        <com.mukesh.OtpView
+            android:id="@+id/otp_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:inputType="number"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            app:OtpItemCount="6"
+            app:OtpLineColor="@color/wishlist_desc_color"
+            app:OtpViewType="rectangle" />
+
+        <com.lappenfashion.utils.OtpEditText
+            android:id="@+id/et_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:digits="1234567890"
+            android:inputType="number"
+            android:maxLength="6"
+            android:imeOptions="actionDone"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:textIsSelectable="false"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/txtLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_35ssp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:fontFamily="@font/sfpro_regular"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:textColor="@color/white"
+            android:background="@color/colorAccent"
+            android:text="@string/verify_otp"
+            android:layout_toRightOf="@id/imgProfile">
+
+        </TextView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

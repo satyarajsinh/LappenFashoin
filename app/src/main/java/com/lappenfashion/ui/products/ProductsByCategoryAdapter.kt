@@ -1,6 +1,5 @@
 package com.lappenfashion.ui.products
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainProductsByCategory
-import com.lappenfashion.data.model.ResponseWishlist
 
 
 class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter.ViewHolder> {
@@ -28,6 +26,7 @@ class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter
 
     class ViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         var productImage = itemview.findViewById<ImageView>(R.id.imgProudctImage)
+        var imgLiked = itemview.findViewById<ImageView>(R.id.imgLiked)
         var productName = itemview.findViewById<TextView>(R.id.txtProductName)
         var productDetails = itemview.findViewById<TextView>(R.id.txtProductDetails)
         var productPrice = itemview.findViewById<TextView>(R.id.txtPrice)
@@ -48,6 +47,10 @@ class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter
 
         holder.relativeMain.setOnClickListener {
             context.goToDetails(data.get(position))
+        }
+
+        holder.imgLiked.setOnClickListener {
+            context.addToWishList(data[position]?.productId)
         }
     }
 

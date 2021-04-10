@@ -3,16 +3,14 @@ package com.lappenfashion.data.network
 import android.content.Context
 import com.example.simplemvvm.utils.Constants
 import com.google.gson.JsonObject
-import com.lappenfashion.data.model.ResponseMainCategories
+import com.lappenfashion.data.model.*
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
-import retrofit2.http.Url
+import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
 interface MyApi {
@@ -24,10 +22,62 @@ interface MyApi {
     fun getHome(): Call<JsonObject>
 
     @GET
-    fun getProducts(@Url url : String): Call<JsonObject>
+    fun getProducts(@Url url: String): Call<JsonObject>
 
     @GET(Constants.END_POINT_CATEGORY)
     fun getCategories(): Call<ResponseMainCategories>
+
+    @GET(Constants.END_POINT_GET_WISH_LIST)
+    fun getWishList(@Header("Authorization") token : String): Call<ResponseMainWishList>
+
+    @GET(Constants.END_POINT_GET_ADDRESS)
+    fun getAddress(@Header("Authorization") token : String): Call<ResponseMainAddress>
+
+    @DELETE("wish-list/{id}")
+    fun deleteWishList(@Header("Authorization") token : String,@Path("id") itemId : Int): Call<ResponseMainLogin>
+
+
+    @FormUrlEncoded
+    @POST(Constants.END_POINT_LOGIN)
+    fun login(
+        @Field("mobile_number") mobile_number: String?,
+    ): Call<ResponseMainLogin>
+
+    @FormUrlEncoded
+    @POST(Constants.END_POINT_ADD_ADDRESS)
+    fun addAddress(
+        @Header("Authorization") token : String,
+        @Field("name") name : String,
+        @Field("mobile_number") mobile_number : String,
+        @Field("pincode") pincode : String,
+        @Field("state") state : String,
+        @Field("address") address : String,
+        @Field("locality_town") locality_town : String,
+        @Field("city") city : String,
+        @Field("type") type : String,
+
+    ): Call<ResponseMainLogin>
+
+    @FormUrlEncoded
+    @POST(Constants.END_POINT_WISH_LIST)
+    fun addToWishList(
+        @Header("Authorization") token : String ,
+        @Field("product_id") product_id: String?,
+    ): Call<ResponseMainLogin>
+
+    @FormUrlEncoded
+    @POST(Constants.END_POINT_VERIFY_OTP)
+    fun verifyOtp(
+        @Field("mobile_number") mobile_number: String?,
+        @Field("otp_code") otp_code: String?,
+    ): Call<ResponseMainVerifyOtp>
+
+    @FormUrlEncoded
+    @POST(Constants.END_POINT_RESEND_OTP)
+    fun resendOTP(
+        @Field("mobile_number") mobile_number: String?,
+    ): Call<ResponseMainLogin>
+
 
     companion object {
         val cacheSize = (5 * 1024 * 1024).toLong()
@@ -45,7 +95,10 @@ interface MyApi {
                     request = if (NetworkConnection.checkConnection(mContext)!!)
                         request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
                     else
-                        request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build()
+                        request.newBuilder().header(
+                            "Cache-Control",
+                            "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7
+                        ).build()
                     chain.proceed(request)
                 }
                 .build()

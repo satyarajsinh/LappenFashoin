@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:weightSum="5">
+    android:weightSum="4">
 
     <LinearLayout
         android:id="@+id/linearHome"
@@ -46,12 +46,14 @@
         android:layout_weight="1">
 
         <ImageView
+            android:id="@+id/imgCategory"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
             android:src="@mipmap/ic_light_category">
         </ImageView>
 
         <TextView
+            android:id="@+id/txtCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sfpro_medium"
@@ -69,16 +71,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/_8sdp"
+        android:visibility="gone"
         android:gravity="center"
-        android:layout_weight="1">
+        >
 
         <ImageView
+            android:id="@+id/imgStudio"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
             android:src="@mipmap/ic_light_camera">
         </ImageView>
 
         <TextView
+            android:id="@+id/txtStudio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sfpro_medium"
@@ -100,12 +105,14 @@
         android:layout_weight="1">
 
         <ImageView
+            android:id="@+id/imgExplore"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
             android:src="@mipmap/ic_light_chart">
         </ImageView>
 
         <TextView
+            android:id="@+id/txtExplore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sfpro_medium"
@@ -127,12 +134,14 @@
         android:layout_weight="1">
 
         <ImageView
+            android:id="@+id/imgProfile"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
             android:src="@mipmap/ic_light_profile">
         </ImageView>
 
         <TextView
+            android:id="@+id/txtProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sfpro_medium"

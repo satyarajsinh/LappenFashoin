@@ -10,11 +10,13 @@ import com.example.simplemvvm.utils.Constants
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.lappenfashion.R
+import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.model.ResponseMainProductsByCategory
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.utils.Helper
 import com.lappenfashion.utils.SpacesItemDecoration
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_products_by_product_category.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.toolbar_with_like_cart.*
@@ -101,5 +103,36 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
         var intent = Intent(this@ProductsByProductCategoryActivity,ProductDetailsActivity::class.java)
         intent.putExtra("productDetail",data)
         startActivity(intent)
+    }
+
+    fun addToWishList(productId: Int?) {
+        if (NetworkConnection.checkConnection(this@ProductsByProductCategoryActivity)) {
+            Helper.showLoader(this@ProductsByProductCategoryActivity)
+            var api = MyApi(this)
+            val requestCall: Call<ResponseMainLogin> =
+                api.addToWishList("Bearer "+Prefs.getString(Constants.PREF_TOKEN, ""), productId.toString())
+
+            requestCall.enqueue(object : Callback<ResponseMainLogin> {
+                override fun onResponse(
+                    call: Call<ResponseMainLogin>,
+                    response: Response<ResponseMainLogin>
+                ) {
+                    Helper.dismissLoader()
+                    if (response.body() != null && response.body()!!.result == true) {
+                        Helper.showTost(
+                            this@ProductsByProductCategoryActivity,
+                            response.body()!!.message!!
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                    Helper.dismissLoader()
+                }
+
+            })
+        }else{
+            Helper.showTost(this@ProductsByProductCategoryActivity,getString(R.string.no_internet))
+        }
     }
 }

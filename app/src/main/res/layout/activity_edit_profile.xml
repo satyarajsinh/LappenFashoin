@@ -192,7 +192,7 @@
         android:textColor="@color/white"
         android:fontFamily="@font/sfpro_bold"
         android:text="@string/save_profile"
-        android:background="@color/pink"
+        android:background="@color/colorAccent"
         android:layout_marginTop="@dimen/_10sdp">
 
     </TextView>

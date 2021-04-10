@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
+import com.example.simplemvvm.utils.Constants
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.lappenfashion.R
@@ -32,7 +33,9 @@ import com.lappenfashion.ui.checkout.CheckoutActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
 import com.lappenfashion.utils.SpacesItemDecoration
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -65,6 +68,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setUpToolBarAction()
         initData()
 //        getCategories(localDbId)
@@ -72,6 +76,9 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
     private fun initData() {
 //        nestedScrollView.setOnTouchListener(TranslateAnimationUtil(mContext, recyclerCategories))
+
+        Log.e("Token","Token"+ Prefs.getString(Constants.PREF_TOKEN,""))
+
         dbManager = DBManager(mContext)
         dbManager.open()
 
@@ -128,25 +135,24 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
         //deals of the day
         if (homeResponse?.payload != null && homeResponse?.payload?.dealsOfTheDay!!.size > 0) {
-            linearDealsOfTheDay.visibility = View.VISIBLE
-            recyclerDealsOftheDay.layoutManager = LinearLayoutManager(
-                mContext,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            recyclerDealsOftheDay.setHasFixedSize(true)
-            var dealsOfTheDayAdapter = DealsOfTheDayAdapter(
-                mContext,
-                homeResponse?.payload?.dealsOfTheDay!!
-            )
-            recyclerDealsOftheDay.adapter = dealsOfTheDayAdapter
-
+                rootView.linearDealsOfTheDay.visibility = View.VISIBLE
+                rootView.recyclerDealsOftheDay.layoutManager = LinearLayoutManager(
+                    mContext,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            rootView.recyclerDealsOftheDay.setHasFixedSize(true)
+                var dealsOfTheDayAdapter = DealsOfTheDayAdapter(
+                    mContext,
+                    homeResponse?.payload?.dealsOfTheDay!!
+                )
+            rootView.recyclerDealsOftheDay.adapter = dealsOfTheDayAdapter
         } else {
-            linearDealsOfTheDay.visibility = View.GONE
+            rootView.linearDealsOfTheDay.visibility = View.GONE
         }
 
         //second categories
-        recyclerCategoriesSecond.setLayoutManager(
+        rootView.recyclerCategoriesSecond.setLayoutManager(
             GridLayoutManager(
                 mContext,
                 2
@@ -154,85 +160,85 @@ class HomeFragment : Fragment(),CategoriesInterface {
         )
 
         var spaceIterator : SpacesItemDecoration = SpacesItemDecoration(10)
-        recyclerCategoriesSecond.addItemDecoration(spaceIterator);
-        recyclerCategoriesSecond.setHasFixedSize(true)
+        rootView.recyclerCategoriesSecond.addItemDecoration(spaceIterator);
+        rootView.recyclerCategoriesSecond.setHasFixedSize(true)
 
 
         var categoriesSecondAdapter = CategoriesSecondAdapter(
             mContext,
             homeResponse?.payload?.dealsOfTheDay!!
         )
-        recyclerCategoriesSecond.adapter = categoriesSecondAdapter
+        rootView.recyclerCategoriesSecond.adapter = categoriesSecondAdapter
 
 
         //banners
         if (homeResponse?.payload != null && homeResponse?.payload?.exploreList!!.size > 0) {
-            linearViewPager.visibility = View.VISIBLE
+            rootView.linearViewPager.visibility = View.VISIBLE
             loadBanner(homeResponse!!.payload?.exploreList!!)
         } else {
-            linearViewPager.visibility = View.GONE
+            rootView.linearViewPager.visibility = View.GONE
         }
 
 
         //trending images
-        recyclerTrending.setLayoutManager(
+        rootView.recyclerTrending.setLayoutManager(
             GridLayoutManager(
                 mContext,
                 3
             )
         )
-        recyclerTrending.setHasFixedSize(true)
+        rootView.recyclerTrending.setHasFixedSize(true)
 
 
         var trendingAdapter = TrendingAdapter(
             mContext,
             homeResponse.payload?.trending
         )
-        recyclerTrending.adapter = trendingAdapter
+        rootView.recyclerTrending.adapter = trendingAdapter
 
 
         //offer banners
-        recyclerOffers.layoutManager = LinearLayoutManager(
+        rootView.recyclerOffers.layoutManager = LinearLayoutManager(
             mContext,
             LinearLayoutManager.VERTICAL,
             false
         )
-        recyclerOffers.setHasFixedSize(true)
+        rootView.recyclerOffers.setHasFixedSize(true)
         var offersAdapter = OffersAdapter(
             mContext,
             homeResponse.payload?.offerPoster
         )
-        recyclerOffers.adapter = offersAdapter
+        rootView.recyclerOffers.adapter = offersAdapter
 
         //Accessories
-        recyclerAccessories.setLayoutManager(
+        rootView.recyclerAccessories.setLayoutManager(
             GridLayoutManager(
                 mContext,
                 3
             )
         )
-        recyclerAccessories.setHasFixedSize(true)
+        var spaceIterator1 : SpacesItemDecoration = SpacesItemDecoration(10)
+        rootView.recyclerAccessories.addItemDecoration(spaceIterator1);
+        rootView.recyclerAccessories.setHasFixedSize(true)
 
         var accessoriesAdapter = AccessoriesAdapter(
             mContext,
             homeResponse.payload?.accessories
         )
-        recyclerAccessories.adapter = accessoriesAdapter
+        rootView.recyclerAccessories.adapter = accessoriesAdapter
 
         //other banners
-        recyclerOtherOffers.layoutManager = LinearLayoutManager(
+        rootView.recyclerOtherOffers.layoutManager = LinearLayoutManager(
             mContext,
             LinearLayoutManager.VERTICAL,
             false
         )
-        recyclerOtherOffers.setHasFixedSize(true)
+        rootView.recyclerOtherOffers.setHasFixedSize(true)
         var otherOffersAdapter = OtherOffersAdapter(
             mContext,
             homeResponse.payload?.otherPoster
         )
-        recyclerOtherOffers.adapter = otherOffersAdapter
-
-
+        rootView.recyclerOtherOffers.adapter = otherOffersAdapter
 
     }
 
@@ -251,7 +257,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
                 if (response.body() != null) {
 
                     if (localDbId != "") {
-                        dbManager.delete(id.toLong())
+                        dbManager.delete(localDbId.toLong())
                     }
 
                     dbManager.insert(response.body().toString())
@@ -282,14 +288,14 @@ class HomeFragment : Fragment(),CategoriesInterface {
     }
 
     private fun loadBanner(body: List<ResponseMainHome.Payload.Explore?>) {
-        mPager!!.adapter = SlidingImageAdapter(mContext, body)
+        rootView.mPager!!.adapter = SlidingImageAdapter(mContext, body)
 
-        indicator.setViewPager(mPager)
+        rootView.indicator.setViewPager(rootView.mPager)
 
         val density = resources.displayMetrics.density
 
         //Set circle indicator radius
-        indicator.setRadius(5 * density)
+        rootView.indicator.setRadius(5 * density)
 
         NUM_PAGES = body.size
 
@@ -299,7 +305,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
             if (currentPage == NUM_PAGES) {
                 currentPage = 0
             }
-            mPager!!.setCurrentItem(currentPage++, true)
+            rootView.mPager!!.setCurrentItem(currentPage++, true)
         }
         /*  val swipeTimer = Timer()
           swipeTimer.schedule(object : TimerTask() {
@@ -309,7 +315,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
           }, 3000, 3000)*/
 
         // Pager listener over indicator
-        indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        rootView.indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageSelected(position: Int) {
                 currentPage = position

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_grey">
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:fontFamily="@font/sfpro_regular"
+        android:textColor="@color/black"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/txtType"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:background="@color/dark_grey"
+        android:layout_alignParentRight="true"
+        android:fontFamily="@font/sfpro_regular"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:layout_below="@id/txtName"
+        android:fontFamily="@font/sfpro_regular"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtLocality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:layout_below="@id/txtAddress"
+        android:fontFamily="@font/sfpro_regular"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:layout_below="@id/txtLocality"
+        android:fontFamily="@font/sfpro_regular"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtPincode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/txtCity"
+        android:layout_below="@id/txtLocality"
+        android:fontFamily="@font/sfpro_regular"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:layout_below="@id/txtPincode"
+        android:fontFamily="@font/sfpro_regular"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:layout_below="@id/txtState"
+        android:fontFamily="@font/sfpro_regular"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_below="@+id/txtNumber"
+        android:background="@color/dark_grey">
+
+    </View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/txtNumber">
+
+        <TextView
+            android:id="@+id/txtEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:text="Edit"
+            android:textColor="@color/colorAccent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_below="@id/txtState"
+            android:fontFamily="@font/sfpro_regular"
+            android:textSize="@dimen/_12ssp">
+
+        </TextView>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/dark_grey">
+
+        </View>
+
+        <TextView
+            android:id="@+id/txtRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:text="Remove"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:layout_below="@id/txtState"
+            android:fontFamily="@font/sfpro_regular"
+            android:textSize="@dimen/_12ssp">
+
+        </TextView>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

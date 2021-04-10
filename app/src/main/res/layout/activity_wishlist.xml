@@ -51,7 +51,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerWishList"
-        android:background="@color/background"
         android:layout_below="@id/relativeToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,5 +58,44 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <RelativeLayout
+        android:id="@+id/relativeNoData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/txtNoDataFound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_data_found"
+            android:paddingLeft="@dimen/_10sdp"
+            android:textSize="@dimen/_14ssp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/sfpro_medium">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtStartShopping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtNoDataFound"
+            android:layout_marginLeft="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/sfpro_medium"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="Start Shopping"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp">
+
+        </TextView>
+
+    </RelativeLayout>
 
 </RelativeLayout>

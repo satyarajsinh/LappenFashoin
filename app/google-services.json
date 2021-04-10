@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "195779891446",
+    "project_id": "lappen-fashion-c3dab",
+    "storage_bucket": "lappen-fashion-c3dab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195779891446:android:0e622ce38d4c8d6da99cd7",
+        "android_client_info": {
+          "package_name": "com.lappenfashion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195779891446-b4ai5goorssm389ps3r14cggihng9mmc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lappenfashion",
+            "certificate_hash": "cec5cf4937aea08819d98bda7d7a47d7a70f0cde"
+          }
+        },
+        {
+          "client_id": "195779891446-kfmgj5vjhfbp5s2qgifh629smq38tc7r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgXestX639oNyDVT6XlgdV7pf88gxmrSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195779891446-kfmgj5vjhfbp5s2qgifh629smq38tc7r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

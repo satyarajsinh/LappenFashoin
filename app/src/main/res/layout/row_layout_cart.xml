@@ -80,6 +80,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner_background"
             android:gravity="center"
+            android:visibility="gone"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_toRightOf="@id/spinnerSize"
             android:layout_marginTop="@dimen/_5sdp"
@@ -108,8 +109,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner_background"
             android:layout_marginTop="@dimen/_5sdp"
-            android:paddingLeft="@dimen/_10sdp"
-            android:paddingRight="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
             android:layout_below="@id/spinnerSize">
 
             <ImageView
@@ -117,6 +118,7 @@
                 android:layout_centerVertical="true"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
+                android:padding="@dimen/_5sdp"
                 android:src="@drawable/ic_plus">
 
             </ImageView>
@@ -126,11 +128,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
+                android:fontFamily="@font/sfpro_medium"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_toRightOf="@id/imgAdd"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_10ssp"
                 android:padding="@dimen/_8sdp">
 
             </TextView>
@@ -141,6 +144,7 @@
                 android:layout_toRightOf="@id/txtQty"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
+                android:padding="@dimen/_5sdp"
                 android:src="@drawable/ic_minus">
 
             </ImageView>
@@ -159,8 +163,8 @@
         android:fontFamily="@font/sfpro_regular"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_below="@id/imgProductImage"
-        android:textColor="@color/green"
-        android:background="@drawable/border_green"
+        android:textColor="@color/colorAccent"
+        android:background="@drawable/border_accent"
         android:text="@string/remove">
 
     </TextView>
@@ -179,8 +183,8 @@
         android:layout_toRightOf="@id/txtRemove"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_below="@id/imgProductImage"
-        android:textColor="@color/green"
-        android:background="@drawable/border_green"
+        android:textColor="@color/colorAccent"
+        android:background="@drawable/border_accent"
         android:text="@string/move_to_wishlist">
 
     </TextView>
