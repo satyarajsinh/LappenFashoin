@@ -8,6 +8,8 @@
         android:id="@+id/relativeToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="@dimen/_2sdp"
         android:padding="@dimen/_8sdp">
 
         <TextView
@@ -19,7 +21,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/imgLiked"
-            android:fontFamily="@font/sfpro_medium"
+            android:fontFamily="@font/poppins_medium"
             android:text="Categories">
 
         </TextView>

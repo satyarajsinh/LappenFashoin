@@ -29,6 +29,7 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
         var productName = itemview.findViewById<TextView>(R.id.txtProductName)
         var productDetails = itemview.findViewById<TextView>(R.id.txtProductDetails)
         var productPrice = itemview.findViewById<TextView>(R.id.txtPrice)
+        var txtMoveToBag = itemview.findViewById<TextView>(R.id.txtMoveToBag)
 
     }
 
@@ -48,6 +49,10 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
 
         holder.imgClose.setOnClickListener {
             context.removeFromWishList(data?.get(position),position)
+        }
+
+        holder.txtMoveToBag.setOnClickListener {
+            context.addToCart(data?.get(position),position)
         }
     }
 

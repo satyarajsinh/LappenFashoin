@@ -21,7 +21,7 @@
         android:background="@drawable/border_grey"
         android:textSize="@dimen/_10ssp"
         android:visibility="gone"
-        android:fontFamily="@font/sfpro_medium"
+        android:fontFamily="@font/poppins_medium"
         android:padding="@dimen/_8sdp"
         android:textColor="@color/black">
 

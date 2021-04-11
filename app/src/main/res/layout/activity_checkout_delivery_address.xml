@@ -8,15 +8,16 @@
         android:id="@+id/relativeToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/_8sdp"
-        android:background="@drawable/bottom_shadow">
+        android:padding="@dimen/_8sdp"
+        android:background="@color/white"
+        android:elevation="@dimen/_2sdp">
 
         <ImageView
             android:id="@+id/imgBack"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:paddingLeft="@dimen/_8sdp"
-            android:paddingRight="@dimen/_8sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:padding="@dimen/_5sdp"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_light_arrow">
 
         </ImageView>
@@ -27,9 +28,9 @@
             android:text="@string/checkout"
             android:paddingLeft="@dimen/_10sdp"
             android:textSize="@dimen/_14ssp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_centerVertical="true"
             android:textColor="@color/black"
-            android:fontFamily="@font/sfpro_medium"
+            android:fontFamily="@font/poppins_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -40,6 +41,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/txtNext"
         android:layout_below="@id/relativeToolbar">
 
         <LinearLayout
@@ -89,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:fontFamily="@font/sfpro_regular"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="@string/delivery">
 
                     </TextView>
@@ -136,10 +138,10 @@
                         android:layout_below="@id/imgSecond"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/dark_grey"
+                        android:textColor="@color/black"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:fontFamily="@font/sfpro_regular"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="@string/address">
 
                     </TextView>
@@ -180,7 +182,7 @@
                         android:textColor="@color/dark_grey"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:fontFamily="@font/sfpro_regular"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="Payments">
 
                     </TextView>
@@ -197,8 +199,9 @@
                 android:padding="@dimen/_10sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="center_vertical"
                     android:src="@mipmap/ic_checkbox">
 
                 </ImageView>
@@ -208,7 +211,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/sfpro_medium"
+                    android:fontFamily="@font/poppins_medium"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_gravity="center_vertical"
                     android:text="@string/billing_address_is_the_same_as_delivery_address">
@@ -229,7 +232,7 @@
                     android:text="@string/street_1"
                     android:textSize="@dimen/_12ssp"
                     android:paddingLeft="@dimen/_3sdp"
-                    android:fontFamily="@font/sfpro_medium">
+                    android:fontFamily="@font/poppins_regular">
 
                 </TextView>
 
@@ -239,10 +242,9 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="text"
-                    android:fontFamily="@font/sfpro_medium"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/black"
-                    android:paddingBottom="@dimen/_15sdp">
+                    android:paddingBottom="@dimen/_10sdp">
 
                 </EditText>
 
@@ -253,7 +255,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textSize="@dimen/_12ssp"
                     android:paddingLeft="@dimen/_3sdp"
-                    android:fontFamily="@font/sfpro_medium">
+                    android:fontFamily="@font/poppins_regular">
 
                 </TextView>
 
@@ -263,10 +265,9 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="text"
-                    android:fontFamily="@font/sfpro_medium"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/black"
-                    android:paddingBottom="@dimen/_20sdp">
+                    android:paddingBottom="@dimen/_10sdp">
 
                 </EditText>
 
@@ -277,7 +278,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textSize="@dimen/_12ssp"
                     android:paddingLeft="@dimen/_3sdp"
-                    android:fontFamily="@font/sfpro_medium">
+                    android:fontFamily="@font/poppins_regular">
 
                 </TextView>
 
@@ -287,10 +288,9 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="text"
-                    android:fontFamily="@font/sfpro_medium"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/black"
-                    android:paddingBottom="@dimen/_20sdp">
+                    android:paddingBottom="@dimen/_10sdp">
 
                 </EditText>
 
@@ -313,7 +313,7 @@
                             android:layout_marginTop="@dimen/_10sdp"
                             android:textSize="@dimen/_12ssp"
                             android:paddingLeft="@dimen/_3sdp"
-                            android:fontFamily="@font/sfpro_medium">
+                            android:fontFamily="@font/poppins_regular">
 
                         </TextView>
 
@@ -323,10 +323,9 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:fontFamily="@font/sfpro_medium"
-                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/black"
-                            android:paddingBottom="@dimen/_20sdp">
+                            android:paddingBottom="@dimen/_10sdp">
 
                         </EditText>
 
@@ -345,7 +344,7 @@
                             android:layout_marginTop="@dimen/_10sdp"
                             android:textSize="@dimen/_12ssp"
                             android:paddingLeft="@dimen/_3sdp"
-                            android:fontFamily="@font/sfpro_medium">
+                            android:fontFamily="@font/poppins_regular">
 
                         </TextView>
 
@@ -355,10 +354,9 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionDone"
                             android:inputType="text"
-                            android:fontFamily="@font/sfpro_medium"
-                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/black"
-                            android:paddingBottom="@dimen/_20sdp">
+                            android:paddingBottom="@dimen/_10sdp">
 
                         </EditText>
 
@@ -382,6 +380,7 @@
         android:layout_margin="@dimen/_10sdp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:fontFamily="@font/poppins_medium"
         android:paddingLeft="@dimen/_30sdp"
         android:paddingRight="@dimen/_30sdp"
         android:paddingTop="@dimen/_10sdp"
@@ -392,9 +391,9 @@
         android:id="@+id/txtBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/border_accent"
+        android:background="@drawable/rounded_border_grey"
         android:text="@string/back"
-        android:fontFamily="@font/sfpro_medium"
+        android:fontFamily="@font/poppins_medium"
         android:layout_margin="@dimen/_10sdp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"

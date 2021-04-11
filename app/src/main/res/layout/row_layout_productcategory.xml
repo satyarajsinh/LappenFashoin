@@ -12,7 +12,7 @@
         android:paddingTop="@dimen/_5sdp"
         android:paddingBottom="@dimen/_5sdp"
         android:layout_marginLeft="@dimen/_10sdp"
-        android:fontFamily="@font/sfpro_regular"
+        android:fontFamily="@font/poppins_regular"
         android:layout_centerVertical="true"
         android:textSize="@dimen/_12ssp">
     </TextView>

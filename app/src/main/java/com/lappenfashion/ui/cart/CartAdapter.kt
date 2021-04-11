@@ -5,23 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
-import com.lappenfashion.data.model.ResponseCart
-import com.lappenfashion.data.model.ResponseMainAddress
+import com.lappenfashion.data.model.ResponseMainCart
 
 
 class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
     lateinit var context : Context
-    lateinit var data : ArrayList<ResponseCart>
+    var data : ArrayList<ResponseMainCart.Payload?>?
 
     constructor(
         context: Context,
-        advertisementList: ArrayList<ResponseCart>,
+        advertisementList: ArrayList<ResponseMainCart.Payload?>?,
     ) {
         this.context = context
         this.data = advertisementList
@@ -43,10 +40,10 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        Glide.with(context).load(data[position].image).into(holder.productImage)
+        Glide.with(context).load(data!![position]?.product?.mainImageName).into(holder.productImage)
 
-        holder.productName.text = data[position].productName
-        holder.productPrice.text = data[position].price
+        holder.productName.text = data!![position]?.product?.productName
+        holder.productPrice.text = "₹"+data!![position]?.amount.toString()
 
         holder.imgAdd.setOnClickListener {
             holder.txtQty.text= (holder.txtQty.text.toString().toInt()+1).toString()
@@ -60,7 +57,7 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return data?.size!!
     }
 
 }

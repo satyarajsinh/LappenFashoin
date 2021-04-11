@@ -16,9 +16,10 @@
         android:layout_gravity="center_vertical"
         android:paddingLeft="@dimen/_15sdp"
         android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_20sdp"
-        android:fontFamily="@font/sfpro_bold"
-        android:background="@drawable/bottom_shadow"
+        android:background="@color/white"
+        android:elevation="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_medium"
         android:text="@string/profile">
 
     </TextView>
@@ -37,15 +38,16 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:padding="@dimen/_10sdp">
 
-                <com.makeramen.roundedimageview.RoundedImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgProfile"
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_100sdp"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:src="@mipmap/ic_user_placeholder">
 
-                </com.makeramen.roundedimageview.RoundedImageView>
+                </de.hdodenhof.circleimageview.CircleImageView>
 
                 <RelativeLayout
                     android:id="@+id/relativeProfile"
@@ -60,7 +62,7 @@
                         android:id="@+id/txtSignup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_bold"
+                        android:fontFamily="@font/poppins_medium"
                         android:background="@drawable/rounded_corner_green"
                         android:textAllCaps="true"
                         android:layout_marginLeft="@dimen/_20sdp"
@@ -78,7 +80,7 @@
                         android:id="@+id/txtName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_bold"
+                        android:fontFamily="@font/poppins_medium"
                         android:paddingLeft="@dimen/_20sdp"
                         android:text="David Sample"
                         android:textColor="@color/black"
@@ -92,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/txtName"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:fontFamily="@font/sfpro_medium"
+                        android:fontFamily="@font/poppins_medium"
                         android:paddingLeft="@dimen/_20sdp"
                         android:text="david@gmail.com"
                         android:textColor="@color/black"
@@ -112,7 +114,7 @@
                     android:gravity="center"
                     android:layout_marginLeft="@dimen/_10ssp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:fontFamily="@font/sfpro_regular"
+                    android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/white"
                     android:background="@color/colorAccent"
                     android:text="Login / Signup"
@@ -155,10 +157,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/black"
                     android:layout_toLeftOf="@id/imgOne1"
-                    android:fontFamily="@font/sfpro_regular"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/imgOne"
                     android:text="@string/edit_profile">
@@ -200,10 +202,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/black"
                     android:layout_toLeftOf="@id/imgtwo1"
-                    android:fontFamily="@font/sfpro_regular"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/imgtwo"
                     android:text="@string/shipping_address">
@@ -248,7 +250,7 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@drawable/rounded_corner_accent"
-                    android:fontFamily="@font/sfpro_bold"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/txtWishList"
                     android:text="New"/>
@@ -258,9 +260,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/sfpro_regular"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/imgThree"
                     android:text="Wishlist">
@@ -302,10 +304,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/black"
                     android:layout_toLeftOf="@id/imgFour1"
-                    android:fontFamily="@font/sfpro_regular"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/imgFour"
                     android:text="@string/track_order">
@@ -346,10 +348,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/black"
                     android:layout_toLeftOf="@id/imgFive1"
-                    android:fontFamily="@font/sfpro_regular"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/imgFive"
                     android:text="@string/cards">
@@ -381,9 +383,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/sfpro_regular"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/imgSix"
                     android:text="@string/logout">

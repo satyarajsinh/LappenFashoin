@@ -3,14 +3,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/border_grey">
+    android:layout_marginTop="@dimen/_10sdp"
+    android:background="@drawable/border_light_grey">
 
     <TextView
         android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
-        android:fontFamily="@font/sfpro_regular"
+        android:fontFamily="@font/poppins_regular"
         android:textColor="@color/black"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/txtType"
@@ -25,7 +26,7 @@
         android:padding="@dimen/_10sdp"
         android:background="@color/dark_grey"
         android:layout_alignParentRight="true"
-        android:fontFamily="@font/sfpro_regular"
+        android:fontFamily="@font/poppins_regular"
         android:textColor="@color/black"
         android:textSize="@dimen/_12ssp">
 
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/_10sdp"
         android:layout_below="@id/txtName"
-        android:fontFamily="@font/sfpro_regular"
+        android:fontFamily="@font/poppins_regular"
         android:textSize="@dimen/_12ssp">
 
     </TextView>
@@ -48,7 +49,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/_10sdp"
         android:layout_below="@id/txtAddress"
-        android:fontFamily="@font/sfpro_regular"
+        android:fontFamily="@font/poppins_regular"
         android:textSize="@dimen/_12ssp">
 
     </TextView>
@@ -59,7 +60,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/_10sdp"
         android:layout_below="@id/txtLocality"
-        android:fontFamily="@font/sfpro_regular"
+        android:fontFamily="@font/poppins_regular"
         android:textSize="@dimen/_12ssp">
 
     </TextView>
@@ -70,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/txtCity"
         android:layout_below="@id/txtLocality"
-        android:fontFamily="@font/sfpro_regular"
+        android:fontFamily="@font/poppins_regular"
         android:textSize="@dimen/_12ssp">
 
     </TextView>
@@ -81,7 +82,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/_10sdp"
         android:layout_below="@id/txtPincode"
-        android:fontFamily="@font/sfpro_regular"
+        android:fontFamily="@font/poppins_regular"
         android:textSize="@dimen/_12ssp">
 
     </TextView>
@@ -94,7 +95,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:layout_below="@id/txtState"
-        android:fontFamily="@font/sfpro_regular"
+        android:fontFamily="@font/poppins_regular"
         android:textSize="@dimen/_12ssp">
 
     </TextView>
@@ -103,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
         android:layout_below="@+id/txtNumber"
-        android:background="@color/dark_grey">
+        android:background="@color/dark_light_grey">
 
     </View>
     <LinearLayout
@@ -122,7 +123,7 @@
             android:gravity="center"
             android:layout_weight="1"
             android:layout_below="@id/txtState"
-            android:fontFamily="@font/sfpro_regular"
+            android:fontFamily="@font/poppins_medium"
             android:textSize="@dimen/_12ssp">
 
         </TextView>
@@ -130,7 +131,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/dark_grey">
+            android:background="@color/dark_light_grey">
 
         </View>
 
@@ -144,7 +145,7 @@
             android:gravity="center"
             android:textColor="@color/colorAccent"
             android:layout_below="@id/txtState"
-            android:fontFamily="@font/sfpro_regular"
+            android:fontFamily="@font/poppins_medium"
             android:textSize="@dimen/_12ssp">
 
         </TextView>

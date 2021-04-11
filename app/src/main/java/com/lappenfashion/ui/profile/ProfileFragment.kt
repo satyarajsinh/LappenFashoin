@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.simplemvvm.utils.Constants
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.lappenfashion.R
@@ -21,6 +22,9 @@ import com.lappenfashion.ui.address.AddressListingActivity
 import com.lappenfashion.ui.editProfile.EditProfileActivity
 import com.lappenfashion.ui.otp.OTPActivity
 import com.pixplicity.easyprefs.library.Prefs
+import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.activity_edit_profile.imgProfile
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -95,8 +99,7 @@ class ProfileFragment : Fragment() {
         }
 
         rootView.relativeTrackOrder.setOnClickListener {
-            var intent = Intent(mContext,OTPActivity::class.java)
-            startActivity(intent)
+
         }
 
         rootView.relativeEditProfile.setOnClickListener {
@@ -180,6 +183,19 @@ class ProfileFragment : Fragment() {
         }else{
             rootView.relativeProfile.visibility = View.GONE
             rootView.txtLogin.visibility = View.VISIBLE
+        }
+
+        if(Prefs.getString(Constants.PREF_PROFILE_PICTURE,"") != "") {
+            Glide.with(mContext)
+                .load(Prefs.getString(Constants.PREF_PROFILE_PICTURE, "")).into(rootView.imgProfile)
+        }
+
+        if(Prefs.getString(Constants.PREF_PROFILE_FULL_NAME,"") != "") {
+            rootView.txtName.setText(Prefs.getString(Constants.PREF_PROFILE_FULL_NAME,""))
+        }
+
+        if(Prefs.getString(Constants.PREF_PROFILE_EMAIL,"") != "") {
+            rootView.txtEmail.setText(Prefs.getString(Constants.PREF_PROFILE_EMAIL,""))
         }
 
     }

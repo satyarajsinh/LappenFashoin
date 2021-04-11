@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainAddress
+import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.utils.Helper
@@ -24,7 +25,7 @@ import retrofit2.Response
 
 class AddressListingActivity : AppCompatActivity() {
 
-    lateinit var imageView : ImageView
+    lateinit var imageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,24 +42,42 @@ class AddressListingActivity : AppCompatActivity() {
         if (NetworkConnection.checkConnection(this)) {
             Helper.showLoader(this@AddressListingActivity)!!
             getAddress()
-        }else {
+        } else {
             Helper.showTost(this, "No internet connection")
         }
 
         txtAddAddress.setOnClickListener {
-            var intent = Intent(this@AddressListingActivity,AddAddressActivity::class.java)
-            startActivity(intent)
+            var intent = Intent(this@AddressListingActivity, AddAddressActivity::class.java)
+            startActivityForResult(intent,100)
         }
 
-        imageView.setOnClickListener{
+        txtAddress.setOnClickListener {
+            var intent = Intent(this@AddressListingActivity, AddAddressActivity::class.java)
+            startActivityForResult(intent,100)
+        }
+
+        imageView.setOnClickListener {
             finish()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 100){
+            finish()
+            overridePendingTransition(0, 0)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
         }
     }
 
     private fun getAddress() {
         var api = MyApi(this)
-        val requestCall: Call<ResponseMainAddress> = api.getAddress("Bearer "+ Prefs.getString(
-            Constants.PREF_TOKEN, ""))
+        val requestCall: Call<ResponseMainAddress> = api.getAddress(
+            "Bearer " + Prefs.getString(
+                Constants.PREF_TOKEN, ""
+            )
+        )
 
         requestCall.enqueue(object : Callback<ResponseMainAddress> {
             override fun onResponse(
@@ -66,20 +85,25 @@ class AddressListingActivity : AppCompatActivity() {
                 response: Response<ResponseMainAddress>
             ) {
                 Helper.dismissLoader()
-                if (response.body() != null && response.body()!!.result == true && response.body()!!.payload?.size!! >0) {
-                    txtAddAddress.visibility = View.GONE
+                if (response.body() != null && response.body()!!.result == true && response.body()!!.payload?.size!! > 0) {
+                    linearAddress.visibility = View.GONE
                     recyclerAddress.visibility = View.VISIBLE
-
+                    txtAddress.visibility = View.VISIBLE
                     recyclerAddress.layoutManager =
-                        LinearLayoutManager(this@AddressListingActivity, LinearLayoutManager.VERTICAL, false)
+                        LinearLayoutManager(
+                            this@AddressListingActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
                     var adapter = AddressAdapter(
                         this@AddressListingActivity,
                         response.body()!!.payload as ArrayList<ResponseMainAddress.Payload?>?
                     )
                     recyclerAddress.adapter = adapter
 
-                }else{
-                    txtAddAddress.visibility = View.VISIBLE
+                } else {
+                    txtAddress.visibility = View.GONE
+                    linearAddress.visibility = View.VISIBLE
                     recyclerAddress.visibility = View.GONE
                 }
             }
@@ -89,5 +113,53 @@ class AddressListingActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    fun removeAddress(addressId: Int?) {
+        if (NetworkConnection.checkConnection(this)) {
+            Helper.showLoader(this@AddressListingActivity)!!
+
+            var api = MyApi(this)
+            val requestCall: Call<ResponseMainLogin> = api.deleteAddress(
+                "Bearer " + Prefs.getString(
+                    Constants.PREF_TOKEN, ""
+                ), addressId!!
+            )
+
+            requestCall.enqueue(object : Callback<ResponseMainLogin> {
+                override fun onResponse(
+                    call: Call<ResponseMainLogin>,
+                    response: Response<ResponseMainLogin>
+                ) {
+                    Helper.dismissLoader()
+                    if (response.body() != null && response.body()!!.result == true) {
+                        Helper.showTost(this@AddressListingActivity, response.body()!!.message!!)
+                        finish()
+                        overridePendingTransition(0, 0)
+                        startActivity(intent)
+                        overridePendingTransition(0, 0)
+                    } else {
+                        Helper.showTost(this@AddressListingActivity, response.body()!!.message!!)
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                    Helper.dismissLoader()
+                }
+            })
+        } else {
+            Helper.showTost(this, resources.getString(R.string.no_internet))
+        }
+
+    }
+
+    override fun onBackPressed() {
+
+    }
+
+    fun editAddress(address: ResponseMainAddress.Payload?) {
+        var intent = Intent(this@AddressListingActivity,AddAddressActivity::class.java)
+        intent.putExtra("address",address)
+        startActivityForResult(intent,100)
     }
 }

@@ -39,6 +39,8 @@ class WishListActivity : AppCompatActivity() {
         if (NetworkConnection.checkConnection(this@WishListActivity)) {
             Helper.showLoader(this@WishListActivity)
             getWishList()
+        }else{
+            Helper.showTost(this@WishListActivity,resources.getString(R.string.no_internet))
         }
     }
 
@@ -112,5 +114,37 @@ class WishListActivity : AppCompatActivity() {
             Helper.showTost(this@WishListActivity,getString(R.string.no_internet))
         }
 
+    }
+
+    fun addToCart(data: ResponseMainWishList.Payload?, position: Int) {
+        if (NetworkConnection.checkConnection(this@WishListActivity)) {
+            Helper.showLoader(this@WishListActivity)
+            var api = MyApi(this@WishListActivity)
+            val requestCall: Call<ResponseMainLogin> = api.addToCart("Bearer "+ Prefs.getString(
+                Constants.PREF_TOKEN, ""), data?.product?.productId.toString(),"1",data?.product?.salePrice.toString()
+            )
+
+            requestCall.enqueue(object : Callback<ResponseMainLogin> {
+                override fun onResponse(
+                    call: Call<ResponseMainLogin>,
+                    response: Response<ResponseMainLogin>
+                ) {
+                    Helper.dismissLoader()
+                    if (response.body() != null && response.body()!!.result == true) {
+                        adapter.removeData(position)
+                        Helper.showTost(this@WishListActivity, response.body()!!.message!!)
+                    }else{
+                        Helper.showTost(this@WishListActivity, response.body()!!.message!!)
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                    Helper.dismissLoader()
+                }
+
+            })
+        }else{
+            Helper.showTost(this@WishListActivity,getString(R.string.no_internet))
+        }
     }
 }

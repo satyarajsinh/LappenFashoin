@@ -60,13 +60,16 @@ dependencies {
     implementation Dependencies.navigation_fragment
     implementation Dependencies.navigation_ui
     implementation Dependencies.rounded_imageview
+    implementation Dependencies.circle_imageview
     implementation Dependencies.retrofit
     implementation Dependencies.retrofit_gson
     implementation Dependencies.retrofit_rxjava
     implementation Dependencies.preference
     implementation Dependencies.seekbar
+    implementation Dependencies.imagePicker
     implementation Dependencies.firebaseAnalytics
     implementation Dependencies.otp
+    implementation Dependencies.datePicker
     implementation Dependencies.firebaseCrashlytics
     implementation platform(Dependencies.firebaseBom)
 

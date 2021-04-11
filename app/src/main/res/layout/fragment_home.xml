@@ -60,6 +60,7 @@
                         android:layout_marginLeft="2dp"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="2dp"
+                        android:layout_marginRight="2dp"
                         android:paddingRight="2dp" />
 
                     <com.viewpagerindicator.CirclePageIndicator
@@ -86,7 +87,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_bold"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="@string/deals_of_the_day"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp">
@@ -115,7 +116,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_bold"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="@string/categories"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp">
@@ -144,7 +145,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_bold"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="@string/trending"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp">
@@ -173,7 +174,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_bold"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="@string/you_may_also_like"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp">
@@ -202,7 +203,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_bold"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="@string/accessories_for_you"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp">
@@ -231,7 +232,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sfpro_bold"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="@string/you_may_also_like"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp">

@@ -2,6 +2,7 @@ package com.lappenfashion.data.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ResponseMainAddress(
     @SerializedName("message")
@@ -10,7 +11,7 @@ data class ResponseMainAddress(
     var payload: List<Payload?>?,
     @SerializedName("result")
     var result: Boolean?
-) {
+) : Serializable {
     data class Payload(
         @SerializedName("address")
         var address: String?,
@@ -30,5 +31,5 @@ data class ResponseMainAddress(
         var state: String?,
         @SerializedName("type")
         var type: String?
-    )
+    ): Serializable
 }

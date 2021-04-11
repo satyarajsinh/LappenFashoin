@@ -11,25 +11,89 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
         android:padding="@dimen/_10sdp"
+        android:layout_above="@id/txtAddress"
         android:scrollbars="none">
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <LinearLayout
+        android:id="@+id/linearAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:alpha="0.8"
+            android:src="@mipmap/map">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_35ssp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:text="Save Your Address Now">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_35ssp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/wishlist_desc_color"
+            android:textSize="@dimen/_12ssp"
+            android:text="Add your home and office addresses and enjoy faster checkout">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtAddAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center"
+            android:visibility="visible"
+            android:layout_marginLeft="@dimen/_35ssp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:textColor="@color/white"
+            android:background="@color/colorAccent"
+            android:text="@string/add_address">
+
+        </TextView>
+
+    </LinearLayout>
+
     <TextView
-        android:id="@+id/txtAddAddress"
+        android:id="@+id/txtAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
         android:gravity="center"
         android:visibility="gone"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="@dimen/_35ssp"
-        android:layout_marginRight="@dimen/_35sdp"
+        android:layout_alignParentBottom="true"
         android:fontFamily="@font/sfpro_regular"
-        android:layout_marginTop="@dimen/_30sdp"
         android:textColor="@color/white"
         android:background="@color/colorAccent"
         android:text="@string/add_address">
 
     </TextView>
+
+
 </RelativeLayout>

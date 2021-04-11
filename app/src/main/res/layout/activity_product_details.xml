@@ -60,7 +60,7 @@
                     android:padding="@dimen/_10sdp"
                     android:textSize="@dimen/_16ssp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/sfpro_bold">
+                    android:fontFamily="@font/poppins_medium">
 
                 </TextView>
 
@@ -71,7 +71,7 @@
                     android:paddingLeft="@dimen/_10sdp"
                     android:textSize="@dimen/_14ssp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/sfpro_bold">
+                    android:fontFamily="@font/poppins_medium">
 
                 </TextView>
 
@@ -91,7 +91,7 @@
                     android:padding="@dimen/_10sdp"
                     android:textSize="@dimen/_14ssp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/sfpro_bold">
+                    android:fontFamily="@font/poppins_medium">
 
                 </TextView>
 
@@ -114,7 +114,7 @@
                     android:padding="@dimen/_10sdp"
                     android:textSize="@dimen/_14ssp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/sfpro_bold">
+                    android:fontFamily="@font/poppins_medium">
 
                 </TextView>
 

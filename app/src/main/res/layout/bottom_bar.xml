@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:fontFamily="@font/sfpro_medium"
+            android:fontFamily="@font/poppins_medium"
             android:text="@string/home"
             android:textSize="@dimen/_10ssp">
 
@@ -56,7 +56,7 @@
             android:id="@+id/txtCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/sfpro_medium"
+            android:fontFamily="@font/poppins_medium"
             android:text="@string/categories"
             android:gravity="center"
             android:textSize="@dimen/_10ssp">
@@ -86,7 +86,7 @@
             android:id="@+id/txtStudio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/sfpro_medium"
+            android:fontFamily="@font/poppins_medium"
             android:text="@string/studio"
             android:gravity="center"
             android:textSize="@dimen/_10ssp">
@@ -115,7 +115,7 @@
             android:id="@+id/txtExplore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/sfpro_medium"
+            android:fontFamily="@font/poppins_medium"
             android:text="@string/explore"
             android:gravity="center"
             android:textSize="@dimen/_10ssp">
@@ -144,7 +144,7 @@
             android:id="@+id/txtProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/sfpro_medium"
+            android:fontFamily="@font/poppins_medium"
             android:text="@string/user"
             android:gravity="center"
             android:textSize="@dimen/_10ssp">

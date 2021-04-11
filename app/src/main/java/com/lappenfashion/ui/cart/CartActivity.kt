@@ -1,42 +1,85 @@
 package com.lappenfashion.ui.cart
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
-import com.lappenfashion.data.model.ResponseCart
+import com.lappenfashion.data.model.ResponseMainCart
+import com.lappenfashion.data.network.MyApi
+import com.lappenfashion.data.network.NetworkConnection
+import com.lappenfashion.ui.checkout.CheckoutActivity
+import com.lappenfashion.utils.Helper
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_cart.*
+import kotlinx.android.synthetic.main.activity_cart.imgBack
+import kotlinx.android.synthetic.main.activity_wishlist.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CartActivity : AppCompatActivity() {
 
-    private var cartList : ArrayList<ResponseCart> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
 
-        var list1 = ResponseCart("https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZHVjdHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80","Scarlet Headphone","$1100")
-        var list2 = ResponseCart("https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixid=MXwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80","Apple Watch","$5000")
-        var list3 = ResponseCart("https://ca.binus.ac.id/files/2014/05/Chandra-Barli-160126941.jpg","Adidas Perfume","$50")
-
-        cartList.add(list1)
-        cartList.add(list2)
-        cartList.add(list3)
-
-        recyclerCart.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        var adapter = CartAdapter(
-            this@CartActivity,
-            cartList
-        )
-        recyclerCart.adapter = adapter
-
+        initData()
         clickListeners()
+    }
+
+    private fun initData() {
+        if (NetworkConnection.checkConnection(this@CartActivity)) {
+            Helper.showLoader(this@CartActivity)
+            getCartItem()
+        }else{
+            Helper.showTost(this@CartActivity,resources.getString(R.string.no_internet))
+        }
+    }
+
+    private fun getCartItem() {
+        var api = MyApi(this@CartActivity)
+        val requestCall: Call<ResponseMainCart> = api.getCart("Bearer "+ Prefs.getString(
+            Constants.PREF_TOKEN, ""))
+
+        requestCall.enqueue(object : Callback<ResponseMainCart> {
+            override fun onResponse(
+                call: Call<ResponseMainCart>,
+                response: Response<ResponseMainCart>
+            ) {
+                Helper.dismissLoader()
+                if (response.body() != null && response.body()!!.payload?.size!! >0) {
+                    recyclerCart.layoutManager =
+                        LinearLayoutManager(this@CartActivity, LinearLayoutManager.VERTICAL, false)
+                    var adapter = CartAdapter(
+                        this@CartActivity,
+                        response.body()!!.payload as ArrayList<ResponseMainCart.Payload?>?
+                    )
+                    recyclerCart.adapter = adapter
+                }else{
+                    relativeNoData.visibility = View.VISIBLE
+                    recyclerWishList.visibility = View.GONE
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMainCart>, t: Throwable) {
+                Helper.dismissLoader()
+            }
+
+        })
     }
 
     private fun clickListeners() {
         imgBack.setOnClickListener {
             finish()
+        }
+
+        txtCheckout.setOnClickListener {
+            var intent = Intent(this@CartActivity,CheckoutActivity::class.java)
+            startActivity(intent)
         }
     }
 }

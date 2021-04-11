@@ -62,7 +62,9 @@ class OTPActivity : AppCompatActivity() {
                 if (response.body() != null) {
                     if(response.body()?.result==true){
                         Prefs.putString(Constants.PREF_TOKEN,response.body()?.payload?.accessToken)
+                        Prefs.putString(Constants.PREF_PROFILE_MOBILE_NUMBER,response.body()?.payload?.mobileNumber)
                         Prefs.putString(Constants.PREF_IS_LOGGED_IN,"1")
+
                         var intent = Intent(this@OTPActivity,MainActivity::class.java)
                         startActivity(intent)
                     }

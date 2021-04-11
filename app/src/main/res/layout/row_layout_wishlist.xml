@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/border_grey"
     android:layout_marginLeft="@dimen/_1sdp"
     android:layout_marginRight="@dimen/_1sdp">
 
@@ -11,6 +11,9 @@
     <ImageView
         android:id="@+id/imgProudctImage"
         android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/_2sdp"
+        android:layout_marginRight="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_2sdp"
         android:layout_height="@dimen/_230sdp"
         android:background="@color/white"
         android:scaleType="fitXY">
@@ -22,7 +25,7 @@
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
         android:src="@mipmap/ic_close_grey"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:layout_alignParentRight="true"
         android:scaleType="fitXY">
 
@@ -35,10 +38,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
         android:text="Hello Ronak"
-        android:paddingLeft="@dimen/_15sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
         android:maxLines="1"
         android:ellipsize="end"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/poppins_medium"
         android:textSize="@dimen/_12ssp"
         android:textColor="@color/black"
         android:layout_below="@id/imgProudctImage">
@@ -51,8 +55,9 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:paddingLeft="@dimen/_15sdp"
-        android:fontFamily="sans-serif-medium"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
         android:textSize="@dimen/_10ssp"
         android:textColor="@color/wishlist_desc_color"
         android:layout_below="@id/txtProductName">
@@ -65,8 +70,9 @@
         android:layout_height="wrap_content"
         android:text="790"
         android:layout_marginTop="@dimen/_5sdp"
-        android:paddingLeft="@dimen/_15sdp"
-        android:fontFamily="@font/sfpro_bold"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_medium"
         android:textSize="@dimen/_12ssp"
         android:textColor="@color/black"
         android:layout_below="@id/txtProductDetails">
@@ -81,7 +87,7 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/_10sdp"
         android:background="@color/colorAccent"
-        android:fontFamily="@font/sfpro_regular"
+        android:fontFamily="@font/poppins_medium"
         android:textSize="@dimen/_12ssp"
         android:textColor="@color/white"
         android:padding="@dimen/_10sdp"

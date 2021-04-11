@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:fontFamily="@font/sfpro_bold"
+            android:fontFamily="@font/poppins_medium"
             android:textSize="@dimen/_12ssp">
 
         </TextView>
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/dark_grey"
-            android:fontFamily="@font/sfpro_medium"
+            android:fontFamily="@font/poppins_medium"
             android:layout_marginLeft="@dimen/_5sdp"
             android:textSize="@dimen/_12ssp">
 
