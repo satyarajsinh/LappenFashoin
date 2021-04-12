@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/relativeToolbar"
@@ -60,10 +60,62 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <LinearLayout
+        android:id="@+id/linearNoCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:alpha="0.8"
+            app:tint="@color/colorAccent"
+            android:src="@mipmap/ic_light_bag">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_35ssp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textColor="@color/wishlist_desc_color"
+            android:textSize="@dimen/_12ssp"
+            android:text="Your cart is empty !">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtShopping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_35ssp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:background="@color/colorAccent"
+            android:text="@string/start_shopping">
+
+        </TextView>
+
+    </LinearLayout>
+
+
     <RelativeLayout
         android:id="@+id/relativeBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:background="@drawable/border_grey"
         android:padding="@dimen/_10sdp">

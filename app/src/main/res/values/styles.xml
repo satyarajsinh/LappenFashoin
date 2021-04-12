@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -22,6 +22,17 @@
         <item name="android:textColor">@color/white</item>
         <item name="fontFamily">@font/sfpro_medium</item>
         <item name="android:fontFamily">@font/sfpro_medium</item>
+    </style>
+
+    <style name="NumberPickerStyle">
+        <item name="android:textSize">22dp</item>
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColorAlertDialogListItem">@color/colorAccent</item>
+        <item name="android:colorControlActivated" tools:targetApi="lollipop">@color/colorAccent</item>
+        <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/colorAccent</item>
+        <item name="android:colorButtonNormal" tools:targetApi="lollipop">@color/colorAccent</item>
+        <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/colorAccent</item>
     </style>
 
 </resources>

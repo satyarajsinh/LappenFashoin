@@ -1,6 +1,7 @@
 package com.lappenfashion.ui.home
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.RelativeSizeSpan
@@ -11,6 +12,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.github.ybq.android.spinkit.SpinKitView
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainHome
 
@@ -24,6 +30,7 @@ class DealsOfTheDayAdapter(
     class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
         val txtSpaceName : TextView = view.findViewById(R.id.txtSpaceName)
         val imgPosterImage : ImageView = view.findViewById(R.id.imgPosterImage)
+        val progressBar : SpinKitView = view.findViewById(R.id.progressBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,7 +53,33 @@ class DealsOfTheDayAdapter(
         val ss2 = SpannableString(end)
         ss1.setSpan(RelativeSizeSpan(1.5f), 0, s!!.length, 0) // set size
         holder.txtSpaceName.text = TextUtils.concat(ss1 ,ss2)
-        Glide.with(context).load(data?.get(position)?.image).into(holder.imgPosterImage)
+
+        holder.progressBar.visibility = View.VISIBLE
+        Glide.with(context).load(data?.get(position)?.image)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    holder.progressBar.visibility = View.GONE
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    holder.progressBar.visibility = View.GONE
+                    return false
+                }
+            })
+            .into(holder.imgPosterImage)
+
     }
 
 

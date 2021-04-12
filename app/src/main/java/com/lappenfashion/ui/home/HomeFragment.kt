@@ -2,6 +2,7 @@ package com.lappenfashion.ui.home
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -17,7 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.simplemvvm.utils.Constants
+import com.github.ybq.android.spinkit.SpinKitView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.lappenfashion.R
@@ -61,7 +67,6 @@ class HomeFragment : Fragment(),CategoriesInterface {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_home, container, false)
         return rootView
     }
@@ -105,6 +110,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
             } else {
                 if (NetworkConnection.checkConnection(mContext)) {
                     Helper.showLoader(mContext)
+                    rootView.nestedScrollView.visibility = View.GONE
                     getHomeData(localDbId)
                 } else {
                     Helper.showTost(mContext, "No internet connection")
@@ -252,8 +258,6 @@ class HomeFragment : Fragment(),CategoriesInterface {
                 call: Call<JsonObject>,
                 response: Response<JsonObject>
             ) {
-                Helper.dismissLoader()
-
                 if (response.body() != null) {
 
                     if (localDbId != "") {
@@ -272,9 +276,12 @@ class HomeFragment : Fragment(),CategoriesInterface {
                 } else {
                     Helper.showTost(mContext, "No Data Found")
                 }
+                rootView.nestedScrollView.visibility = View.VISIBLE
+                Helper.dismissLoader()
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                rootView.nestedScrollView.visibility = View.VISIBLE
                 Helper.dismissLoader()
             }
 
@@ -349,6 +356,9 @@ class HomeFragment : Fragment(),CategoriesInterface {
             val imageView = imageLayout
                 .findViewById(R.id.image) as ImageView
 
+            val progressBar = imageLayout
+                .findViewById(R.id.progressBar) as SpinKitView
+
             val txtBannerTitle = imageLayout
                 .findViewById(R.id.bannerTitle) as TextView
 
@@ -356,8 +366,30 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
             imageView.scaleType = ImageView.ScaleType.FIT_XY
 
-            Glide.with(mContext)
-                .load(imageModelArrayList?.get(position)?.image)
+            progressBar.visibility = View.VISIBLE
+            Glide.with(mContext).load(imageModelArrayList?.get(position)?.image)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+                })
                 .into(imageView)
 
             txtBannerTitle.text = imageModelArrayList?.get(position)?.title

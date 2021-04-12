@@ -1,6 +1,7 @@
 package com.lappenfashion.ui.home
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,15 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.github.ybq.android.spinkit.SpinKitView
 import com.lappenfashion.R
 import com.lappenfashion.`interface`.CategoriesInterface
 import com.lappenfashion.data.model.ResponseMainHome
+import kotlinx.android.synthetic.main.activity_categories_details.*
 
 class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
 
@@ -29,6 +36,7 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
         val txtCategoryName : TextView = view.findViewById(R.id.txtCategoryName)
         val imgPosterImage : ImageView = view.findViewById(R.id.imgPosterImage)
         val linearMain : LinearLayout = view.findViewById(R.id.linearMain)
+        val progressBar : SpinKitView = view.findViewById(R.id.progressBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,7 +50,32 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtCategoryName.text = data?.get(position)?.title
-        Glide.with(context).load(data?.get(position)?.image).into(holder.imgPosterImage)
+
+        holder.progressBar.visibility = View.VISIBLE
+        Glide.with(context).load(data?.get(position)?.image)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    holder.progressBar.visibility = View.GONE
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    holder.progressBar.visibility = View.GONE
+                    return false
+                }
+            })
+            .into(holder.imgPosterImage)
 
         holder.linearMain.setOnClickListener {
             categoriesInterface.goToSubCategories(data?.get(position))

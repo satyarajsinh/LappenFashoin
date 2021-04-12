@@ -26,6 +26,7 @@
             android:layout_toRightOf="@id/imgBack"
             android:text="@string/wishlist"
             android:paddingLeft="@dimen/_10sdp"
+            android:paddingTop="@dimen/_2sdp"
             android:layout_centerVertical="true"
             android:textSize="@dimen/_14ssp"
             android:textColor="@color/black"

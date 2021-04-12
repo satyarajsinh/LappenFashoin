@@ -2,14 +2,12 @@ package com.lappenfashion.ui.editProfile
 
 import android.content.Intent
 import android.database.Cursor
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-import com.bruce.pickerview.popwindow.DatePickerPopWin
 import com.bumptech.glide.Glide
 import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
@@ -18,6 +16,9 @@ import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
+import com.tsongkha.spinnerdatepicker.DatePicker
+import com.tsongkha.spinnerdatepicker.DatePickerDialog
+import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import kotlinx.android.synthetic.main.activity_add_address.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_edit_profile.edtMobileNumber
@@ -31,12 +32,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
-class EditProfileActivity : AppCompatActivity() {
+
+class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener{
 
     private var imagePath: String = ""
     private var gender: String = ""
     private var selectedUriList: MutableList<Uri> = arrayListOf()
+    var simpleDateFormat: SimpleDateFormat? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,25 +52,25 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun initData(){
-        if(Prefs.getString(Constants.PREF_PROFILE_PICTURE,"") != "") {
+        if(Prefs.getString(Constants.PREF_PROFILE_PICTURE, "") != "") {
             Glide.with(this@EditProfileActivity)
                 .load(Prefs.getString(Constants.PREF_PROFILE_PICTURE, "")).into(imgProfile)
         }
 
-        if(Prefs.getString(Constants.PREF_PROFILE_MOBILE_NUMBER,"") != "") {
-            edtMobileNumber.setText(Prefs.getString(Constants.PREF_PROFILE_MOBILE_NUMBER,""))
+        if(Prefs.getString(Constants.PREF_PROFILE_MOBILE_NUMBER, "") != "") {
+            edtMobileNumber.setText(Prefs.getString(Constants.PREF_PROFILE_MOBILE_NUMBER, ""))
         }
 
-        if(Prefs.getString(Constants.PREF_PROFILE_FULL_NAME,"") != "") {
-            edtFullName.setText(Prefs.getString(Constants.PREF_PROFILE_FULL_NAME,""))
+        if(Prefs.getString(Constants.PREF_PROFILE_FULL_NAME, "") != "") {
+            edtFullName.setText(Prefs.getString(Constants.PREF_PROFILE_FULL_NAME, ""))
         }
 
-        if(Prefs.getString(Constants.PREF_PROFILE_EMAIL,"") != "") {
-            edtEmail.setText(Prefs.getString(Constants.PREF_PROFILE_EMAIL,""))
+        if(Prefs.getString(Constants.PREF_PROFILE_EMAIL, "") != "") {
+            edtEmail.setText(Prefs.getString(Constants.PREF_PROFILE_EMAIL, ""))
         }
 
-        if(Prefs.getString(Constants.PREF_PROFILE_GENDER,"") != "") {
-            if(Prefs.getString(Constants.PREF_PROFILE_GENDER,"")== "Male"){
+        if(Prefs.getString(Constants.PREF_PROFILE_GENDER, "") != "") {
+            if(Prefs.getString(Constants.PREF_PROFILE_GENDER, "")== "Male"){
                 txtMale.setBackgroundResource(R.drawable.border_accent)
                 txtFemale.setBackgroundResource(R.drawable.border_grey)
                 gender = "Male"
@@ -76,8 +81,8 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
-        if(Prefs.getString(Constants.PREF_PROFILE_DATE_OF_BIRTH,"")!=""){
-            txtBirthDate.setText(Prefs.getString(Constants.PREF_PROFILE_DATE_OF_BIRTH,""))
+        if(Prefs.getString(Constants.PREF_PROFILE_DATE_OF_BIRTH, "")!=""){
+            txtBirthDate.setText(Prefs.getString(Constants.PREF_PROFILE_DATE_OF_BIRTH, ""))
         }
     }
 
@@ -140,28 +145,24 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         txtBirthDate.setOnClickListener {
-            try {
-                val pickerPopWin = DatePickerPopWin.Builder(
-                    this
-                ) { year, month, day, dateDesc -> //                            Toast.makeText(getActivity(), dateDesc, Toast.LENGTH_SHORT).show();
-                    //                            String myFormat = "MM/dd/yy"; //In which you need put here
-                    //                            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                    txtBirthDate.setText("$year-$month-$day")
-                }.textConfirm("CONFIRM") //text of confirm button
-                    .textCancel("CANCEL") //text of cancel button
-                    .btnTextSize(12) // button text size
-                    .viewTextSize(25) // pick view text size
-                    .colorCancel(Color.parseColor("#999999")) //color of cancel button
-                    .colorConfirm(Color.parseColor("#009900")) //color of confirm button
-                    .minYear(1900) //min year in loop
-                    .maxYear(2550) // max year in loop
-                    //                            .dateChose("2013-11-11") // date chose when init popwindow
-                    .build()
-                pickerPopWin.showPopWin(this)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            var year : Int= Calendar.getInstance().get(Calendar.YEAR);
+            var day : Int= Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+            var month : Int= Calendar.getInstance().get(Calendar.MONTH);
+            showDate(year, month, day, R.style.NumberPickerStyle);
         }
+    }
+
+    private fun showDate(year: Int, monthOfYear: Int, dayOfMonth: Int, datePickerSpinner: Int) {
+        SpinnerDatePickerDialogBuilder()
+            .context(this@EditProfileActivity)
+            .callback(this@EditProfileActivity)
+            .spinnerTheme(datePickerSpinner)
+            .defaultDate(year, monthOfYear, dayOfMonth)
+            .build()
+            .show()
+
+      /*  val calendar: Calendar = GregorianCalendar(year, monthOfYear, dayOfMonth)
+        txtBirthDate.text = simpleDateFormat!!.format(calendar.getTime())*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -248,8 +249,7 @@ class EditProfileActivity : AppCompatActivity() {
         })
     }
 
-    private fun showMultiImage(uriList: List<Uri>) {
-        this.selectedUriList = uriList as MutableList<Uri>
-        imgProfile.setImageURI(selectedUriList[0])
+    override fun onDateSet(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        txtBirthDate.text = year.toString()+"-"+(monthOfYear+1).toString()+"-"+dayOfMonth.toString()
     }
 }

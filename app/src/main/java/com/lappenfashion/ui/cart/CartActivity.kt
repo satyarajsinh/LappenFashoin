@@ -10,6 +10,7 @@ import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainCart
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
+import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.checkout.CheckoutActivity
 import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
@@ -52,6 +53,9 @@ class CartActivity : AppCompatActivity() {
             ) {
                 Helper.dismissLoader()
                 if (response.body() != null && response.body()!!.payload?.size!! >0) {
+                    relativeBottom.visibility = View.VISIBLE
+                    recyclerCart.visibility = View.VISIBLE
+                    linearNoCart.visibility = View.GONE
                     recyclerCart.layoutManager =
                         LinearLayoutManager(this@CartActivity, LinearLayoutManager.VERTICAL, false)
                     var adapter = CartAdapter(
@@ -60,8 +64,9 @@ class CartActivity : AppCompatActivity() {
                     )
                     recyclerCart.adapter = adapter
                 }else{
-                    relativeNoData.visibility = View.VISIBLE
-                    recyclerWishList.visibility = View.GONE
+                    linearNoCart.visibility = View.VISIBLE
+                    relativeBottom.visibility = View.GONE
+                    recyclerCart.visibility = View.GONE
                 }
             }
 
@@ -79,6 +84,11 @@ class CartActivity : AppCompatActivity() {
 
         txtCheckout.setOnClickListener {
             var intent = Intent(this@CartActivity,CheckoutActivity::class.java)
+            startActivity(intent)
+        }
+
+        txtShopping.setOnClickListener{
+            var intent = Intent(this@CartActivity,MainActivity::class.java)
             startActivity(intent)
         }
     }

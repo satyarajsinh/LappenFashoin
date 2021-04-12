@@ -17,6 +17,7 @@ import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
+import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.address.AddAddressActivity
 import com.lappenfashion.ui.address.AddressListingActivity
 import com.lappenfashion.ui.editProfile.EditProfileActivity
@@ -61,41 +62,8 @@ class ProfileFragment : Fragment() {
 
     private fun clickListener() {
         rootView.txtLogin.setOnClickListener {
-            val dialog = BottomSheetDialog(mContext)
-            dialog.setContentView(R.layout.bottom_sheet_login)
-            dialog.setCanceledOnTouchOutside(false)
+            displayLoginDialog()
 
-            val imgClose = dialog.findViewById<View>(R.id.imgClose) as ImageView?
-            val txtLogin = dialog.findViewById<View>(R.id.txtLogin) as TextView?
-            val edtMobileNumber = dialog.findViewById<View>(R.id.edtPhoneNumber) as EditText?
-            val txtResendOtp = dialog.findViewById<View>(R.id.txtResendOtp) as TextView?
-
-            txtLogin!!.setOnClickListener {
-                if(edtMobileNumber?.text.toString() != ""){
-                    if(NetworkConnection.checkConnection(mContext)) {
-                        txtLogin.isEnabled = false
-                        com.lappenfashion.utils.Helper.showLoader(mContext)
-                        loginData(edtMobileNumber?.text.toString(),txtLogin)
-                    }else{
-                        com.lappenfashion.utils.Helper.showTost(mContext, getString(R.string.no_internet))
-                    }
-                }else{
-                    com.lappenfashion.utils.Helper.showTost(mContext,"Field is required")
-                }
-
-            }
-
-            txtResendOtp?.setOnClickListener {
-                if(NetworkConnection.checkConnection(mContext)) {
-                    com.lappenfashion.utils.Helper.showLoader(mContext)
-                    resendOTP(edtMobileNumber?.text.toString())
-                }else{
-                    com.lappenfashion.utils.Helper.showTost(mContext, getString(R.string.no_internet))
-                }
-            }
-
-            imgClose!!.setOnClickListener { dialog.dismiss() }
-            dialog.show()
         }
 
         rootView.relativeTrackOrder.setOnClickListener {
@@ -103,14 +71,67 @@ class ProfileFragment : Fragment() {
         }
 
         rootView.relativeEditProfile.setOnClickListener {
-            var intent = Intent(mContext,EditProfileActivity::class.java)
+            if(Prefs.getString(Constants.PREF_IS_LOGGED_IN,"")=="1") {
+                var intent = Intent(mContext, EditProfileActivity::class.java)
+                startActivity(intent)
+            }else{
+                displayLoginDialog()
+            }
+        }
+
+        rootView.relativeLogout.setOnClickListener {
+            Prefs.clear()
+            var intent = Intent(mContext,MainActivity::class.java)
             startActivity(intent)
         }
 
         rootView.relativeAddress.setOnClickListener {
-            var intent = Intent(mContext,AddressListingActivity::class.java)
-            startActivity(intent)
+            if(Prefs.getString(Constants.PREF_IS_LOGGED_IN,"")=="1") {
+                var intent = Intent(mContext,AddressListingActivity::class.java)
+                startActivity(intent)
+            }else{
+                displayLoginDialog()
+            }
+
         }
+    }
+
+    private fun displayLoginDialog() {
+        val dialog = BottomSheetDialog(mContext)
+        dialog.setContentView(R.layout.bottom_sheet_login)
+        dialog.setCanceledOnTouchOutside(false)
+
+        val imgClose = dialog.findViewById<View>(R.id.imgClose) as ImageView?
+        val txtLogin = dialog.findViewById<View>(R.id.txtLogin) as TextView?
+        val edtMobileNumber = dialog.findViewById<View>(R.id.edtPhoneNumber) as EditText?
+        val txtResendOtp = dialog.findViewById<View>(R.id.txtResendOtp) as TextView?
+
+        txtLogin!!.setOnClickListener {
+            if(edtMobileNumber?.text.toString() != ""){
+                if(NetworkConnection.checkConnection(mContext)) {
+                    txtLogin.isEnabled = false
+                    com.lappenfashion.utils.Helper.showLoader(mContext)
+                    loginData(edtMobileNumber?.text.toString(),txtLogin)
+                }else{
+                    com.lappenfashion.utils.Helper.showTost(mContext, getString(R.string.no_internet))
+                }
+            }else{
+                com.lappenfashion.utils.Helper.showTost(mContext,"Field is required")
+            }
+
+        }
+
+        txtResendOtp?.setOnClickListener {
+            if(NetworkConnection.checkConnection(mContext)) {
+                com.lappenfashion.utils.Helper.showLoader(mContext)
+                resendOTP(edtMobileNumber?.text.toString())
+            }else{
+                com.lappenfashion.utils.Helper.showTost(mContext, getString(R.string.no_internet))
+            }
+        }
+
+        imgClose!!.setOnClickListener { dialog.dismiss() }
+        dialog.show()
     }
 
     private fun resendOTP(mobileNumber: String) {

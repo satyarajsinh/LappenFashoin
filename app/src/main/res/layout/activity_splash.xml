@@ -5,9 +5,10 @@
     android:background="@color/colorAccent">
 
     <ImageView
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:layout_centerInParent="true">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_300sdp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo">
 
     </ImageView>
 

@@ -45,15 +45,16 @@
     <TextView
         android:id="@+id/txtTitle"
         android:text="Filter"
-        android:visibility="gone"
+        android:visibility="visible"
         android:paddingLeft="@dimen/_10sdp"
         android:textSize="@dimen/_14ssp"
+        android:layout_centerVertical="true"
         android:textColor="@color/black"
+        android:paddingTop="@dimen/_2sdp"
         android:fontFamily="@font/poppins_medium"
         android:layout_width="match_parent"
         android:layout_toLeftOf="@id/imgLiked"
         android:layout_toRightOf="@id/imgBack"
-        android:layout_marginTop="@dimen/_10sdp"
         android:layout_height="wrap_content">
 
     </TextView>
