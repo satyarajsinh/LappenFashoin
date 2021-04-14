@@ -69,6 +69,7 @@
     <string name="no_data_found">No Data Found</string>
     <string name="add_address">Add Address</string>
     <string name="start_shopping">Start Shopping</string>
+    <string name="add_to_cart">Add to cart</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

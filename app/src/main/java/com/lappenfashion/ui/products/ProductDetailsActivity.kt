@@ -1,9 +1,11 @@
 package com.lappenfashion.ui.products
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +16,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
+import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
+import com.lappenfashion.data.model.ResponseMainLocalCart
 import com.lappenfashion.data.model.ResponseMainProductsByCategory
+import com.lappenfashion.sqlitedb.DBManager
+import com.lappenfashion.ui.cart.CartActivity
+import com.lappenfashion.ui.wishlist.WishListActivity
+import com.lappenfashion.utils.Helper
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_product_details.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.indicator
@@ -26,16 +35,51 @@ import kotlinx.android.synthetic.main.toolbar_with_like_cart.*
 class ProductDetailsActivity : AppCompatActivity(){
 
     private var productData: ResponseMainProductsByCategory.Payload.Data? = null
+    private lateinit var dbManager: DBManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
 
         initData()
-
+        clickListener()
         imgBack.setOnClickListener {
             finish()
         }
+    }
+
+    private fun clickListener() {
+        linearAddToBag.setOnClickListener {
+            if(Prefs.getString(Constants.PREF_IS_LOGGED_IN,"") == "1"){
+
+            }else{
+                addToCart()
+            }
+        }
+
+        imgCart.setOnClickListener {
+            var intent = Intent(this@ProductDetailsActivity,CartActivity::class.java)
+            startActivity(intent)
+        }
+
+        imgLiked.setOnClickListener {
+            var intent = Intent(this@ProductDetailsActivity,WishListActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun addToCart() {
+        dbManager = DBManager(this)
+        dbManager.open()
+
+        Helper.showLoader(this@ProductDetailsActivity)
+        Handler(Looper.getMainLooper()).postDelayed({
+            var localCart = ResponseMainLocalCart(0,
+                productData?.mainImageName!!, productData?.productId!!.toString(),"1",productData?.productName!!,productData?.mrp!!.toString())
+            dbManager.insertCart(localCart)
+            Helper.dismissLoader()
+        }, 2000)
+
     }
 
     private fun initData() {
@@ -51,7 +95,12 @@ class ProductDetailsActivity : AppCompatActivity(){
         }
 
         txtProductTitle.text = productData?.productName
-        txtColor.setBackgroundColor(Color.parseColor(productData?.color!!))
+        try {
+            txtColor.setBackgroundColor(Color.parseColor(productData?.color!!))
+        }catch (e : Exception){
+
+        }
+
         txtDetails.text = productData?.description
 
 

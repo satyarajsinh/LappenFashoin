@@ -8,8 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainHome
+import com.pixplicity.easyprefs.library.Prefs
 
 class SubCategoriesAdapter : RecyclerView.Adapter<SubCategoriesAdapter.ViewHolder> {
 
@@ -41,6 +43,7 @@ class SubCategoriesAdapter : RecyclerView.Adapter<SubCategoriesAdapter.ViewHolde
 
         holder.txtSubCategoryName.setOnClickListener {
             if(holder.imgDown.rotation == 360f){
+                Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,data?.get(position)?.subCategoryId.toString())
                 holder.imgDown.rotation = 180f
                 holder.recyclerProductCategory.visibility = View.VISIBLE
                 holder.recyclerProductCategory.layoutManager = LinearLayoutManager(

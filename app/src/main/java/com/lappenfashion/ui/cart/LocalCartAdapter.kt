@@ -8,18 +8,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
-import com.lappenfashion.data.model.ResponseMainCartNew
-import com.lappenfashion.data.network.NetworkConnection
-import com.lappenfashion.utils.Helper
+import com.lappenfashion.data.model.ResponseMainLocalCart
 
 
-class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
+class LocalCartAdapter : RecyclerView.Adapter<LocalCartAdapter.ViewHolder> {
     lateinit var context : CartActivity
-    var data : ArrayList<ResponseMainCartNew.Payload.Cart?>?
+    var data : ArrayList<ResponseMainLocalCart>
 
     constructor(
         context: CartActivity,
-        advertisementList: ArrayList<ResponseMainCartNew.Payload.Cart?>?,
+        advertisementList: ArrayList<ResponseMainLocalCart>,
     ) {
         this.context = context
         this.data = advertisementList
@@ -42,40 +40,29 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        Glide.with(context).load(data!![position]?.product?.mainImageName).into(holder.productImage)
+        Glide.with(context).load(data!![position]?.cartImage).into(holder.productImage)
 
-        holder.productName.text = data!![position]?.product?.productName
-        holder.productPrice.text = "₹"+data!![position]?.amount.toString()
-        holder.txtQty.text = data!![position]?.quantity.toString()
+        holder.productName.text = data!![position]?.cartTitle
+        holder.productPrice.text = "₹"+data!![position]?.cartAmount
+        holder.productPrice.text = "₹"+data!![position]?.cartAmount
+        holder.txtQty.text = data!![position]?.cartQty
+
         holder.imgAdd.setOnClickListener {
             holder.txtQty.text= (holder.txtQty.text.toString().toInt()+1).toString()
-            if(NetworkConnection.checkConnection(context)) {
-                Helper.showLoader(context)
-                context.updateCart(data!!.get(position), holder.txtQty.text.toString())
-            }else{
-                Helper.showTost(context, context.resources.getString(R.string.no_internet))
-            }
+            context.updateQuantity(data!![position],holder.txtQty.text.toString().toInt())
         }
 
         holder.imgMinus.setOnClickListener {
             if(holder.txtQty.text.toString().toInt() != 1) {
                 holder.txtQty.text = (holder.txtQty.text.toString().toInt() - 1).toString()
-                if(NetworkConnection.checkConnection(context)) {
-                    Helper.showLoader(context)
-                    context.updateCart(data!!.get(position), holder.txtQty.text.toString())
-                }else{
-                    Helper.showTost(context, context.resources.getString(R.string.no_internet))
-                }
+                context.updateQuantity(data!![position],holder.txtQty.text.toString().toInt())
             }
         }
 
         holder.txtRemove.setOnClickListener {
-            if(NetworkConnection.checkConnection(context)) {
-                Helper.showLoader(context)
-                context.removeCart(data!![position])
-            }else{
-                Helper.showTost(context, context.resources.getString(R.string.no_internet))
-            }
+            context.removeProduct(data!![position])
+            data.removeAt(position)
+            notifyDataSetChanged()
         }
     }
 

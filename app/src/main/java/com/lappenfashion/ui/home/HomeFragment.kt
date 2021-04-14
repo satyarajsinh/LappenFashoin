@@ -437,6 +437,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
     override fun goToSubCategories(data: ResponseMainHome.Payload.Category?) {
         var intent = Intent(mContext,CategoriesDetailsActivity::class.java)
+        Prefs.putString(Constants.PREF_CATEGORY_ID,data?.categoryId.toString())
         intent.putExtra("subCategories",data)
         startActivity(intent)
     }

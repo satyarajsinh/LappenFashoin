@@ -10,6 +10,7 @@ import com.lappenfashion.data.model.ResponseMainVerifyOtp
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.ui.MainActivity
+import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_otp.*
 import retrofit2.Call
@@ -57,7 +58,7 @@ class OTPActivity : AppCompatActivity() {
                 call: Call<ResponseMainVerifyOtp>,
                 response: Response<ResponseMainVerifyOtp>
             ) {
-                com.lappenfashion.utils.Helper.dismissLoader()
+                Helper.dismissLoader()
 
                 if (response.body() != null) {
                     if(response.body()?.result==true){
@@ -65,8 +66,7 @@ class OTPActivity : AppCompatActivity() {
                         Prefs.putString(Constants.PREF_PROFILE_MOBILE_NUMBER,response.body()?.payload?.mobileNumber)
                         Prefs.putString(Constants.PREF_IS_LOGGED_IN,"1")
 
-                        var intent = Intent(this@OTPActivity,MainActivity::class.java)
-                        startActivity(intent)
+                        finish()
                     }
                 } else {
                     com.lappenfashion.utils.Helper.showTost(this@OTPActivity, resources.getString(R.string.some_thing_happend_wrong))
@@ -78,5 +78,10 @@ class OTPActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Helper.dismissLoader()
     }
 }

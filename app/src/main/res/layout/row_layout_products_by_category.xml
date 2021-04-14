@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,17 +11,35 @@
     android:layout_marginRight="@dimen/_2sdp"
     android:id="@+id/relativeMain">
 
-    <ImageView
-        android:id="@+id/imgProudctImage"
+    <RelativeLayout
+        android:id="@+id/relativeImage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
-        android:layout_marginLeft="@dimen/_2sdp"
-        android:layout_marginRight="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:background="@color/white"
-        android:scaleType="fitXY">
+        android:layout_height="wrap_content">
 
-    </ImageView>
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/progressBar"
+            style="@style/SpinKitView.Circle"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:SpinKit_Style="FadingCircle"
+            app:SpinKit_Color="@color/pink" />
+
+        <ImageView
+            android:id="@+id/imgProudctImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginLeft="@dimen/_2sdp"
+            android:layout_marginRight="@dimen/_2sdp"
+            android:background="@color/white"
+            android:scaleType="fitXY">
+
+        </ImageView>
+
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/txtProductName"
@@ -30,12 +49,12 @@
         android:maxLines="2"
         android:ellipsize="end"
         android:layout_toLeftOf="@id/imgLiked"
-        android:paddingLeft="@dimen/_15sdp"
+        android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"
         android:fontFamily="@font/poppins_medium"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_10ssp"
         android:textColor="@color/black"
-        android:layout_below="@id/imgProudctImage">
+        android:layout_below="@id/relativeImage">
 
     </TextView>
 
@@ -46,7 +65,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_below="@id/imgProudctImage"
+        android:layout_below="@id/relativeImage"
         android:src="@mipmap/ic_light_heart"
         android:scaleType="fitXY">
 
@@ -58,9 +77,10 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:paddingLeft="@dimen/_15sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
         android:fontFamily="@font/poppins_regular"
-        android:textSize="@dimen/_10ssp"
+        android:textSize="@dimen/_8ssp"
         android:textColor="@color/wishlist_desc_color"
         android:layout_below="@id/txtProductName">
 
@@ -71,9 +91,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
-        android:paddingLeft="@dimen/_15sdp"
+        android:paddingLeft="@dimen/_10sdp"
         android:fontFamily="@font/poppins_medium"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_10ssp"
         android:textColor="@color/black"
         android:layout_below="@id/txtProductDetails">
 

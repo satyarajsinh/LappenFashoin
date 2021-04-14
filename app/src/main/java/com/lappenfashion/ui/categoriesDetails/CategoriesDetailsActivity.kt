@@ -11,9 +11,13 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainHome
+import com.lappenfashion.ui.cart.CartActivity
 import com.lappenfashion.ui.products.ProductsByProductCategoryActivity
+import com.lappenfashion.ui.wishlist.WishListActivity
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_categories_details.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.recyclerCategories
@@ -29,9 +33,23 @@ class CategoriesDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_categories_details)
 
         initData()
+        clickListener()
 
+    }
+
+    private fun clickListener() {
         imgBack.setOnClickListener {
             finish()
+        }
+
+        imgLiked.setOnClickListener {
+            var intent = Intent(this, WishListActivity::class.java)
+            startActivity(intent)
+        }
+
+        imgCart.setOnClickListener {
+            var intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -115,8 +133,8 @@ class CategoriesDetailsActivity : AppCompatActivity() {
 
     fun goToProducts(data: ResponseMainHome.Payload.Category.SubCategory.ProductCategory?) {
         var intent = Intent(this, ProductsByProductCategoryActivity::class.java)
-        intent.putExtra("id", data?.productCategoryId.toString())
-        intent.putExtra("name", data?.title.toString())
+        Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,data?.productCategoryId.toString())
+        Prefs.putString(Constants.PREF_PRODUCT_TITLE,data?.title.toString())
         startActivity(intent)
     }
 

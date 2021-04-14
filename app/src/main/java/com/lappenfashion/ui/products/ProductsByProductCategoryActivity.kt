@@ -1,11 +1,13 @@
 package com.lappenfashion.ui.products
 
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.AbsListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.simplemvvm.utils.Constants
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -14,6 +16,8 @@ import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.model.ResponseMainProductsByCategory
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
+import com.lappenfashion.ui.cart.CartActivity
+import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
 import com.lappenfashion.utils.SpacesItemDecoration
 import com.pixplicity.easyprefs.library.Prefs
@@ -26,36 +30,100 @@ import retrofit2.Response
 
 class ProductsByProductCategoryActivity : AppCompatActivity() {
 
-    private var pageTitle: String? = ""
-    private var productCategoryId: String? = ""
+    private lateinit var productsByCategoryAdapter: ProductsByCategoryAdapter
+    private var productData: ArrayList<ResponseMainProductsByCategory.Payload.Data?>? = arrayListOf()
+    private var isScrolling = false
+    private var offset = 0
+    private var visibleItemCount = 0
+    private var totalItemCount = 0
+    private var pastVisiblesItems = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products_by_product_category)
 
-        txtTitle.visibility = View.VISIBLE
+        initData()
+        clickListener()
+    }
 
-        if(intent!=null){
-            productCategoryId = intent.getStringExtra("id")
-            pageTitle = intent.getStringExtra("name")
-            txtTitle.text = pageTitle
-        }
-
-        if (NetworkConnection.checkConnection(this)) {
-            Helper.showLoader(this@ProductsByProductCategoryActivity)!!
-            getProductsByProductCategory()
-        }else {
-            Helper.showTost(this, "No internet connection")
-        }
-
+    private fun clickListener() {
         imgBack.setOnClickListener {
             finish()
         }
+
+        imgLiked.setOnClickListener {
+            var intent = Intent(this, WishListActivity::class.java)
+            startActivity(intent)
+        }
+
+        imgCart.setOnClickListener {
+            var intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
     }
 
-    private fun getProductsByProductCategory() {
+    private fun initData() {
+        txtTitle.visibility = View.VISIBLE
+
+        txtTitle.text = Prefs.getString(Constants.PREF_PRODUCT_TITLE,"")
+        if (NetworkConnection.checkConnection(this)) {
+            getProductsByProductCategory(offset, true)
+            recyclerProductsByProductCategory.setLayoutManager(
+                GridLayoutManager(
+                    this@ProductsByProductCategoryActivity,
+                    2
+                )
+            )
+            var spaceIterator : SpacesItemDecoration = SpacesItemDecoration(10)
+            recyclerProductsByProductCategory.addItemDecoration(spaceIterator);
+            recyclerProductsByProductCategory.setHasFixedSize(true)
+
+            productsByCategoryAdapter = ProductsByCategoryAdapter(
+                this@ProductsByProductCategoryActivity,
+                productData
+            )
+            recyclerProductsByProductCategory.adapter = productsByCategoryAdapter
+            onLoadMoreProduct(recyclerProductsByProductCategory)
+        }else {
+            Helper.showTost(this, "No internet connection")
+        }
+    }
+
+    private fun onLoadMoreProduct(recyclerView: RecyclerView) {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isScrolling = true
+                }
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    visibleItemCount = recyclerView.layoutManager!!.childCount
+                    totalItemCount = recyclerView.layoutManager!!.itemCount
+                    pastVisiblesItems =
+                        (recyclerView.layoutManager as LinearLayoutManager?)!!.findFirstVisibleItemPosition()
+                    if (isScrolling && visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                        isScrolling = false
+                        offset = offset + 1
+                        getProductsByProductCategory(offset, false)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun getProductsByProductCategory(offset: Int, b: Boolean) {
+        if (b) {
+            Helper.showLoader(this)
+        } else {
+            progressBar.setVisibility(View.VISIBLE)
+        }
+
         var api = MyApi(this)
-        val requestCall: Call<JsonObject> = api.getProducts(Constants.END_POINT_PRODUCTS+"?page=1&product_category_id="+productCategoryId)
+        val requestCall: Call<JsonObject> = api.getProducts(Constants.END_POINT_PRODUCTS + "?page=" + offset + "&category_id="+Prefs.getString(Constants.PREF_CATEGORY_ID,"")+"sub_category_id="+Prefs.getString(Constants.PREF_SUB_CATEGORY_ID,"")+"product_category_id=" + Prefs.getString(Constants.PREF_PRODUCT_CATEGORY_ID,""))
 
         requestCall.enqueue(object : Callback<JsonObject> {
             override fun onResponse(
@@ -69,24 +137,8 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
                         response.body(),
                         ResponseMainProductsByCategory::class.java
                     )
-
-                    recyclerProductsByProductCategory.setLayoutManager(
-                        GridLayoutManager(
-                            this@ProductsByProductCategoryActivity,
-                            2
-                        )
-                    )
-
-                    var spaceIterator : SpacesItemDecoration = SpacesItemDecoration(10)
-                    recyclerProductsByProductCategory.addItemDecoration(spaceIterator);
-                    recyclerProductsByProductCategory.setHasFixedSize(true)
-
-                    var productsByCategoryAdapter = ProductsByCategoryAdapter(
-                        this@ProductsByProductCategoryActivity,
-                        productsResponse.payload?.data
-                    )
-                    recyclerProductsByProductCategory.adapter = productsByCategoryAdapter
-
+                    productData?.addAll(productsResponse.payload?.data!!)
+                    productsByCategoryAdapter.notifyDataSetChanged()
                 } else {
                     Helper.showTost(this@ProductsByProductCategoryActivity, "No Data Found")
                 }
@@ -100,8 +152,11 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
     }
 
     fun goToDetails(data: ResponseMainProductsByCategory.Payload.Data?) {
-        var intent = Intent(this@ProductsByProductCategoryActivity,ProductDetailsActivity::class.java)
-        intent.putExtra("productDetail",data)
+        var intent = Intent(
+            this@ProductsByProductCategoryActivity,
+            ProductDetailsActivity::class.java
+        )
+        intent.putExtra("productDetail", data)
         startActivity(intent)
     }
 
@@ -110,7 +165,10 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
             Helper.showLoader(this@ProductsByProductCategoryActivity)
             var api = MyApi(this)
             val requestCall: Call<ResponseMainLogin> =
-                api.addToWishList("Bearer "+Prefs.getString(Constants.PREF_TOKEN, ""), productId.toString())
+                api.addToWishList(
+                    "Bearer " + Prefs.getString(Constants.PREF_TOKEN, ""),
+                    productId.toString()
+                )
 
             requestCall.enqueue(object : Callback<ResponseMainLogin> {
                 override fun onResponse(
@@ -132,7 +190,7 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
 
             })
         }else{
-            Helper.showTost(this@ProductsByProductCategoryActivity,getString(R.string.no_internet))
+            Helper.showTost(this@ProductsByProductCategoryActivity, getString(R.string.no_internet))
         }
     }
 }

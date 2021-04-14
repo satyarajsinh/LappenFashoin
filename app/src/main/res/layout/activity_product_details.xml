@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -8,8 +8,11 @@
     <include android:id="@+id/toolbar" layout="@layout/toolbar_with_like_cart" android:layout_width="match_parent" android:layout_height="wrap_content"></include>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_above="@id/linearBottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -135,4 +138,81 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/linearWishList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_grey"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@mipmap/ic_light_heart">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/txtWishList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:textAllCaps="true"
+                android:textSize="@dimen/_10sdp"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_below="@id/imgProductImage"
+                android:textColor="@color/black"
+                android:text="@string/wishlist">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearAddToBag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                app:tint="@color/white"
+                android:src="@mipmap/ic_light_bag">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/txtMoveToBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:textAllCaps="true"
+                android:textSize="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_below="@id/imgProductImage"
+                android:textColor="@color/white"
+                android:text="@string/add_to_cart">
+
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -51,6 +51,16 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerLocalCart"
+        android:layout_below="@id/relativeToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/relativeBottom"
+        android:scrollbars="none">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerCart"
         android:layout_below="@id/relativeToolbar"
         android:layout_width="match_parent"
@@ -116,13 +126,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:paddingTop="@dimen/_5sdp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/border_grey"
-        android:padding="@dimen/_10sdp">
+        android:background="@drawable/border_grey">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_5sdp"
             android:layout_centerVertical="true">
 
             <TextView
@@ -139,11 +150,11 @@
             <TextView
                 android:id="@+id/txtTotal"
                 android:paddingLeft="@dimen/_10sdp"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 android:layout_below="@id/txtTitleText"
                 android:textColor="@color/green"
                 android:text="2200"
-                android:fontFamily="@font/poppins_regular"
+                android:fontFamily="@font/poppins_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
