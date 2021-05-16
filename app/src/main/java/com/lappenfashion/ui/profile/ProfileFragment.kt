@@ -21,7 +21,9 @@ import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.address.AddAddressActivity
 import com.lappenfashion.ui.address.AddressListingActivity
 import com.lappenfashion.ui.editProfile.EditProfileActivity
+import com.lappenfashion.ui.orderList.OrderListActivity
 import com.lappenfashion.ui.otp.OTPActivity
+import com.lappenfashion.ui.wishlist.WishListActivity
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_edit_profile.imgProfile
@@ -67,7 +69,12 @@ class ProfileFragment : Fragment() {
         }
 
         rootView.relativeTrackOrder.setOnClickListener {
-
+            if(Prefs.getString(Constants.PREF_IS_LOGGED_IN,"")=="1") {
+                var intent = Intent(mContext, OrderListActivity::class.java)
+                startActivity(intent)
+            }else{
+                displayLoginDialog()
+            }
         }
 
         rootView.relativeEditProfile.setOnClickListener {
@@ -79,11 +86,23 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        rootView.relativeWishlist.setOnClickListener {
+            if(Prefs.getString(Constants.PREF_IS_LOGGED_IN,"")=="1") {
+                var intent = Intent(mContext, WishListActivity::class.java)
+                startActivity(intent)
+            }else{
+                displayLoginDialog()
+            }
+        }
+
         rootView.relativeLogout.setOnClickListener {
+            var count = Prefs.getInt(Constants.PREF_CART_COUNT,0)
             Prefs.clear()
+            Prefs.putInt(Constants.PREF_CART_COUNT,count)
             var intent = Intent(mContext,MainActivity::class.java)
             startActivity(intent)
         }
+
 
         rootView.relativeAddress.setOnClickListener {
             if(Prefs.getString(Constants.PREF_IS_LOGGED_IN,"")=="1") {
@@ -104,14 +123,13 @@ class ProfileFragment : Fragment() {
         val imgClose = dialog.findViewById<View>(R.id.imgClose) as ImageView?
         val txtLogin = dialog.findViewById<View>(R.id.txtLogin) as TextView?
         val edtMobileNumber = dialog.findViewById<View>(R.id.edtPhoneNumber) as EditText?
-        val txtResendOtp = dialog.findViewById<View>(R.id.txtResendOtp) as TextView?
 
         txtLogin!!.setOnClickListener {
             if(edtMobileNumber?.text.toString() != ""){
                 if(NetworkConnection.checkConnection(mContext)) {
                     txtLogin.isEnabled = false
                     com.lappenfashion.utils.Helper.showLoader(mContext)
-                    loginData(edtMobileNumber?.text.toString(),txtLogin)
+                    loginData(edtMobileNumber?.text.toString(),txtLogin,dialog)
                 }else{
                     com.lappenfashion.utils.Helper.showTost(mContext, getString(R.string.no_internet))
                 }
@@ -121,50 +139,11 @@ class ProfileFragment : Fragment() {
 
         }
 
-        txtResendOtp?.setOnClickListener {
-            if(NetworkConnection.checkConnection(mContext)) {
-                com.lappenfashion.utils.Helper.showLoader(mContext)
-                resendOTP(edtMobileNumber?.text.toString())
-            }else{
-                com.lappenfashion.utils.Helper.showTost(mContext, getString(R.string.no_internet))
-            }
-        }
-
         imgClose!!.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }
 
-    private fun resendOTP(mobileNumber: String) {
-        var api = MyApi(mContext)
-        val requestCall: Call<ResponseMainLogin> = api.resendOTP(mobileNumber)
-
-        requestCall.enqueue(object : Callback<ResponseMainLogin> {
-            override fun onResponse(
-                call: Call<ResponseMainLogin>,
-                response: Response<ResponseMainLogin>
-            ) {
-                com.lappenfashion.utils.Helper.dismissLoader()
-
-                if (response.body() != null) {
-                    if( response.body()?.result==true){
-                        com.lappenfashion.utils.Helper.showTost(mContext, response.body()?.message!!)
-                        var intent = Intent(mContext,OTPActivity::class.java)
-                        intent.putExtra("mobile_number",mobileNumber)
-                        startActivity(intent)
-                    }
-                } else {
-                    com.lappenfashion.utils.Helper.showTost(mContext, resources.getString(R.string.some_thing_happend_wrong))
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
-                com.lappenfashion.utils.Helper.dismissLoader()
-            }
-
-        })
-    }
-
-    private fun loginData(mobileNumber: String, txtLogin: TextView) {
+    private fun loginData(mobileNumber: String, txtLogin: TextView,dialog: BottomSheetDialog) {
         var api = MyApi(mContext)
         val requestCall: Call<ResponseMainLogin> = api.login(mobileNumber)
 
@@ -174,13 +153,13 @@ class ProfileFragment : Fragment() {
                 response: Response<ResponseMainLogin>
             ) {
                 com.lappenfashion.utils.Helper.dismissLoader()
-
                 if (response.body() != null) {
                     if( response.body()?.result==true){
+                        dialog.dismiss()
                         com.lappenfashion.utils.Helper.showTost(mContext, response.body()?.message!!)
                         var intent = Intent(mContext,OTPActivity::class.java)
                         intent.putExtra("mobile_number",mobileNumber)
-                        startActivity(intent)
+                        startActivityForResult(intent,101)
                     }
                 } else {
                     txtLogin.isEnabled = true
@@ -201,8 +180,10 @@ class ProfileFragment : Fragment() {
         if(Prefs.getString(Constants.PREF_IS_LOGGED_IN,"") == "1"){
             rootView.relativeProfile.visibility = View.VISIBLE
             rootView.txtLogin.visibility = View.GONE
+            rootView.relativeLogout.visibility = View.VISIBLE
         }else{
             rootView.relativeProfile.visibility = View.GONE
+            rootView.relativeLogout.visibility = View.GONE
             rootView.txtLogin.visibility = View.VISIBLE
         }
 
@@ -219,6 +200,13 @@ class ProfileFragment : Fragment() {
             rootView.txtEmail.setText(Prefs.getString(Constants.PREF_PROFILE_EMAIL,""))
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 101){
+            initData()
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.lappenfashion.data.network
 
 import android.content.Context
 import com.example.simplemvvm.utils.Constants
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.lappenfashion.data.model.*
@@ -20,11 +21,20 @@ interface MyApi {
     /*@GET(Constants.END_POINT)
     fun getCategories(): Call<ResponseMain>
 */
-    @GET(Constants.END_POINT_HOME)
-    fun getHome(): Call<JsonObject>
+    @GET
+    fun getHome(@Url url: String): Call<JsonObject>
+
+    @GET
+    fun searchProduct(@Url url: String): Call<ResponseMainSearchProduct>
+
+    @GET(Constants.END_POINT_PLACE_ORDER)
+    fun getOrders(@Header("Authorization") token: String): Call<ResponseMainOrderList>
 
     @GET
     fun getProducts(@Url url: String): Call<JsonObject>
+
+    @GET
+    fun getProductDetails(@Url url: String): Call<ResponseMainProductDetails>
 
     @GET(Constants.END_POINT_CATEGORY)
     fun getCategories(): Call<ResponseMainCategories>
@@ -32,14 +42,27 @@ interface MyApi {
     @GET(Constants.END_POINT_GET_WISH_LIST)
     fun getWishList(@Header("Authorization") token: String): Call<ResponseMainWishList>
 
+    @GET(Constants.END_POINT_CHECKOUT_CART)
+    fun checkoutCart(@Header("Authorization") token: String): Call<ResponseMainCheckoutCart>
+
+    @GET
+    fun placeOrderView(@Header("Authorization") token: String,@Url url : String): Call<ResponseMainPlaceOrderView>
+
     @GET(Constants.END_POINT_GET_ADDRESS)
     fun getAddress(@Header("Authorization") token: String): Call<ResponseMainAddress>
+
+    @GET(Constants.END_POINT_DELIVERY_OPTION)
+    fun getDeliveryOption(): Call<ResponseMainDeliveryOption>
 
     @GET(Constants.END_POINT_CART)
     fun getCart(@Header("Authorization") token: String): Call<ResponseMainCartNew>
 
     @DELETE("wish-list/{id}")
     fun deleteWishList(@Header("Authorization") token: String, @Path("id") itemId: Int): Call<ResponseMainLogin>
+
+    @FormUrlEncoded
+    @HTTP(method = "DELETE",path = Constants.END_POINT_OUT_OF_STOCK_PRODUCT, hasBody = true)
+    fun deleteOutOfStockCart(@Header("Authorization") token: String, @Field("product_ids") product_ids: List<Int>): Call<ResponseMainDeleteCheckoutCart>
 
     @DELETE("shipping-address/{id}")
     fun deleteAddress(@Header("Authorization") token: String, @Path("id") itemId: Int): Call<ResponseMainLogin>
@@ -63,6 +86,19 @@ interface MyApi {
         @Field("quantity") quantity: String?,
         @Field("amount") amount: String?,
     ): Call<ResponseMainLogin>
+
+    @FormUrlEncoded
+    @POST(Constants.END_POINT_PLACE_ORDER)
+    fun placeOrder(
+        @Header("Authorization") token: String,
+        @Field("address_id") address_id: String?,
+        @Field("delivery_option_id") delivery_option_id: String?,
+        @Field("delivery_date") delivery_date: String?,
+        @Field("grand_total") grand_total: String?,
+        @Field("payment_id") payment_id: String?,
+        @Field("products") products: String,
+    ): Call<ResponseMainLogin>
+
 
     @FormUrlEncoded
     @POST(Constants.END_POINT_LOGIN)
@@ -135,7 +171,7 @@ interface MyApi {
 
     @POST(Constants.END_POINT_CART)
     fun addCart(
-        @Header("access-token") token: String?,
+        @Header("Authorization") token: String?,
         @Body param: JsonArray?
     ): Call<ResponseMainCartNew>
 
@@ -143,10 +179,8 @@ interface MyApi {
         val cacheSize = (5 * 1024 * 1024).toLong()
 
         operator fun invoke(mContext: Context): MyApi {
-            val myCache = Cache(mContext.cacheDir, cacheSize)
 
             val okHttpClient = OkHttpClient.Builder()
-                .cache(myCache)
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .callTimeout(20, TimeUnit.SECONDS)
@@ -162,11 +196,12 @@ interface MyApi {
                     chain.proceed(request)
                 }
                 .build()
+            val gson = GsonBuilder().setLenient()
 
             return Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL_MAIN)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson.create()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
                 .create(MyApi::class.java)

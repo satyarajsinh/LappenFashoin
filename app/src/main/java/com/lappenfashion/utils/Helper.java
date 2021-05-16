@@ -12,8 +12,12 @@ import androidx.core.content.ContextCompat;
 
 import com.lappenfashion.R;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.Locale;
+
+import okhttp3.ResponseBody;
 
 
 public class Helper {
@@ -39,6 +43,17 @@ public class Helper {
 
     public static void showTost(Context context,String message){
         Toast.makeText(context,message,Toast.LENGTH_LONG).show();
+    }
+
+    public static String getErrorBodyMessage(Context context, ResponseBody responseBody){
+        try {
+            JSONObject jObjError = new JSONObject(responseBody.string());
+            String message = jObjError.getString("message");
+            return message;
+        } catch (Exception e) {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        return "";
     }
 
 }

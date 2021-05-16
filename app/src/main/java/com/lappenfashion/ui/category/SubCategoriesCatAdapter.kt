@@ -8,18 +8,26 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainCategories
-import com.lappenfashion.data.model.ResponseMainHome
+import com.lappenfashion.ui.profile.CategoryFragment
+import com.pixplicity.easyprefs.library.Prefs
 
 class SubCategoriesCatAdapter : RecyclerView.Adapter<SubCategoriesCatAdapter.ViewHolder> {
 
     lateinit var context: Context
     var data:  List<ResponseMainCategories.Payload.SubCategory?>?
+    lateinit var categoryFragment : CategoryFragment
 
-    constructor(context: Context, data: List<ResponseMainCategories.Payload.SubCategory?>?) {
+    constructor(
+        context: Context,
+        data: List<ResponseMainCategories.Payload.SubCategory?>?,
+        categoryFragment: CategoryFragment
+    ) {
         this.context = context
         this.data = data
+        this.categoryFragment=categoryFragment
     }
 
     class ViewHolder(view : View):RecyclerView.ViewHolder(view) {
@@ -43,6 +51,7 @@ class SubCategoriesCatAdapter : RecyclerView.Adapter<SubCategoriesCatAdapter.Vie
         holder.view.visibility = View.GONE
         holder.txtSubCategoryName.setOnClickListener {
             if(holder.imgDown.rotation == 360f){
+                Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,data?.get(position)?.subCategoryId.toString())
                 holder.imgDown.rotation = 180f
                 holder.recyclerProductCategory.visibility = View.VISIBLE
                 holder.recyclerProductCategory.layoutManager = LinearLayoutManager(
@@ -53,7 +62,8 @@ class SubCategoriesCatAdapter : RecyclerView.Adapter<SubCategoriesCatAdapter.Vie
                 holder.recyclerProductCategory.setHasFixedSize(true)
                 var offersAdapter = ProductCategoriesCatAdapter(
                     context,
-                    data?.get(position)?.productCategory
+                    data?.get(position)?.productCategory,
+                    categoryFragment
                 )
                 holder.recyclerProductCategory.adapter = offersAdapter
             }else{

@@ -13,6 +13,8 @@ data class ResponseMainHome(
     var result: Boolean?
 ):Serializable {
     data class Payload(
+        @SerializedName("cart_count")
+        var cart_count: Int,
         @SerializedName("accessories")
         var accessories: List<Accessory?>?,
         @SerializedName("category_list")
@@ -105,44 +107,40 @@ data class ResponseMainHome(
         }
 
         data class DealsOfTheDay(
-            @SerializedName("amount_type")
-            var amountType: String?,
-            @SerializedName("category_ids")
-            var categoryIds: String?,
+            @SerializedName("amount")
+            var amount: Int?,
+            @SerializedName("category_id")
+            var categoryId: Int?,
             @SerializedName("created_at")
             var createdAt: String?,
             @SerializedName("deal_id")
             var dealId: Int?,
             @SerializedName("image")
             var image: String?,
-            @SerializedName("thumbnail_image")
-            var thumbnailImage: String?,
+            @SerializedName("product_category_id")
+            var productCategoryId: Int?,
+            @SerializedName("sub_category_id")
+            var subCategoryId: Int?,
             @SerializedName("title")
-            var title: String?,
-            @SerializedName("value")
-            var value: String?
+            var title: String?
         ):Serializable
 
         data class Explore(
-            @SerializedName("amount_type")
-            var amountType: String?,
-            @SerializedName("category_ids")
-            var categoryIds: String?,
+            @SerializedName("amount")
+            var amount: Int?,
+            @SerializedName("category_id")
+            var categoryId: Int?,
             @SerializedName("created_at")
             var createdAt: String?,
             @SerializedName("explore_id")
             var exploreId: Int?,
             @SerializedName("image")
             var image: String?,
-            @SerializedName("shot_description")
-            var shotDescription: String?,
-            @SerializedName("thumbnail_image")
-            var thumbnailImage: String?,
-            @SerializedName("title")
-            var title: String?,
-            @SerializedName("value")
-            var value: String?
-        ):Serializable
+            @SerializedName("product_category_id")
+            var productCategoryId: Int?,
+            @SerializedName("sub_category_id")
+            var subCategoryId: Int?
+        ) :Serializable
 
         data class OfferPoster(
             @SerializedName("image")

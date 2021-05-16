@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -23,7 +24,8 @@ import com.lappenfashion.data.model.ResponseMainHome
 
 class DealsOfTheDayAdapter(
     private val context: Context,
-    private val data: List<ResponseMainHome.Payload.DealsOfTheDay?>?
+    private val data: List<ResponseMainHome.Payload.DealsOfTheDay?>?,
+    private val homeFragment: HomeFragment
 ) :
     RecyclerView.Adapter<DealsOfTheDayAdapter.ViewHolder>() {
 
@@ -31,6 +33,7 @@ class DealsOfTheDayAdapter(
         val txtSpaceName : TextView = view.findViewById(R.id.txtSpaceName)
         val imgPosterImage : ImageView = view.findViewById(R.id.imgPosterImage)
         val progressBar : SpinKitView = view.findViewById(R.id.progressBar)
+        val relativeMain : RelativeLayout = view.findViewById(R.id.relativeMain)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -80,6 +83,9 @@ class DealsOfTheDayAdapter(
             })
             .into(holder.imgPosterImage)
 
+        holder.relativeMain.setOnClickListener {
+            homeFragment.dealsOfTheDay(data?.get(position))
+        }
     }
 
 

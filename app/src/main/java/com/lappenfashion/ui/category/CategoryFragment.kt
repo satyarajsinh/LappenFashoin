@@ -1,6 +1,7 @@
 package com.lappenfashion.ui.profile
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainCategories
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.ui.category.CategoriesAdapter
+import com.lappenfashion.ui.products.ProductsByProductCategoryActivity
 import com.lappenfashion.utils.Helper
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.fragment_category.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -65,7 +69,7 @@ class CategoryFragment : Fragment() {
                     if (response.body() != null) {
                         recyclerCategoriesBottom.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
                         recyclerCategoriesBottom.setHasFixedSize(true)
-                        var adapter = CategoriesAdapter(mContext, response?.body()?.payload!!)
+                        var adapter = CategoriesAdapter(mContext, response?.body()?.payload!!,this@CategoryFragment)
                         recyclerCategoriesBottom.adapter = adapter
                     }
                 }
@@ -84,6 +88,11 @@ class CategoryFragment : Fragment() {
         recyclerCategoriesBottom = rootView.findViewById(R.id.recyclerCategoriesBottom)
 
         getCategories()
+    }
+
+    fun goToProductDetails() {
+        var intent = Intent(mContext, ProductsByProductCategoryActivity::class.java)
+        mContext.startActivity(intent)
     }
 
 }

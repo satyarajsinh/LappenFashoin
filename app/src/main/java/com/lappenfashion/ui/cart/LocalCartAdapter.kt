@@ -1,10 +1,12 @@
 package com.lappenfashion.ui.cart
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
@@ -31,6 +33,8 @@ class LocalCartAdapter : RecyclerView.Adapter<LocalCartAdapter.ViewHolder> {
         var productPrice = itemview.findViewById<TextView>(R.id.txtProductPrice)
         var txtQty = itemview.findViewById<TextView>(R.id.txtQty)
         var txtRemove = itemview.findViewById<TextView>(R.id.txtRemove)
+        var cardView = itemview.findViewById<CardView>(R.id.cardView)
+        var txtSize = itemview.findViewById<TextView>(R.id.txtSize)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,7 +45,8 @@ class LocalCartAdapter : RecyclerView.Adapter<LocalCartAdapter.ViewHolder> {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         Glide.with(context).load(data!![position]?.cartImage).into(holder.productImage)
-
+        holder.cardView.setCardBackgroundColor(Color.parseColor(data.get(position)?.color))
+        holder.txtSize.text = data.get(position).size
         holder.productName.text = data!![position]?.cartTitle
         holder.productPrice.text = "₹"+data!![position]?.cartAmount
         holder.productPrice.text = "₹"+data!![position]?.cartAmount

@@ -54,15 +54,15 @@
                 android:id="@+id/linearTimeLine"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
-                android:padding="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
                 android:layout_below="@id/relativeToolbar"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_25sdp"
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/delivery">
 
@@ -100,7 +100,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -140,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_25sdp"
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/address">
 
@@ -150,7 +150,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -179,11 +179,10 @@
                         android:layout_below="@id/imgThird"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/dark_grey"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_25sdp"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Payments">
+                        android:text="Order Now">
 
                     </TextView>
 
@@ -191,10 +190,99 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/txtAddAddressCheckoutText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:layout_gravity="right"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:textSize="@dimen/_10ssp"
+                android:text="Add new address">
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerDeliveryAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:scrollbars="none">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+
+            <LinearLayout
+                android:id="@+id/linearAddressCheckout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:alpha="0.8"
+                    android:src="@mipmap/map">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/_35ssp"
+                    android:layout_marginRight="@dimen/_35sdp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Save Your Address Now">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/_35ssp"
+                    android:layout_marginRight="@dimen/_35sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/wishlist_desc_color"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Add your home and office addresses and enjoy faster checkout">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/txtAddAddressCheckout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    android:layout_marginLeft="@dimen/_35ssp"
+                    android:layout_marginRight="@dimen/_35sdp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/white"
+                    android:background="@color/colorAccent"
+                    android:text="@string/add_address">
+
+                </TextView>
+
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/linearBilling"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 android:padding="@dimen/_10sdp">
 
@@ -224,6 +312,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -367,6 +456,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
 
     </ScrollView>
 

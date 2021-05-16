@@ -1,37 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingTop="@dimen/_5sdp"
-    android:paddingBottom="@dimen/_5sdp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_40sdp"
+    android:layout_height="@dimen/_40sdp"
+    android:id="@+id/linearMain"
     android:layout_marginRight="@dimen/_5sdp"
-    android:paddingLeft="@dimen/_10sdp"
-    android:paddingRight="@dimen/_10sdp"
-    android:background="@drawable/rounded_border_grey"
+    android:background="@drawable/rounded_border_grey_20"
     android:orientation="horizontal">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_medium"
-        android:text="Size"
-        android:textColor="@color/black"
-        android:layout_weight="1"
-        android:textSize="@dimen/_10ssp"
-        android:gravity="center">
-
-    </TextView>
-
-    <TextView
         android:id="@+id/txtSize"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
         android:textSize="@dimen/_10ssp"
-        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_centerInParent="true"
         android:textColor="@color/black"
         android:layout_weight="1"
-        android:gravity="center">
+        android:layout_gravity="center">
 
     </TextView>
-</LinearLayout>
+</RelativeLayout>

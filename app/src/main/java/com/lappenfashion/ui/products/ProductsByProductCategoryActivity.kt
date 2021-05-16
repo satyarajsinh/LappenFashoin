@@ -4,11 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplemvvm.utils.Constants
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.lappenfashion.R
@@ -16,13 +20,16 @@ import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.model.ResponseMainProductsByCategory
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
+import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.cart.CartActivity
+import com.lappenfashion.ui.otp.OTPActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
 import com.lappenfashion.utils.SpacesItemDecoration
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_products_by_product_category.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.toolbar_with_drawer.view.*
 import kotlinx.android.synthetic.main.toolbar_with_like_cart.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,7 +40,7 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
     private lateinit var productsByCategoryAdapter: ProductsByCategoryAdapter
     private var productData: ArrayList<ResponseMainProductsByCategory.Payload.Data?>? = arrayListOf()
     private var isScrolling = false
-    private var offset = 0
+    private var offset = 1
     private var visibleItemCount = 0
     private var totalItemCount = 0
     private var pastVisiblesItems = 0
@@ -46,8 +53,19 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
         clickListener()
     }
 
+    override fun onBackPressed() {
+        Prefs.putString(Constants.PREFS_SEARCH_STRING,"")
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Prefs.putString(Constants.PREFS_SEARCH_STRING,"")
+    }
+
     private fun clickListener() {
         imgBack.setOnClickListener {
+            Prefs.putString(Constants.PREFS_SEARCH_STRING,"")
             finish()
         }
 
@@ -60,12 +78,36 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
             var intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
+
+        txtShopping.setOnClickListener {
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(Prefs.getInt(Constants.PREF_CART_COUNT,0) > 0){
+            txtCartCount.visibility = View.VISIBLE
+            txtCartCount.text = Prefs.getInt(Constants.PREF_CART_COUNT,0).toString()
+        }else{
+            txtCartCount.visibility = View.GONE
+        }
+    }
     private fun initData() {
         txtTitle.visibility = View.VISIBLE
 
         txtTitle.text = Prefs.getString(Constants.PREF_PRODUCT_TITLE,"")
+
+
+        if(Prefs.getInt(Constants.PREF_CART_COUNT,0) > 0){
+            txtCartCount.visibility = View.VISIBLE
+            txtCartCount.text = Prefs.getInt(Constants.PREF_CART_COUNT,0).toString()
+        }else{
+            txtCartCount.visibility = View.GONE
+        }
+
         if (NetworkConnection.checkConnection(this)) {
             getProductsByProductCategory(offset, true)
             recyclerProductsByProductCategory.setLayoutManager(
@@ -117,13 +159,18 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
 
     private fun getProductsByProductCategory(offset: Int, b: Boolean) {
         if (b) {
-            Helper.showLoader(this)
+            Helper.showLoader(this@ProductsByProductCategoryActivity)
         } else {
             progressBar.setVisibility(View.VISIBLE)
         }
 
+        val requestCall: Call<JsonObject>
         var api = MyApi(this)
-        val requestCall: Call<JsonObject> = api.getProducts(Constants.END_POINT_PRODUCTS + "?page=" + offset + "&category_id="+Prefs.getString(Constants.PREF_CATEGORY_ID,"")+"sub_category_id="+Prefs.getString(Constants.PREF_SUB_CATEGORY_ID,"")+"product_category_id=" + Prefs.getString(Constants.PREF_PRODUCT_CATEGORY_ID,""))
+        if(Prefs.getString(Constants.PREFS_SEARCH_STRING,"") == ""){
+            requestCall = api.getProducts(Constants.END_POINT_PRODUCTS + "?page=" + offset + "&category_id="+Prefs.getString(Constants.PREF_CATEGORY_ID,"")+"&sub_category_id="+Prefs.getString(Constants.PREF_SUB_CATEGORY_ID,"")+"&product_category_id=" + Prefs.getString(Constants.PREF_PRODUCT_CATEGORY_ID,"")+"&user_id="+Prefs.getInt(Constants.PREF_USER_ID,0).toString()+"&search=")
+        }else{
+            requestCall = api.getProducts(Constants.END_POINT_PRODUCTS + "?page=" + offset + "&category_id=&sub_category_id=&product_category_id=&user_id="+Prefs.getInt(Constants.PREF_USER_ID,0).toString()+"&search="+Prefs.getString(Constants.PREFS_SEARCH_STRING,""))
+        }
 
         requestCall.enqueue(object : Callback<JsonObject> {
             override fun onResponse(
@@ -137,8 +184,16 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
                         response.body(),
                         ResponseMainProductsByCategory::class.java
                     )
-                    productData?.addAll(productsResponse.payload?.data!!)
-                    productsByCategoryAdapter.notifyDataSetChanged()
+                    recyclerProductsByProductCategory.visibility = View.VISIBLE
+                    if(productsResponse.result == true && productsResponse.payload?.data!!.size > 0){
+                        productData?.addAll(productsResponse.payload?.data!!)
+                        productsByCategoryAdapter.notifyDataSetChanged()
+                    }else{
+                        if(b){
+                            recyclerProductsByProductCategory.visibility = View.GONE
+                            linearNoCart.visibility = View.VISIBLE
+                        }
+                    }
                 } else {
                     Helper.showTost(this@ProductsByProductCategoryActivity, "No Data Found")
                 }
@@ -156,41 +211,121 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
             this@ProductsByProductCategoryActivity,
             ProductDetailsActivity::class.java
         )
-        intent.putExtra("productDetail", data)
+        intent.putExtra("productId", data?.productId)
         startActivity(intent)
     }
 
-    fun addToWishList(productId: Int?) {
-        if (NetworkConnection.checkConnection(this@ProductsByProductCategoryActivity)) {
-            Helper.showLoader(this@ProductsByProductCategoryActivity)
-            var api = MyApi(this)
-            val requestCall: Call<ResponseMainLogin> =
-                api.addToWishList(
-                    "Bearer " + Prefs.getString(Constants.PREF_TOKEN, ""),
-                    productId.toString()
-                )
+    fun addToWishList(productId: Int?, position: Int) {
+        if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
+            if (NetworkConnection.checkConnection(this@ProductsByProductCategoryActivity)) {
+                Helper.showLoader(this@ProductsByProductCategoryActivity)
+                var api = MyApi(this)
+                val requestCall: Call<ResponseMainLogin> =
+                    api.addToWishList(
+                        "Bearer " + Prefs.getString(Constants.PREF_TOKEN, ""),
+                        productId.toString()
+                    )
 
-            requestCall.enqueue(object : Callback<ResponseMainLogin> {
-                override fun onResponse(
-                    call: Call<ResponseMainLogin>,
-                    response: Response<ResponseMainLogin>
-                ) {
-                    Helper.dismissLoader()
-                    if (response.body() != null && response.body()!!.result == true) {
-                        Helper.showTost(
-                            this@ProductsByProductCategoryActivity,
-                            response.body()!!.message!!
-                        )
+                requestCall.enqueue(object : Callback<ResponseMainLogin> {
+                    override fun onResponse(
+                        call: Call<ResponseMainLogin>,
+                        response: Response<ResponseMainLogin>
+                    ) {
+                        Helper.dismissLoader()
+                        if (response.body() != null && response.body()!!.result == true) {
+                            productsByCategoryAdapter.setWishLIst(position)
+                            Helper.showTost(
+                                this@ProductsByProductCategoryActivity,
+                                response.body()!!.message!!
+                            )
+                        }else{
+                            var message = Helper.getErrorBodyMessage(this@ProductsByProductCategoryActivity,response.errorBody())
+                            Helper.showTost(this@ProductsByProductCategoryActivity,message)
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
-                    Helper.dismissLoader()
-                }
+                    override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                        Helper.dismissLoader()
+                    }
 
-            })
-        }else{
-            Helper.showTost(this@ProductsByProductCategoryActivity, getString(R.string.no_internet))
+                })
+            } else {
+                Helper.showTost(this@ProductsByProductCategoryActivity, getString(R.string.no_internet))
+            }
+        } else {
+            displayLoginDialog()
         }
     }
+
+    private fun displayLoginDialog() {
+        val dialog = BottomSheetDialog(this@ProductsByProductCategoryActivity)
+        dialog.setContentView(R.layout.bottom_sheet_login)
+        dialog.setCanceledOnTouchOutside(false)
+
+        val imgClose = dialog.findViewById<View>(R.id.imgClose) as ImageView?
+        val txtLogin = dialog.findViewById<View>(R.id.txtLogin) as TextView?
+        val edtMobileNumber = dialog.findViewById<View>(R.id.edtPhoneNumber) as EditText?
+
+        txtLogin!!.setOnClickListener {
+            if (edtMobileNumber?.text.toString() != "") {
+                if (NetworkConnection.checkConnection(this@ProductsByProductCategoryActivity)) {
+                    txtLogin.isEnabled = false
+                    Helper.showLoader(this@ProductsByProductCategoryActivity)
+                    loginData(edtMobileNumber?.text.toString(), txtLogin, dialog)
+                } else {
+                    Helper.showTost(
+                        this@ProductsByProductCategoryActivity,
+                        getString(R.string.no_internet)
+                    )
+                }
+            } else {
+                Helper.showTost(this@ProductsByProductCategoryActivity, "Field is required")
+            }
+
+        }
+
+
+        imgClose!!.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+    }
+
+    private fun loginData(mobileNumber: String, txtLogin: TextView, dialog: BottomSheetDialog) {
+        var api = MyApi(this@ProductsByProductCategoryActivity)
+        val requestCall: Call<ResponseMainLogin> = api.login(mobileNumber)
+
+        requestCall.enqueue(object : Callback<ResponseMainLogin> {
+            override fun onResponse(
+                call: Call<ResponseMainLogin>,
+                response: Response<ResponseMainLogin>
+            ) {
+                com.lappenfashion.utils.Helper.dismissLoader()
+
+                if (response.body() != null) {
+                    if (response.body()?.result == true) {
+                        dialog.dismiss()
+                        com.lappenfashion.utils.Helper.showTost(
+                            this@ProductsByProductCategoryActivity,
+                            response.body()?.message!!
+                        )
+                        var intent = Intent(this@ProductsByProductCategoryActivity, OTPActivity::class.java)
+                        intent.putExtra("mobile_number", mobileNumber)
+                        startActivity(intent)
+                    }
+                } else {
+                    txtLogin.isEnabled = true
+                    com.lappenfashion.utils.Helper.showTost(
+                        this@ProductsByProductCategoryActivity,
+                        resources.getString(R.string.some_thing_happend_wrong)
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                txtLogin.isEnabled = true
+                com.lappenfashion.utils.Helper.dismissLoader()
+            }
+
+        })
+    }
+
 }

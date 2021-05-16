@@ -1,6 +1,7 @@
 package com.lappenfashion.ui.home
 
 import android.content.Context
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.bumptech.glide.request.target.Target
 import com.github.ybq.android.spinkit.SpinKitView
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainHome
+import kotlinx.android.synthetic.main.activity_product_details.*
 
 
 class TrendingAdapter(
@@ -73,6 +75,8 @@ class TrendingAdapter(
 
         holder.txtDiscountPrice.text = "₹"+data?.get(position)?.salePrice
         holder.txtOrignalPrice.text = "₹"+data?.get(position)?.price
+        holder.txtOrignalPrice.setPaintFlags(holder.txtOrignalPrice.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+
     }
 
 

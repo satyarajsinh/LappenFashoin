@@ -112,6 +112,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_below="@id/relativeMain"
         android:textSize="@dimen/_12ssp"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:fontFamily="@font/poppins_medium"
         android:layout_marginRight="@dimen/_15sdp"

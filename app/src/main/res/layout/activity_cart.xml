@@ -18,7 +18,7 @@
             android:layout_height="@dimen/_30sdp"
             android:padding="@dimen/_5sdp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_light_arrow">
+            app:srcCompat="@drawable/ic_light_arrow">
 
         </ImageView>
 
@@ -37,7 +37,7 @@
         </TextView>
 
         <ImageView
-            android:id="@+id/imgLiked"
+            android:id="@+id/imgLikedCart"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
             android:padding="@dimen/_5sdp"

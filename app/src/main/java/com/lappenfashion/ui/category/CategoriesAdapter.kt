@@ -13,12 +13,17 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.example.simplemvvm.utils.Constants
 import com.github.ybq.android.spinkit.SpinKitView
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainCategories
+import com.lappenfashion.ui.profile.CategoryFragment
+import com.pixplicity.easyprefs.library.Prefs
 
-class CategoriesAdapter(private val context: Context,
-                        private val data: List<ResponseMainCategories.Payload?>?
+class CategoriesAdapter(
+    private val context: Context,
+    private val data: List<ResponseMainCategories.Payload?>?,
+    private val categoryFragment: CategoryFragment
 ) :
     RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
@@ -69,6 +74,7 @@ class CategoriesAdapter(private val context: Context,
         holder.imgPosterImage.setOnClickListener {
             if(!isClicked) {
                 isClicked = true
+                Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,data?.get(position)?.categoryId.toString())
                 holder.recyclerSubCategories.visibility = View.VISIBLE
                 holder.recyclerSubCategories.layoutManager = LinearLayoutManager(
                     context,
@@ -78,7 +84,8 @@ class CategoriesAdapter(private val context: Context,
                 holder.recyclerSubCategories.setHasFixedSize(true)
                 var offersAdapter = SubCategoriesCatAdapter(
                     context,
-                    data?.get(position)?.subCategory
+                    data?.get(position)?.subCategory,
+                    categoryFragment
                 )
                 holder.recyclerSubCategories.adapter = offersAdapter
             }else{

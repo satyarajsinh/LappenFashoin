@@ -1,5 +1,6 @@
 package com.lappenfashion.ui.products
 
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -16,6 +18,7 @@ import com.bumptech.glide.request.target.Target
 import com.github.ybq.android.spinkit.SpinKitView
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainProductsByCategory
+import kotlinx.android.synthetic.main.activity_product_details.*
 
 
 class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter.ViewHolder> {
@@ -36,6 +39,7 @@ class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter
         var productName = itemview.findViewById<TextView>(R.id.txtProductName)
         var productDetails = itemview.findViewById<TextView>(R.id.txtProductDetails)
         var productPrice = itemview.findViewById<TextView>(R.id.txtPrice)
+        var productMrp = itemview.findViewById<TextView>(R.id.txtMrp)
         var relativeMain = itemview.findViewById<RelativeLayout>(R.id.relativeMain)
         val progressBar: SpinKitView = itemview.findViewById(R.id.progressBar)
     }
@@ -48,6 +52,7 @@ class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        holder.progressBar.visibility = View.VISIBLE
         Glide.with(context).load(data[position]?.mainImageName)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
@@ -75,18 +80,43 @@ class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter
         holder.productName.text = data[position]?.productName
         holder.productDetails.text = data[position]?.description
         holder.productPrice.text = "₹" + data[position]?.salePrice
+        holder.productPrice.text = "₹" + data[position]?.salePrice
+        holder.productMrp.text = "₹" + data[position]?.mrp
+        holder.productMrp.setPaintFlags(holder.productMrp.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
 
         holder.relativeMain.setOnClickListener {
             context.goToDetails(data.get(position))
         }
 
         holder.imgLiked.setOnClickListener {
-            context.addToWishList(data[position]?.productId)
+            context.addToWishList(data[position]?.productId,position)
+        }
+
+        if(data[position]?.isWishList == 1){
+            holder.imgLiked.setColorFilter(
+                ContextCompat.getColor(context, R.color.colorAccent),
+                android.graphics.PorterDuff.Mode.SRC_ATOP
+            )
+        }else{
+            holder.imgLiked.setColorFilter(
+                ContextCompat.getColor(context, R.color.black),
+                android.graphics.PorterDuff.Mode.SRC_ATOP
+            )
         }
     }
 
     override fun getItemCount(): Int {
         return data.size
+    }
+
+    fun setWishLIst(position: Int){
+        if(data[position]?.isWishList == 1){
+            data[position]?.isWishList = 0
+        }else{
+            data[position]?.isWishList = 1
+        }
+
+        notifyDataSetChanged()
     }
 
 }

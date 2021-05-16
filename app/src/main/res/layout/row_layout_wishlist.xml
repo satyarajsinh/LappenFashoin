@@ -11,9 +11,6 @@
     <ImageView
         android:id="@+id/imgProudctImage"
         android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/_2sdp"
-        android:layout_marginRight="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_2sdp"
         android:layout_height="@dimen/_230sdp"
         android:background="@color/white"
         android:scaleType="fitXY">
@@ -22,8 +19,8 @@
 
     <ImageView
         android:id="@+id/imgClose"
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
+        android:layout_width="@dimen/_15sdp"
+        android:layout_height="@dimen/_15sdp"
         android:src="@mipmap/ic_close_grey"
         android:layout_margin="@dimen/_5sdp"
         android:layout_alignParentRight="true"

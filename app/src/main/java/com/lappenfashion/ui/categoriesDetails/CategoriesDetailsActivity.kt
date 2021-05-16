@@ -21,6 +21,7 @@ import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_categories_details.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.recyclerCategories
+import kotlinx.android.synthetic.main.toolbar_with_drawer.view.*
 import kotlinx.android.synthetic.main.toolbar_with_like_cart.*
 
 class CategoriesDetailsActivity : AppCompatActivity() {
@@ -35,6 +36,16 @@ class CategoriesDetailsActivity : AppCompatActivity() {
         initData()
         clickListener()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (Prefs.getInt(Constants.PREF_CART_COUNT, 0) > 0) {
+            txtCartCount.visibility = View.VISIBLE
+            txtCartCount.text = Prefs.getInt(Constants.PREF_CART_COUNT, 0).toString()
+        }else{
+            txtCartCount.visibility = View.GONE
+        }
     }
 
     private fun clickListener() {
@@ -54,6 +65,15 @@ class CategoriesDetailsActivity : AppCompatActivity() {
     }
 
     private fun initData() {
+
+        if (Prefs.getInt(Constants.PREF_CART_COUNT, 0) > 0) {
+            txtCartCount.visibility = View.VISIBLE
+            txtCartCount.text = Prefs.getInt(Constants.PREF_CART_COUNT, 0).toString()
+        }else{
+            txtCartCount.visibility = View.GONE
+        }
+
+
         if (intent != null) {
             subCategoriesData =
                 intent.getSerializableExtra("subCategories") as ResponseMainHome.Payload.Category
@@ -133,8 +153,8 @@ class CategoriesDetailsActivity : AppCompatActivity() {
 
     fun goToProducts(data: ResponseMainHome.Payload.Category.SubCategory.ProductCategory?) {
         var intent = Intent(this, ProductsByProductCategoryActivity::class.java)
-        Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,data?.productCategoryId.toString())
-        Prefs.putString(Constants.PREF_PRODUCT_TITLE,data?.title.toString())
+        Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID, data?.productCategoryId.toString())
+        Prefs.putString(Constants.PREF_PRODUCT_TITLE, data?.title.toString())
         startActivity(intent)
     }
 

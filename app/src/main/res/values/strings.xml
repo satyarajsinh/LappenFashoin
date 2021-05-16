@@ -70,6 +70,16 @@
     <string name="add_address">Add Address</string>
     <string name="start_shopping">Start Shopping</string>
     <string name="add_to_cart">Add to cart</string>
+    <string name="change_your_address">Change Your Address</string>
+    <string name="place_order">Place Order</string>
+    <string name="size_fit"><![CDATA[Size & Fit]]></string>
+    <string name="material_care"><![CDATA[Material & Care]]></string>
+    <string name="style_note">Style Note</string>
+    <string name="genuine_product">Genuine Product</string>
+    <string name="quality_checked">Quality Checked</string>
+    <string name="cash_on_delivery_available">Cash on delivery available</string>
+    <string name="easy_30_days_return_exchange_available"><![CDATA[Easy 30 days return & exchange available]]></string>
+    <string name="no_products_available_for_this_category">No products available for this category!</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

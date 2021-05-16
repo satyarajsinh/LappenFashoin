@@ -33,6 +33,10 @@ class OTPActivity : AppCompatActivity() {
             finish()
         }
 
+        txtResendOtp.setOnClickListener {
+            resendOTP()
+        }
+
         txtLogin.setOnClickListener {
             if(NetworkConnection.checkConnection(this)) {
                 com.lappenfashion.utils.Helper.showLoader(this@OTPActivity)
@@ -49,10 +53,42 @@ class OTPActivity : AppCompatActivity() {
 
     }
 
+    private fun resendOTP() {
+        var api = MyApi(this@OTPActivity)
+        val requestCall: Call<ResponseMainLogin> = api.resendOTP(mobileNumber)
+
+        requestCall.enqueue(object : Callback<ResponseMainLogin> {
+            override fun onResponse(
+                call: Call<ResponseMainLogin>,
+                response: Response<ResponseMainLogin>
+            ) {
+                Helper.dismissLoader()
+
+                if (response.body() != null) {
+                    if (response.body()?.result == true) {
+                        Helper.showTost(
+                            this@OTPActivity,
+                            response.body()?.message!!
+                        )
+                    }
+                } else {
+                    Helper.showTost(
+                        this@OTPActivity,
+                        resources.getString(R.string.some_thing_happend_wrong)
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                Helper.dismissLoader()
+            }
+
+        })
+    }
+
     private fun verifyOTP(mobileNumber: String, otp: String) {
         var api = MyApi(this)
         val requestCall: Call<ResponseMainVerifyOtp> = api.verifyOtp(mobileNumber,otp)
-
         requestCall.enqueue(object : Callback<ResponseMainVerifyOtp> {
             override fun onResponse(
                 call: Call<ResponseMainVerifyOtp>,
@@ -64,8 +100,8 @@ class OTPActivity : AppCompatActivity() {
                     if(response.body()?.result==true){
                         Prefs.putString(Constants.PREF_TOKEN,response.body()?.payload?.accessToken)
                         Prefs.putString(Constants.PREF_PROFILE_MOBILE_NUMBER,response.body()?.payload?.mobileNumber)
+                        Prefs.putInt(Constants.PREF_USER_ID,response.body()?.payload?.userId!!)
                         Prefs.putString(Constants.PREF_IS_LOGGED_IN,"1")
-
                         finish()
                     }
                 } else {

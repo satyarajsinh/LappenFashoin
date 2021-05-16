@@ -36,12 +36,16 @@ import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.cart.CartActivity
 import com.lappenfashion.ui.categoriesDetails.CategoriesDetailsActivity
 import com.lappenfashion.ui.checkout.CheckoutActivity
+import com.lappenfashion.ui.products.ProductsByProductCategoryActivity
+import com.lappenfashion.ui.search.SearchProductActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
 import com.lappenfashion.utils.SpacesItemDecoration
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.toolbar_with_drawer.view.*
+import kotlinx.android.synthetic.main.toolbar_with_like_cart.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -79,10 +83,20 @@ class HomeFragment : Fragment(),CategoriesInterface {
 //        getCategories(localDbId)
     }
 
+
+
     private fun initData() {
 //        nestedScrollView.setOnTouchListener(TranslateAnimationUtil(mContext, recyclerCategories))
 
         Log.e("Token","Token"+ Prefs.getString(Constants.PREF_TOKEN,""))
+        Log.e("user id","user id : "+ Prefs.getInt(Constants.PREF_USER_ID,0).toString())
+
+        if(Prefs.getInt(Constants.PREF_CART_COUNT,0) > 0){
+            rootView.txtCartCount.visibility = View.VISIBLE
+            rootView.txtCartCount.text = Prefs.getInt(Constants.PREF_CART_COUNT,0).toString()
+        }else{
+            txtCartCount.visibility = View.GONE
+        }
 
         dbManager = DBManager(mContext)
         dbManager.open()
@@ -119,6 +133,17 @@ class HomeFragment : Fragment(),CategoriesInterface {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(Prefs.getInt(Constants.PREF_CART_COUNT,0) > 0){
+            rootView.txtCartCount.visibility = View.VISIBLE
+            rootView.txtCartCount.text = Prefs.getInt(Constants.PREF_CART_COUNT,0).toString()
+        }else{
+            rootView.txtCartCount.visibility = View.GONE
+        }
+
+    }
+
     private fun setHomeData(homeResponse: ResponseMainHome) {
 
         //main categories
@@ -150,7 +175,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
             rootView.recyclerDealsOftheDay.setHasFixedSize(true)
                 var dealsOfTheDayAdapter = DealsOfTheDayAdapter(
                     mContext,
-                    homeResponse?.payload?.dealsOfTheDay!!
+                    homeResponse?.payload?.dealsOfTheDay!!,this@HomeFragment
                 )
             rootView.recyclerDealsOftheDay.adapter = dealsOfTheDayAdapter
         } else {
@@ -250,14 +275,21 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
     private fun getHomeData(localDbId: String) {
 
+        var userId : Int = 0
+        if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
+            userId = Prefs.getInt(Constants.PREF_USER_ID, 0)
+        }else{
+            userId = 0
+        }
         var api = MyApi(mContext)
-        val requestCall: Call<JsonObject> = api.getHome()
+        val requestCall: Call<JsonObject> = api.getHome(Constants.END_POINT_HOME+"?user_id="+userId)
 
         requestCall.enqueue(object : Callback<JsonObject> {
             override fun onResponse(
                 call: Call<JsonObject>,
                 response: Response<JsonObject>
             ) {
+                Helper.dismissLoader()
                 if (response.body() != null) {
 
                     if (localDbId != "") {
@@ -271,13 +303,26 @@ class HomeFragment : Fragment(),CategoriesInterface {
                         response.body(),
                         ResponseMainHome::class.java
                     )
+
+                    if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
+                        if(homeResponse.payload?.cart_count!! > 0){
+                            Prefs.putInt(Constants.PREF_CART_COUNT,homeResponse.payload?.cart_count!!)
+                            rootView.txtCartCount.visibility = View.VISIBLE
+                            rootView.txtCartCount.text = homeResponse.payload?.cart_count!!.toString()
+                        }
+                    }else{
+                        if(Prefs.getInt(Constants.PREF_CART_COUNT,0) <= 0) {
+                            rootView.txtCartCount.visibility = View.GONE
+                        }
+                    }
+
                     setHomeData(homeResponse)
 
                 } else {
                     Helper.showTost(mContext, "No Data Found")
                 }
                 rootView.nestedScrollView.visibility = View.VISIBLE
-                Helper.dismissLoader()
+
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -364,9 +409,8 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
             imageView.setImageResource(0)
 
-            imageView.scaleType = ImageView.ScaleType.FIT_XY
-
             progressBar.visibility = View.VISIBLE
+
             Glide.with(mContext).load(imageModelArrayList?.get(position)?.image)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
@@ -392,7 +436,14 @@ class HomeFragment : Fragment(),CategoriesInterface {
                 })
                 .into(imageView)
 
-            txtBannerTitle.text = imageModelArrayList?.get(position)?.title
+            imageView.setOnClickListener {
+                var intent = Intent(mContext, ProductsByProductCategoryActivity::class.java)
+                Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,imageModelArrayList?.get(position)?.categoryId.toString())
+                Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,"")
+                Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,"")
+                Prefs.putString(Constants.PREF_PRODUCT_TITLE,"")
+                mContext.startActivity(intent)
+            }
 
             view.addView(imageLayout, 0)
 
@@ -424,7 +475,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
         }
 
         imgSearch.setOnClickListener {
-            var intent = Intent(mContext, CheckoutActivity::class.java)
+            var intent = Intent(mContext, SearchProductActivity::class.java)
             startActivity(intent)
         }
 
@@ -440,6 +491,15 @@ class HomeFragment : Fragment(),CategoriesInterface {
         Prefs.putString(Constants.PREF_CATEGORY_ID,data?.categoryId.toString())
         intent.putExtra("subCategories",data)
         startActivity(intent)
+    }
+
+    override fun dealsOfTheDay(get: ResponseMainHome.Payload.DealsOfTheDay?) {
+        var intent = Intent(mContext, ProductsByProductCategoryActivity::class.java)
+        Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,get?.categoryId?.toString())
+        Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,get?.subCategoryId?.toString())
+        Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,get?.productCategoryId?.toString())
+        Prefs.putString(Constants.PREF_PRODUCT_TITLE,get?.title)
+        mContext.startActivity(intent)
     }
 
 }

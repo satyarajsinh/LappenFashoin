@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_8sdp"
+    android:elevation="@dimen/_5sdp"
+    android:background="@color/white"
+    android:layout_marginTop="@dimen/_8sdp">
+
+    <ImageView
+        android:id="@+id/imgProductImage"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:scaleType="fitXY">
+
+    </ImageView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_marginLeft="@dimen/_8sdp"
+        android:layout_toRightOf="@id/imgProductImage">
+
+        <TextView
+            android:id="@+id/txtProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtProductPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtProductName"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtProductPrice"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtSize"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular">
+
+        </TextView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

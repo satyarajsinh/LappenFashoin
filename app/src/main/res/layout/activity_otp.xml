@@ -73,6 +73,21 @@
             android:textSize="20sp"/>
 
         <TextView
+            android:id="@+id/txtResendOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="visible"
+            android:layout_gravity="right"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:text="Resend OTP ?">
+
+        </TextView>
+
+        <TextView
             android:id="@+id/txtLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

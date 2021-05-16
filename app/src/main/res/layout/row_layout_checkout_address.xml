@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/relativeMain"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:elevation="@dimen/_5sdp"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/black"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/txtType"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_5sdp"
+        android:paddingRight="@dimen/_5sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:background="@color/colorAccent"
+        android:layout_alignParentRight="true"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:layout_below="@id/txtName"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="@dimen/_10ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtLocality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/radio"
+        android:layout_below="@id/txtAddress"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="@dimen/_10ssp">
+
+    </TextView>
+
+    <RadioButton
+        android:id="@+id/radio"
+        android:layout_below="@id/txtAddress"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:buttonTint="@color/colorAccent">
+
+    </RadioButton>
+
+    <TextView
+        android:id="@+id/txtCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_5sdp"
+        android:layout_toRightOf="@id/txtState"
+        android:layout_below="@id/txtLocality"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="@dimen/_10ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtPincode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/txtCity"
+        android:layout_below="@id/txtLocality"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="@dimen/_10ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:layout_below="@id/txtLocality"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="@dimen/_10ssp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:paddingBottom="@dimen/_10sdp"
+        android:layout_below="@id/txtState"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="@dimen/_12ssp">
+
+    </TextView>
+
+</RelativeLayout>
