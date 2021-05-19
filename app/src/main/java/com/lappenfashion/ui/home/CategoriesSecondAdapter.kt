@@ -2,14 +2,11 @@ package com.lappenfashion.ui.home
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.text.SpannableString
-import android.text.TextUtils
-import android.text.style.RelativeSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -23,13 +20,15 @@ import com.lappenfashion.data.model.ResponseMainHome
 
 class CategoriesSecondAdapter(
     private val context: Context,
-    private val data: List<ResponseMainHome.Payload.DealsOfTheDay?>?
+    private val data: List<ResponseMainHome.Payload.SubCategory?>,
+    private val homeFragment: HomeFragment
 ) :
     RecyclerView.Adapter<CategoriesSecondAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
-        val imgPosterImage : ImageView = view.findViewById(R.id.imgPosterImage)
-        val progressBar : SpinKitView = view.findViewById(R.id.progressBar)
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val imgPosterImage: ImageView = view.findViewById(R.id.imgPosterImage)
+        val progressBar: SpinKitView = view.findViewById(R.id.progressBar)
+        val relativeMain: RelativeLayout = view.findViewById(R.id.relativeMain)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -71,6 +70,12 @@ class CategoriesSecondAdapter(
                 }
             })
             .into(holder.imgPosterImage)
+
+        holder.relativeMain.setOnClickListener {
+            homeFragment.subCategories(
+                data?.get(position)?.productCategory!!,
+                data?.get(position)?.subCategoryId!!,data?.get(position)?.category_id!!,data?.get(position)?.title!!)
+        }
 
     }
 

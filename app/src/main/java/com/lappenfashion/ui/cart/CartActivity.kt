@@ -568,4 +568,46 @@ class CartActivity : AppCompatActivity() {
 
         })
     }
+
+    fun addToWishList(productId: Int?) {
+        if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
+            if (NetworkConnection.checkConnection(this@CartActivity)) {
+                Helper.showLoader(this@CartActivity)
+                var api = MyApi(this)
+                val requestCall: Call<ResponseMainLogin> =
+                    api.addToWishList(
+                        "Bearer " + Prefs.getString(Constants.PREF_TOKEN, ""),
+                        productId.toString()
+                    )
+
+                requestCall.enqueue(object : Callback<ResponseMainLogin> {
+                    override fun onResponse(
+                        call: Call<ResponseMainLogin>,
+                        response: Response<ResponseMainLogin>
+                    ) {
+                        Helper.dismissLoader()
+                        if (response.body() != null && response.body()!!.result == true) {
+                            Helper.showTost(
+                                this@CartActivity,
+                                response.body()!!.message!!
+                            )
+                        }else{
+                            var message = Helper.getErrorBodyMessage(this@CartActivity,response.errorBody())
+                            Helper.showTost(this@CartActivity,message)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                        Helper.dismissLoader()
+                        Helper.showTost(this@CartActivity,t.message)
+                    }
+
+                })
+            } else {
+                Helper.showTost(this@CartActivity, getString(R.string.no_internet))
+            }
+        } else {
+            displayLoginDialog()
+        }
+    }
 }

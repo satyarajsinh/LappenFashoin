@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.example.simplemvvm.utils.Constants
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.lappenfashion.R
@@ -27,6 +29,7 @@ import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.sqlitedb.DBManager
 import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.cart.CartActivity
+import com.lappenfashion.ui.otp.OTPActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
@@ -45,6 +48,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     private lateinit var productData: ResponseMainProductDetails.Payload
     private lateinit var dbManager: DBManager
+    private var productId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +70,10 @@ class ProductDetailsActivity : AppCompatActivity() {
             }
         }
 
+        linearWishList.setOnClickListener {
+            addToWishList(productId)
+        }
+
         imgCart.setOnClickListener {
             var intent = Intent(this@ProductDetailsActivity, CartActivity::class.java)
             startActivity(intent)
@@ -81,6 +89,118 @@ class ProductDetailsActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    fun addToWishList(productId: Int?) {
+        if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
+            if (NetworkConnection.checkConnection(this@ProductDetailsActivity)) {
+                Helper.showLoader(this@ProductDetailsActivity)
+                var api = MyApi(this)
+                val requestCall: Call<ResponseMainLogin> =
+                    api.addToWishList(
+                        "Bearer " + Prefs.getString(Constants.PREF_TOKEN, ""),
+                        productId.toString()
+                    )
+
+                requestCall.enqueue(object : Callback<ResponseMainLogin> {
+                    override fun onResponse(
+                        call: Call<ResponseMainLogin>,
+                        response: Response<ResponseMainLogin>
+                    ) {
+                        Helper.dismissLoader()
+                        if (response.body() != null && response.body()!!.result == true) {
+                            Helper.showTost(
+                                this@ProductDetailsActivity,
+                                response.body()!!.message!!
+                            )
+                        }else{
+                            var message = Helper.getErrorBodyMessage(this@ProductDetailsActivity,response.errorBody())
+                            Helper.showTost(this@ProductDetailsActivity,message)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                        Helper.dismissLoader()
+                        Helper.showTost(this@ProductDetailsActivity,t.message)
+                    }
+
+                })
+            } else {
+                Helper.showTost(this@ProductDetailsActivity, getString(R.string.no_internet))
+            }
+        } else {
+            displayLoginDialog()
+        }
+    }
+
+    private fun displayLoginDialog() {
+        val dialog = BottomSheetDialog(this@ProductDetailsActivity)
+        dialog.setContentView(R.layout.bottom_sheet_login)
+        dialog.setCanceledOnTouchOutside(false)
+
+        val imgClose = dialog.findViewById<View>(R.id.imgClose) as ImageView?
+        val txtLogin = dialog.findViewById<View>(R.id.txtLogin) as TextView?
+        val edtMobileNumber = dialog.findViewById<View>(R.id.edtPhoneNumber) as EditText?
+
+        txtLogin!!.setOnClickListener {
+            if (edtMobileNumber?.text.toString() != "") {
+                if (NetworkConnection.checkConnection(this@ProductDetailsActivity)) {
+                    txtLogin.isEnabled = false
+                    Helper.showLoader(this@ProductDetailsActivity)
+                    loginData(edtMobileNumber?.text.toString(), txtLogin, dialog)
+                } else {
+                    Helper.showTost(
+                        this@ProductDetailsActivity,
+                        getString(R.string.no_internet)
+                    )
+                }
+            } else {
+                Helper.showTost(this@ProductDetailsActivity, "Field is required")
+            }
+
+        }
+
+        imgClose!!.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+    }
+
+    private fun loginData(mobileNumber: String, txtLogin: TextView, dialog: BottomSheetDialog) {
+        var api = MyApi(this@ProductDetailsActivity)
+        val requestCall: Call<ResponseMainLogin> = api.login(mobileNumber)
+
+        requestCall.enqueue(object : Callback<ResponseMainLogin> {
+            override fun onResponse(
+                call: Call<ResponseMainLogin>,
+                response: Response<ResponseMainLogin>
+            ) {
+                com.lappenfashion.utils.Helper.dismissLoader()
+
+                if (response.body() != null) {
+                    if (response.body()?.result == true) {
+                        dialog.dismiss()
+                        com.lappenfashion.utils.Helper.showTost(
+                            this@ProductDetailsActivity,
+                            response.body()?.message!!
+                        )
+                        var intent = Intent(this@ProductDetailsActivity, OTPActivity::class.java)
+                        intent.putExtra("mobile_number", mobileNumber)
+                        startActivityForResult(intent,200)
+                    }
+                } else {
+                    txtLogin.isEnabled = true
+                    com.lappenfashion.utils.Helper.showTost(
+                        this@ProductDetailsActivity,
+                        resources.getString(R.string.some_thing_happend_wrong)
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                txtLogin.isEnabled = true
+                com.lappenfashion.utils.Helper.dismissLoader()
+            }
+
+        })
     }
 
     fun addToCartMain(data: ResponseMainProductDetails.Payload?) {
@@ -161,7 +281,7 @@ class ProductDetailsActivity : AppCompatActivity() {
     private fun initData() {
         Prefs.putInt(Constants.PREF_SELECTED_COLOR,0)
         if (intent != null) {
-            var productId = intent.getIntExtra("productId", 0)
+            productId = intent.getIntExtra("productId", 0)
             if (NetworkConnection.checkConnection(this@ProductDetailsActivity)) {
                 Helper.showLoader(this@ProductDetailsActivity)
                 getProductDetailsById(productId)
@@ -243,7 +363,6 @@ class ProductDetailsActivity : AppCompatActivity() {
                     )
                     recyclerSize.adapter = productSizeAdapter
 
-
                     recyclerColor.layoutManager = LinearLayoutManager(
                         this@ProductDetailsActivity,
                         LinearLayoutManager.HORIZONTAL,
@@ -257,7 +376,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                     for(i in response.body()?.payload!!.colorList!!.indices){
                         if(colorList.size > 0){
                             for(j in colorList.indices){
-                                if(colorList.get(j)?.color == response.body()?.payload!!.colorList!!.get(i)!!.color){
+                                if(colorList.get(j)?.colorCode == response.body()?.payload!!.colorList!!.get(i)!!.colorCode){
                                     flag = 0
                                     break
                                 }else{

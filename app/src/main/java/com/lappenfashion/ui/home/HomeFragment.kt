@@ -35,7 +35,6 @@ import com.lappenfashion.sqlitedb.DBManager
 import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.cart.CartActivity
 import com.lappenfashion.ui.categoriesDetails.CategoriesDetailsActivity
-import com.lappenfashion.ui.checkout.CheckoutActivity
 import com.lappenfashion.ui.products.ProductsByProductCategoryActivity
 import com.lappenfashion.ui.search.SearchProductActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
@@ -197,7 +196,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
         var categoriesSecondAdapter = CategoriesSecondAdapter(
             mContext,
-            homeResponse?.payload?.dealsOfTheDay!!
+            homeResponse?.payload?.subCategory!!,this@HomeFragment
         )
         rootView.recyclerCategoriesSecond.adapter = categoriesSecondAdapter
 
@@ -237,7 +236,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
         rootView.recyclerOffers.setHasFixedSize(true)
         var offersAdapter = OffersAdapter(
             mContext,
-            homeResponse.payload?.offerPoster
+            homeResponse.payload?.offerPoster,this@HomeFragment
         )
         rootView.recyclerOffers.adapter = offersAdapter
 
@@ -267,7 +266,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
         rootView.recyclerOtherOffers.setHasFixedSize(true)
         var otherOffersAdapter = OtherOffersAdapter(
             mContext,
-            homeResponse.payload?.otherPoster
+            homeResponse.payload?.otherPoster,this@HomeFragment
         )
         rootView.recyclerOtherOffers.adapter = otherOffersAdapter
 
@@ -495,11 +494,19 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
     override fun dealsOfTheDay(get: ResponseMainHome.Payload.DealsOfTheDay?) {
         var intent = Intent(mContext, ProductsByProductCategoryActivity::class.java)
-        Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,get?.categoryId?.toString())
+        Prefs.putString(Constants.PREF_CATEGORY_ID,get?.categoryId?.toString())
         Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,get?.subCategoryId?.toString())
         Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,get?.productCategoryId?.toString())
         Prefs.putString(Constants.PREF_PRODUCT_TITLE,get?.title)
         mContext.startActivity(intent)
     }
 
+    fun subCategories(productCategory:Int,subCategory:Int,categoryId:Int,title:String) {
+        var intent = Intent(mContext, ProductsByProductCategoryActivity::class.java)
+        Prefs.putString(Constants.PREF_CATEGORY_ID,categoryId.toString())
+        Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,subCategory.toString())
+        Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,productCategory.toString())
+        Prefs.putString(Constants.PREF_PRODUCT_TITLE,title)
+        mContext.startActivity(intent)
+    }
 }

@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -19,13 +20,15 @@ import com.makeramen.roundedimageview.RoundedImageView
 
 class OtherOffersAdapter(
     private val context: Context,
-    private val data: List<ResponseMainHome.Payload.OtherPoster?>?
+    private val data: List<ResponseMainHome.Payload.OtherPoster?>?,
+    private val homeFragment: HomeFragment
 ) :
     RecyclerView.Adapter<OtherOffersAdapter.ViewHolder>() {
 
     class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
         val imgOfferPoster : RoundedImageView = view.findViewById(R.id.imgOfferPoster)
         val progressBar : SpinKitView = view.findViewById(R.id.progressBar)
+        val relativeMain: RelativeLayout = view.findViewById(R.id.relativeMain)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -67,6 +70,12 @@ class OtherOffersAdapter(
                 }
             })
             .into(holder.imgOfferPoster)
+
+        holder.relativeMain.setOnClickListener {
+            homeFragment.subCategories(
+                data?.get(position)?.productCategory!!,
+                data?.get(position)?.subCategoryId!!,data?.get(position)?.category_id!!,"")
+        }
     }
 
 

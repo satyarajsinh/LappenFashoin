@@ -64,9 +64,9 @@ data class ResponseMainPlaceOrderView(
                 @SerializedName("product_id")
                 var productId: Int?,
                 @SerializedName("size")
-                var size: Int?,
+                var size: String?,
                 @SerializedName("color_code")
-                var color_code: Int?,
+                var color_code: String?,
                 @SerializedName("product_name")
                 var productName: String?,
                 @SerializedName("sale_price")

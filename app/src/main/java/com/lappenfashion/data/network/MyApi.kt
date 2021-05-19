@@ -156,6 +156,9 @@ interface MyApi {
         @Field("product_id") product_id: String?,
     ): Call<ResponseMainLogin>
 
+    @GET(Constants.END_POINT_FILTER)
+    fun getFilter(): Call<ResponseMainFilter>
+
     @FormUrlEncoded
     @POST(Constants.END_POINT_VERIFY_OTP)
     fun verifyOtp(

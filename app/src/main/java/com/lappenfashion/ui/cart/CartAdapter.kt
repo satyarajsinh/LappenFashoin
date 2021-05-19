@@ -16,8 +16,8 @@ import com.lappenfashion.utils.Helper
 
 
 class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
-    lateinit var context : CartActivity
-    var data : ArrayList<ResponseMainCartNew.Payload.Cart?>?
+    lateinit var context: CartActivity
+    var data: ArrayList<ResponseMainCartNew.Payload.Cart?>?
 
     constructor(
         context: CartActivity,
@@ -37,6 +37,7 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
         var txtRemove = itemview.findViewById<TextView>(R.id.txtRemove)
         var cardView = itemview.findViewById<CardView>(R.id.cardView)
         var txtSize = itemview.findViewById<TextView>(R.id.txtSize)
+        var txtMoveToWishList = itemview.findViewById<TextView>(R.id.txtMoveToWishList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,37 +52,41 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.product?.colorCode))
         holder.txtSize.text = data?.get(position)?.product?.size
         holder.productName.text = data!![position]?.product?.productName
-        holder.productPrice.text = "₹"+data!![position]?.amount.toString()
+        holder.productPrice.text = "₹" + data!![position]?.amount.toString()
         holder.txtQty.text = data!![position]?.quantity.toString()
         holder.imgAdd.setOnClickListener {
-            holder.txtQty.text= (holder.txtQty.text.toString().toInt()+1).toString()
-            if(NetworkConnection.checkConnection(context)) {
+            holder.txtQty.text = (holder.txtQty.text.toString().toInt() + 1).toString()
+            if (NetworkConnection.checkConnection(context)) {
                 Helper.showLoader(context)
                 context.updateCart(data!!.get(position), holder.txtQty.text.toString())
-            }else{
+            } else {
                 Helper.showTost(context, context.resources.getString(R.string.no_internet))
             }
         }
 
         holder.imgMinus.setOnClickListener {
-            if(holder.txtQty.text.toString().toInt() != 1) {
+            if (holder.txtQty.text.toString().toInt() != 1) {
                 holder.txtQty.text = (holder.txtQty.text.toString().toInt() - 1).toString()
-                if(NetworkConnection.checkConnection(context)) {
+                if (NetworkConnection.checkConnection(context)) {
                     Helper.showLoader(context)
                     context.updateCart(data!!.get(position), holder.txtQty.text.toString())
-                }else{
+                } else {
                     Helper.showTost(context, context.resources.getString(R.string.no_internet))
                 }
             }
         }
 
         holder.txtRemove.setOnClickListener {
-            if(NetworkConnection.checkConnection(context)) {
+            if (NetworkConnection.checkConnection(context)) {
                 Helper.showLoader(context)
                 context.removeCart(data!![position])
-            }else{
+            } else {
                 Helper.showTost(context, context.resources.getString(R.string.no_internet))
             }
+        }
+
+        holder.txtMoveToWishList.setOnClickListener {
+            context.addToWishList(data!![position]?.product?.productId)
         }
     }
 

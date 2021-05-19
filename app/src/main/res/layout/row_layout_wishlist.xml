@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/border_grey"
+    android:layout_marginTop="@dimen/_1sdp"
     android:layout_marginLeft="@dimen/_1sdp"
     android:layout_marginRight="@dimen/_1sdp">
 
@@ -11,9 +12,9 @@
     <ImageView
         android:id="@+id/imgProudctImage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_230sdp"
-        android:background="@color/white"
-        android:scaleType="fitXY">
+        android:layout_margin="@dimen/_2sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:background="@color/white">
 
     </ImageView>
 
@@ -34,7 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
-        android:text="Hello Ronak"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"
         android:maxLines="1"
@@ -65,7 +65,6 @@
         android:id="@+id/txtPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="790"
         android:layout_marginTop="@dimen/_5sdp"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"

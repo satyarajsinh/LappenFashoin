@@ -80,10 +80,23 @@
     <string name="cash_on_delivery_available">Cash on delivery available</string>
     <string name="easy_30_days_return_exchange_available"><![CDATA[Easy 30 days return & exchange available]]></string>
     <string name="no_products_available_for_this_category">No products available for this category!</string>
+    <string name="sort_by">Sort By</string>
+    <string name="apply">Apply</string>
+    <string name="price_low_to_high">Price - Low to High</string>
+    <string name="price_high_to_low">Price - High to Low</string>
+    <string name="discount">Discount</string>
+    <string name="filters">Filters</string>
+    <string name="price">Price</string>
+    <string name="selected_price_range">Selected Price range</string>
+    <string name="_10_and_above">10% and above</string>
+    <string name="_20_and_above">20% and above</string>
+    <string name="_30_and_above">30% and above</string>
+    <string name="_50_and_above">50% and above</string>
+    <string name="_40_and_above">40% and above</string>
 
     <array name="rangeSliderValues">
         <item>20</item>
-        <item>70</item>
+        <item>400</item>
     </array>
 
     <string-array name="size">

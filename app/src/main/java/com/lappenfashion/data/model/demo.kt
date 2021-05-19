@@ -2,21 +2,20 @@ package com.lappenfashion.data.model
 
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
-data class ResponseMainHome(
+data class demo(
     @SerializedName("message")
     var message: String?,
     @SerializedName("payload")
     var payload: Payload?,
     @SerializedName("result")
     var result: Boolean?
-):Serializable {
+) {
     data class Payload(
-        @SerializedName("cart_count")
-        var cart_count: Int,
         @SerializedName("accessories")
         var accessories: List<Accessory?>?,
+        @SerializedName("cart_count")
+        var cartCount: Int?,
         @SerializedName("category_list")
         var categoryList: List<Category?>?,
         @SerializedName("deals_of_the_day")
@@ -31,7 +30,7 @@ data class ResponseMainHome(
         var subCategory: List<SubCategory?>?,
         @SerializedName("trending")
         var trending: List<Trending?>?
-    ) :Serializable{
+    ) {
         data class Accessory(
             @SerializedName("category_id")
             var categoryId: Int?,
@@ -45,7 +44,7 @@ data class ResponseMainHome(
             var subCategoryId: Int?,
             @SerializedName("title")
             var title: String?
-        ):Serializable
+        )
 
         data class Category(
             @SerializedName("banner")
@@ -66,46 +65,31 @@ data class ResponseMainHome(
             var title: String?,
             @SerializedName("top_banner")
             var topBanner: List<TopBanner?>?
-        ):Serializable {
+        ) {
             data class BottomBanner(
                 @SerializedName("banner_image")
                 var bannerImage: String?
-            ):Serializable
+            )
 
             data class SubCategory(
-                @SerializedName("created_at")
-                var created_at: String?,
+                @SerializedName("category_id")
+                var categoryId: Int?,
                 @SerializedName("id")
                 var id: Int?,
                 @SerializedName("image")
                 var image: String?,
-                @SerializedName("thumbnail_image")
-                var thumbnail_image: String?,
-                @SerializedName("product_category")
-                var productCategory: List<ProductCategory>?,
+                @SerializedName("product_category_id")
+                var productCategoryId: Int?,
                 @SerializedName("sub_category_id")
                 var subCategoryId: Int?,
                 @SerializedName("title")
                 var title: String?
-            ) :Serializable{
-                data class ProductCategory(
-                    @SerializedName("created_at")
-                    var createdAt: String?,
-                    @SerializedName("image")
-                    var image: String?,
-                    @SerializedName("product_category_id")
-                    var productCategoryId: Int?,
-                    @SerializedName("thumbnail_image")
-                    var thumbnailImage: String?,
-                    @SerializedName("title")
-                    var title: String?
-                ):Serializable
-            }
+            )
 
             data class TopBanner(
                 @SerializedName("banner_image")
                 var bannerImage: String?
-            ):Serializable
+            )
         }
 
         data class DealsOfTheDay(
@@ -125,7 +109,7 @@ data class ResponseMainHome(
             var subCategoryId: Int?,
             @SerializedName("title")
             var title: String?
-        ):Serializable
+        )
 
         data class Explore(
             @SerializedName("amount")
@@ -142,52 +126,52 @@ data class ResponseMainHome(
             var productCategoryId: Int?,
             @SerializedName("sub_category_id")
             var subCategoryId: Int?
-        ) :Serializable
+        )
 
         data class OfferPoster(
+            @SerializedName("category_id")
+            var categoryId: Int?,
             @SerializedName("id")
             var id: Int?,
             @SerializedName("image")
             var image: String?,
             @SerializedName("product_category_id")
-            var productCategory: Int?,
+            var productCategoryId: Int?,
             @SerializedName("sub_category_id")
             var subCategoryId: Int?,
-            @SerializedName("category_id")
-            var category_id: Int?,
             @SerializedName("thumbnail_image")
-            var thumbnail_image: String?
-        ):Serializable
+            var thumbnailImage: String?
+        )
 
         data class OtherPoster(
+            @SerializedName("category_id")
+            var categoryId: Int?,
             @SerializedName("id")
             var id: Int?,
             @SerializedName("image")
             var image: String?,
             @SerializedName("product_category_id")
-            var productCategory: Int?,
+            var productCategoryId: Int?,
             @SerializedName("sub_category_id")
             var subCategoryId: Int?,
-            @SerializedName("category_id")
-            var category_id: Int?,
             @SerializedName("thumbnail_image")
-            var thumbnail_image: String?
-        ):Serializable
+            var thumbnailImage: String?
+        )
 
         data class SubCategory(
+            @SerializedName("category_id")
+            var categoryId: Int?,
             @SerializedName("id")
             var id: Int?,
             @SerializedName("image")
             var image: String?,
             @SerializedName("product_category_id")
-            var productCategory: Int?,
+            var productCategoryId: Int?,
             @SerializedName("sub_category_id")
             var subCategoryId: Int?,
-            @SerializedName("category_id")
-            var category_id: Int?,
             @SerializedName("title")
             var title: String?
-        ) :Serializable
+        )
 
         data class Trending(
             @SerializedName("image")
@@ -198,6 +182,6 @@ data class ResponseMainHome(
             var salePrice: Int?,
             @SerializedName("thumbnail_image")
             var thumbnailImage: String?
-        ):Serializable
+        )
     }
 }

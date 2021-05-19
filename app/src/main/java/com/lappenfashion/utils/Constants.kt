@@ -20,6 +20,7 @@ object Constants {
     const val END_POINT_VERIFY_OTP = "verify-otp"
     const val END_POINT_PLACE_ORDER_VIEW = "cart-view"
     const val END_POINT_WISH_LIST = "wish-list"
+    const val END_POINT_FILTER = "display-product-filter"
     const val END_POINT_PROFILE = "profile"
     const val END_POINT_GET_WISH_LIST = "wish-list"
     const val END_POINT_CHECKOUT_CART = "check-out"

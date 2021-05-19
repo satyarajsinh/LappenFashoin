@@ -12,16 +12,19 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplemvvm.utils.Constants
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.lappenfashion.R
+import com.lappenfashion.data.model.ResponseMainFilter
 import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.model.ResponseMainProductsByCategory
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.cart.CartActivity
+import com.lappenfashion.ui.cart.CheckoutCartAdapter
 import com.lappenfashion.ui.otp.OTPActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
@@ -84,6 +87,32 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        txtSort.setOnClickListener {
+            displaySortBottomSheet()
+        }
+
+        txtFilter.setOnClickListener {
+            displayFilter()
+        }
+    }
+
+    private fun displayFilter() {
+        val dialog = BottomSheetDialog(this@ProductsByProductCategoryActivity)
+        dialog.setContentView(R.layout.bottom_sheet_filter)
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+
+        dialog.show()
+        Helper.dismissLoader()
+    }
+
+    private fun displaySortBottomSheet() {
+        val dialog = BottomSheetDialog(this@ProductsByProductCategoryActivity)
+        dialog.setContentView(R.layout.bottom_sheet_sort_by)
+
+        dialog.show()
+        Helper.dismissLoader()
     }
 
     override fun onResume() {
@@ -98,13 +127,13 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
     private fun initData() {
         txtTitle.visibility = View.VISIBLE
 
-        txtTitle.text = Prefs.getString(Constants.PREF_PRODUCT_TITLE,"")
+        txtTitle.text = Prefs.getString(Constants.PREF_PRODUCT_TITLE, "")
 
 
-        if(Prefs.getInt(Constants.PREF_CART_COUNT,0) > 0){
+        if (Prefs.getInt(Constants.PREF_CART_COUNT, 0) > 0) {
             txtCartCount.visibility = View.VISIBLE
-            txtCartCount.text = Prefs.getInt(Constants.PREF_CART_COUNT,0).toString()
-        }else{
+            txtCartCount.text = Prefs.getInt(Constants.PREF_CART_COUNT, 0).toString()
+        } else {
             txtCartCount.visibility = View.GONE
         }
 
@@ -116,7 +145,7 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
                     2
                 )
             )
-            var spaceIterator : SpacesItemDecoration = SpacesItemDecoration(10)
+            var spaceIterator: SpacesItemDecoration = SpacesItemDecoration(10)
             recyclerProductsByProductCategory.addItemDecoration(spaceIterator);
             recyclerProductsByProductCategory.setHasFixedSize(true)
 
@@ -126,9 +155,39 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
             )
             recyclerProductsByProductCategory.adapter = productsByCategoryAdapter
             onLoadMoreProduct(recyclerProductsByProductCategory)
-        }else {
+        } else {
             Helper.showTost(this, "No internet connection")
         }
+
+        if (NetworkConnection.checkConnection(this)) {
+            getFilterData()
+        }
+    }
+
+    private fun getFilterData() {
+        var api = MyApi(this)
+        val requestCall: Call<ResponseMainFilter> = api.getFilter()
+
+        requestCall.enqueue(object : Callback<ResponseMainFilter> {
+            override fun onResponse(
+                call: Call<ResponseMainFilter>,
+                response: Response<ResponseMainFilter>
+            ) {
+                Helper.dismissLoader()
+                if (response.body() != null && response.body()!!.result == true) {
+
+                }else{
+                    var message = Helper.getErrorBodyMessage(this@ProductsByProductCategoryActivity,response.errorBody())
+                    Helper.showTost(this@ProductsByProductCategoryActivity,message)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMainFilter>, t: Throwable) {
+                Helper.dismissLoader()
+                Helper.showTost(this@ProductsByProductCategoryActivity,t.message)
+            }
+
+        })
     }
 
     private fun onLoadMoreProduct(recyclerView: RecyclerView) {
