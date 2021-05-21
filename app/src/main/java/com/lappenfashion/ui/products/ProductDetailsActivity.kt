@@ -333,6 +333,12 @@ class ProductDetailsActivity : AppCompatActivity() {
                     } else {
                         linearViewPager.visibility = View.GONE
                     }
+                    if(response.body()?.payload?.discount!! <= 0){
+                        txtDiscount.visibility = View.GONE
+                    }else{
+                        txtDiscount.visibility = View.VISIBLE
+                        txtDiscount.text = "( "+ response.body()?.payload?.discount!! + "% off )"
+                    }
 
                     txtProductTitle.text = response.body()?.payload!!.productName
                     txtProductMrp.text = "₹"+response.body()?.payload!!.mrp.toString()

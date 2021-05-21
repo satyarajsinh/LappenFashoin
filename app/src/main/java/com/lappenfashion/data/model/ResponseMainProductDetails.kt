@@ -68,6 +68,8 @@ data class ResponseMainProductDetails(
         var printCoverage: String?,
         @SerializedName("product_id")
         var productId: Int?,
+        @SerializedName("discount")
+        var discount: Int?,
         @SerializedName("product_name")
         var productName: String?,
         @SerializedName("product_style_id")

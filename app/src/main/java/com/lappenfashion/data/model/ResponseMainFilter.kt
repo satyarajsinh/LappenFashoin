@@ -26,7 +26,8 @@ data class ResponseMainFilter(
 
         data class Size(
             @SerializedName("size")
-            var size: String?
+            var size: String?,
+            var flag : Int = 0
         )
     }
 }

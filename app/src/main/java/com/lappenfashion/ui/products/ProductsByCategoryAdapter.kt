@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -37,10 +38,12 @@ class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter
         var productImage = itemview.findViewById<ImageView>(R.id.imgProudctImage)
         var imgLiked = itemview.findViewById<ImageView>(R.id.imgLiked)
         var productName = itemview.findViewById<TextView>(R.id.txtProductName)
+        var txtDiscount = itemview.findViewById<TextView>(R.id.txtDiscount)
         var productDetails = itemview.findViewById<TextView>(R.id.txtProductDetails)
         var productPrice = itemview.findViewById<TextView>(R.id.txtPrice)
         var productMrp = itemview.findViewById<TextView>(R.id.txtMrp)
         var relativeMain = itemview.findViewById<RelativeLayout>(R.id.relativeMain)
+        var cardView = itemview.findViewById<CardView>(R.id.cardView)
         val progressBar: SpinKitView = itemview.findViewById(R.id.progressBar)
     }
 
@@ -83,6 +86,13 @@ class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter
         holder.productPrice.text = "₹" + data[position]?.salePrice
         holder.productMrp.text = "₹" + data[position]?.mrp
         holder.productMrp.setPaintFlags(holder.productMrp.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+
+        if(data.get(position)?.discount!! <= 0){
+            holder.cardView.visibility = View.GONE
+        }else{
+            holder.txtDiscount.setText(data.get(position)?.discount.toString()+"%")
+            holder.cardView.visibility = View.VISIBLE
+        }
 
         holder.relativeMain.setOnClickListener {
             context.goToDetails(data.get(position))

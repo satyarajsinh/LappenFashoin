@@ -87,6 +87,8 @@ data class ResponseMainProductsByCategory(
             var reviews: List<Review?>?,
             @SerializedName("sale_price")
             var salePrice: Int?,
+            @SerializedName("discount")
+            var discount: Int?,
             @SerializedName("seller_sku_id")
             var sellerSkuId: String?,
             @SerializedName("size")

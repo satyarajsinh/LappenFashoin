@@ -1,10 +1,12 @@
 package com.lappenfashion.ui.wishlist
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lappenfashion.R
@@ -29,8 +31,10 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
         var productName = itemview.findViewById<TextView>(R.id.txtProductName)
         var productDetails = itemview.findViewById<TextView>(R.id.txtProductDetails)
         var productPrice = itemview.findViewById<TextView>(R.id.txtPrice)
+        var txtDiscount = itemview.findViewById<TextView>(R.id.txtDiscount)
         var txtMoveToBag = itemview.findViewById<TextView>(R.id.txtMoveToBag)
-
+        var cardView = itemview.findViewById<CardView>(R.id.cardView)
+        var productMrp = itemview.findViewById<TextView>(R.id.txtMrp)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,9 +50,18 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
         holder.productDetails.text = data?.get(position)?.product?.description
 
         holder.productPrice.text = "₹"+data?.get(position)?.product?.salePrice
+        holder.productMrp.text = "₹" + data!![position]?.product?.mrp
+        holder.productMrp.setPaintFlags(holder.productMrp.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
 
         holder.imgClose.setOnClickListener {
             context.removeFromWishList(data?.get(position),position)
+        }
+
+        if(data?.get(position)?.product?.discount!! <= 0){
+            holder.cardView.visibility = View.GONE
+        }else{
+            holder.txtDiscount.setText(data?.get(position)?.product?.discount.toString()+"%")
+            holder.cardView.visibility = View.VISIBLE
         }
 
         holder.txtMoveToBag.setOnClickListener {

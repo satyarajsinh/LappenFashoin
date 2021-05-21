@@ -51,14 +51,26 @@
             </TextView>
 
             <TextView
-                android:id="@+id/txtDiscount"
+                android:id="@+id/txtDiscountHigh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:padding="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/_12ssp"
-                android:text="@string/discount">
+                android:text="Discount - High to Low">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtDiscountLow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:padding="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="@dimen/_12ssp"
+                android:text="Discount - Low to High">
 
             </TextView>
 

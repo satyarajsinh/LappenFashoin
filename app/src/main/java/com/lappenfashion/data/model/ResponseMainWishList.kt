@@ -40,6 +40,8 @@ data class ResponseMainWishList(
             var groupId: String?,
             @SerializedName("gst")
             var gst: Int?,
+            @SerializedName("discount")
+            var discount: Int?,
             @SerializedName("hsn_code")
             var hsnCode: String?,
             @SerializedName("ideal_for")

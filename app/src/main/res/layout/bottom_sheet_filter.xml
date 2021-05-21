@@ -11,13 +11,26 @@
 
         <TextView
             android:id="@+id/txtFilter"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
             android:padding="@dimen/_10sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:text="@string/filters">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtClearAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="@dimen/_10sdp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_12ssp"
+            android:text="Clear All">
 
         </TextView>
 
@@ -258,7 +271,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/txtSort"
+                android:id="@+id/txtCancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"

@@ -187,22 +187,11 @@ interface MyApi {
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .callTimeout(20, TimeUnit.SECONDS)
-                .addInterceptor { chain ->
-                    var request = chain.request()
-                    request = if (NetworkConnection.checkConnection(mContext)!!)
-                        request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
-                    else
-                        request.newBuilder().header(
-                            "Cache-Control",
-                            "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7
-                        ).build()
-                    chain.proceed(request)
-                }
                 .build()
             val gson = GsonBuilder().setLenient()
 
             return Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL_MAIN)
+                .baseUrl(Constants.BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson.create()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

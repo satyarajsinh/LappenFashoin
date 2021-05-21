@@ -15,7 +15,7 @@
 
     <style name="Widget.App.Tooltip" parent="Widget.MaterialComponents.Tooltip">
         <item name="android:textAppearance">@style/TextAppearance.App.Tooltip</item>
-        <item name="backgroundTint">@color/green</item>
+        <item name="backgroundTint">@color/colorAccent</item>
     </style>
 
     <style name="TextAppearance.App.Tooltip" parent="TextAppearance.MaterialComponents.Tooltip">
