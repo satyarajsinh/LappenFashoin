@@ -46,6 +46,8 @@ data class ResponseMainProductDetails(
         var inventory: String?,
         @SerializedName("is_stock_available")
         var isStockAvailable: Int?,
+        @SerializedName("is_cart")
+        var is_cart: Int?,
         @SerializedName("is_wish_list")
         var isWishList: Int?,
         @SerializedName("key_features")

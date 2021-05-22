@@ -38,10 +38,12 @@ import kotlinx.android.synthetic.main.toolbar_with_like_cart.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.absoluteValue
 
 
 class ProductsByProductCategoryActivity : AppCompatActivity() {
 
+    private val selectedRangeValues: MutableList<Float> = arrayListOf()
     private var minPrice: Int? = 0
     private var maxPrice: Int? = 0
     private var selectedDiscount: Int = 0
@@ -146,8 +148,22 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
             )
         recyclerSize.setHasFixedSize(true)
         var adapter =
-            FilterSizeAdapter(this@ProductsByProductCategoryActivity, filterData?.size!!)
+            FilterSizeAdapter(this@ProductsByProductCategoryActivity, filterData?.size!!,selectedSize)
         recyclerSize.adapter = adapter
+
+        if(selectedDiscount == 10){
+            radio10Percent?.isChecked = true
+        }else if(selectedDiscount == 20){
+            radio20Percent?.isChecked = true
+        }else if(selectedDiscount == 30){
+            radio30Percent?.isChecked = true
+        }else if(selectedDiscount == 40){
+            radio40Percent?.isChecked = true
+        }else if(selectedDiscount == 50){
+            radio50Percent?.isChecked = true
+        }else{
+
+        }
 
         radioGroup?.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
@@ -218,7 +234,11 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
                 )
             recyclerSize.setHasFixedSize(true)
             var adapter =
-                FilterSizeAdapter(this@ProductsByProductCategoryActivity, filterData?.size!!)
+                FilterSizeAdapter(
+                    this@ProductsByProductCategoryActivity,
+                    filterData?.size!!,
+                    selectedSize
+                )
             recyclerSize.adapter = adapter
         }
 
@@ -243,7 +263,7 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
                 )
             recyclerColor.setHasFixedSize(true)
             var adapterColor =
-                FilterColorAdapter(this@ProductsByProductCategoryActivity, filterData?.color!!)
+                FilterColorAdapter(this@ProductsByProductCategoryActivity, filterData?.color!!,selectedColor)
             recyclerColor.adapter = adapterColor
         }
 
@@ -269,7 +289,6 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
             recyclerSize?.visibility = View.GONE
             linearPrice?.visibility = View.GONE
             linearDiscount?.visibility = View.VISIBLE
-
         }
 
         txtCancel?.setOnClickListener {
@@ -285,10 +304,22 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
             }
         })
 
-        slider?.addOnChangeListener { slider, value, fromUser ->
-            minPrice = slider.values[0].toInt()
-            maxPrice = slider.values[1].toInt()
+        if(minPrice!! > 0) {
+            selectedRangeValues.clear()
+            selectedRangeValues.add(minPrice!!.toFloat())
+            selectedRangeValues.add(maxPrice!!.toFloat())
+            slider?.setValues(selectedRangeValues)
         }
+
+        slider?.addOnChangeListener { slider, value, fromUser ->
+            minPrice = slider.values[0].absoluteValue.toInt()
+            maxPrice = value.toInt()
+            Log.e("min Price","min Price"+minPrice.toString())
+            Log.e("max Price","max Price"+maxPrice.toString())
+            Log.e("value Price","value Price"+value.toString())
+        }
+
+
 
         dialog.show()
         Helper.dismissLoader()
@@ -453,6 +484,9 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
         } else {
             progressBar.setVisibility(View.VISIBLE)
         }
+
+        offerAmount = Prefs.getString(Constants.PREF_OFFER_AMOUNT,"")
+
         val requestCall: Call<JsonObject>
         var api = MyApi(this)
         if (Prefs.getString(Constants.PREFS_SEARCH_STRING, "") == "") {

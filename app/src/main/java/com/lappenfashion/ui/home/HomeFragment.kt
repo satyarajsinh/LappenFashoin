@@ -253,7 +253,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
         var accessoriesAdapter = AccessoriesAdapter(
             mContext,
-            homeResponse.payload?.accessories
+            homeResponse.payload?.accessories,this@HomeFragment
         )
         rootView.recyclerAccessories.adapter = accessoriesAdapter
 
@@ -274,6 +274,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
     private fun getHomeData(localDbId: String) {
 
+        Log.e("Orignal user id","Orignal user id"+Prefs.getInt(Constants.PREF_USER_ID, 0).toString())
         var userId : Int = 0
         if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
             userId = Prefs.getInt(Constants.PREF_USER_ID, 0)
@@ -438,9 +439,9 @@ class HomeFragment : Fragment(),CategoriesInterface {
             imageView.setOnClickListener {
                 var intent = Intent(mContext, ProductsByProductCategoryActivity::class.java)
                 Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,imageModelArrayList?.get(position)?.categoryId.toString())
-                Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,"")
-                Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,"")
+                Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,imageModelArrayList?.get(position)?.subCategoryId.toString())
                 Prefs.putString(Constants.PREF_PRODUCT_TITLE,"")
+                Prefs.putString(Constants.PREF_OFFER_AMOUNT,imageModelArrayList?.get(position)?.amount.toString())
                 mContext.startActivity(intent)
             }
 
@@ -497,6 +498,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
         Prefs.putString(Constants.PREF_CATEGORY_ID,get?.categoryId?.toString())
         Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,get?.subCategoryId?.toString())
         Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,get?.productCategoryId?.toString())
+        Prefs.putString(Constants.PREF_OFFER_AMOUNT,get?.amount?.toString())
         Prefs.putString(Constants.PREF_PRODUCT_TITLE,get?.title)
         mContext.startActivity(intent)
     }
@@ -506,6 +508,13 @@ class HomeFragment : Fragment(),CategoriesInterface {
         Prefs.putString(Constants.PREF_CATEGORY_ID,categoryId.toString())
         Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,subCategory.toString())
         Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,productCategory.toString())
+        Prefs.putString(Constants.PREF_PRODUCT_TITLE,title)
+        mContext.startActivity(intent)
+    }
+
+    fun goToAccesories(subCategory:Int,title:String) {
+        var intent = Intent(mContext, ProductsByProductCategoryActivity::class.java)
+        Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,subCategory.toString())
         Prefs.putString(Constants.PREF_PRODUCT_TITLE,title)
         mContext.startActivity(intent)
     }

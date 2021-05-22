@@ -31,6 +31,7 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
         var productName = itemview.findViewById<TextView>(R.id.txtProductName)
         var productDetails = itemview.findViewById<TextView>(R.id.txtProductDetails)
         var productPrice = itemview.findViewById<TextView>(R.id.txtPrice)
+        var txtOutOfStock = itemview.findViewById<TextView>(R.id.txtOutOfStock)
         var txtDiscount = itemview.findViewById<TextView>(R.id.txtDiscount)
         var txtMoveToBag = itemview.findViewById<TextView>(R.id.txtMoveToBag)
         var cardView = itemview.findViewById<CardView>(R.id.cardView)
@@ -43,6 +44,14 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        if(data?.get(position)?.product?.isStockAvailable!! > 0){
+            holder.txtMoveToBag.visibility = View.VISIBLE
+            holder.txtOutOfStock.visibility = View.GONE
+        }else{
+            holder.txtMoveToBag.visibility = View.GONE
+            holder.txtOutOfStock.visibility = View.VISIBLE
+        }
 
         Glide.with(context).load(data?.get(position)?.product?.mainImageName).into(holder.productImage)
 

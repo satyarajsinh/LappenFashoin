@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simplemvvm.utils.Constants
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.lappenfashion.R
@@ -52,15 +54,54 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
         }
 
         relativeBottom.setOnClickListener {
-            Helper.showLoader(this@PlaceOrderActivity)
-            Handler(Looper.getMainLooper()).postDelayed({
-                startPayment()
-                Helper.dismissLoader()
-            }, 2000)
-
-
+            displaySortBottomSheet()
         }
     }
+
+    private fun displaySortBottomSheet() {
+        val dialog = BottomSheetDialog(this@PlaceOrderActivity)
+        dialog.setContentView(R.layout.bottom_sheet_payment_option)
+
+        var flag = 0
+
+        var txtOnline = dialog.findViewById<TextView>(R.id.txtOnline)
+        var txtCash = dialog.findViewById<TextView>(R.id.txtCash)
+        var txtApply = dialog.findViewById<TextView>(R.id.txtApply)
+
+        txtOnline?.setOnClickListener {
+            flag = 1
+            txtOnline?.setBackgroundColor(resources.getColor(R.color.background))
+            txtCash?.setBackgroundColor(resources.getColor(R.color.white))
+        }
+
+        txtCash?.setOnClickListener {
+            flag = 2
+            txtOnline?.setBackgroundColor(resources.getColor(R.color.white))
+            txtCash?.setBackgroundColor(resources.getColor(R.color.background))
+        }
+
+        txtApply?.setOnClickListener {
+            if(flag == 1){
+                Helper.showLoader(this@PlaceOrderActivity)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    startPayment()
+                    Helper.dismissLoader()
+                }, 2000)
+            }else{
+                if (NetworkConnection.checkConnection(this@PlaceOrderActivity)) {
+                    Helper.showLoader(this@PlaceOrderActivity)
+                    placeOrder("",2)
+                } else {
+                    Helper.showTost(this@PlaceOrderActivity, "No internet connection")
+                }
+
+            }
+        }
+
+        dialog.show()
+        Helper.dismissLoader()
+    }
+
 
     private fun startPayment() {
         /*
@@ -95,7 +136,7 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
             Log.e("payment success", "payment success" + p0)
             if (NetworkConnection.checkConnection(this@PlaceOrderActivity)) {
                 Helper.showLoader(this@PlaceOrderActivity)
-                placeOrder(p0)
+                placeOrder(p0, 1)
             } else {
                 Helper.showTost(this@PlaceOrderActivity, "No internet connection")
             }
@@ -104,7 +145,7 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
         }
     }
 
-    private fun placeOrder(paymentId: String?) {
+    private fun placeOrder(paymentId: String?, flag: Int) {
         val array = JsonArray()
         for(i in 0 until placeOrderData.cartList?.size!!) {
             var cartObject = JsonObject()
@@ -121,6 +162,13 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
             array.add(cartObject)
         }
 
+        var paymentMethod : String = ""
+        if(flag ==1){
+            paymentMethod = "online_payment"
+        }else{
+            paymentMethod = "cash_on_delivery"
+        }
+
         var api = MyApi(this@PlaceOrderActivity)
         val requestCall: Call<ResponseMainLogin> = api.placeOrder(
             "Bearer " + Prefs.getString(
@@ -132,6 +180,7 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
             "",
             placeOrderData.totalCartAmount.toString(),
             paymentId,
+            paymentMethod,
             array.toString()
         )
 

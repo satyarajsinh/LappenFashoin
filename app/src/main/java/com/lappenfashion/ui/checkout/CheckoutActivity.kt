@@ -58,7 +58,6 @@ class CheckoutActivity : AppCompatActivity(),
                 Helper.dismissLoader()
 
                 if (response.body() != null && response.body()?.result == true) {
-                    txtSelectDeliverydate.visibility = View.VISIBLE
                     recyclerDeliveryOption.layoutManager =
                         LinearLayoutManager(this@CheckoutActivity, LinearLayoutManager.VERTICAL, false)
                     var adapter = DeliveryOptionAdapter(

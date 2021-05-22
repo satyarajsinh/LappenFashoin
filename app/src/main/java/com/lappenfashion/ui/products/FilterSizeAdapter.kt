@@ -1,6 +1,5 @@
 package com.lappenfashion.ui.products
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lappenfashion.R
 import com.lappenfashion.`interface`.CategoriesInterface
 import com.lappenfashion.data.model.ResponseMainFilter
-import com.lappenfashion.data.model.ResponseMainHome
-import kotlinx.android.synthetic.main.activity_categories_details.*
 
 class FilterSizeAdapter : RecyclerView.Adapter<FilterSizeAdapter.ViewHolder> {
 
@@ -20,10 +17,16 @@ class FilterSizeAdapter : RecyclerView.Adapter<FilterSizeAdapter.ViewHolder> {
     lateinit var categoriesInterface : CategoriesInterface
     lateinit var context: ProductsByProductCategoryActivity
     var data: List<ResponseMainFilter.Payload.Size?>?
+    var selectedSize :String = ""
 
-    constructor(context: ProductsByProductCategoryActivity, data: List<ResponseMainFilter.Payload.Size?>?) {
+    constructor(
+        context: ProductsByProductCategoryActivity,
+        data: List<ResponseMainFilter.Payload.Size?>?,
+        selectedSize: String
+    ) {
         this.context = context
         this.data = data
+        this.selectedSize = selectedSize
     }
 
     class ViewHolder(view : View):RecyclerView.ViewHolder(view) {
@@ -45,6 +48,10 @@ class FilterSizeAdapter : RecyclerView.Adapter<FilterSizeAdapter.ViewHolder> {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtSizeValue.text = data?.get(position)?.size
 
+        if(selectedSize == data?.get(position)?.size){
+            rawIndex = position
+        }
+
         if(rawIndex == position){
             holder.imgCheck.visibility = View.VISIBLE
         }else{
@@ -53,6 +60,7 @@ class FilterSizeAdapter : RecyclerView.Adapter<FilterSizeAdapter.ViewHolder> {
 
         holder.relativeMain.setOnClickListener {
             rawIndex = position
+            selectedSize = data?.get(position)?.size!!
             context.selectedSize = data?.get(position)?.size!!
             notifyDataSetChanged()
         }

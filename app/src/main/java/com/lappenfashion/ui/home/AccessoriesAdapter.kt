@@ -1,13 +1,12 @@
 package com.lappenfashion.ui.home
 
 import android.content.Context
-import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -22,7 +21,8 @@ import com.makeramen.roundedimageview.RoundedImageView
 
 class AccessoriesAdapter(
     private val context: Context,
-    private val data: List<ResponseMainHome.Payload.Accessory?>?
+    private val data: List<ResponseMainHome.Payload.Accessory?>?,
+    private val homeFragment: HomeFragment
 ) :
     RecyclerView.Adapter<AccessoriesAdapter.ViewHolder>() {
 
@@ -30,6 +30,7 @@ class AccessoriesAdapter(
         val imgOfferPoster : RoundedImageView = view.findViewById(R.id.imgOfferPoster)
         val txtAccesoriesName : TextView = view.findViewById(R.id.txtAccesoriesName)
         val progressBar : SpinKitView = view.findViewById(R.id.progressBar)
+        val linearMain : LinearLayout = view.findViewById(R.id.linearMain)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -71,7 +72,14 @@ class AccessoriesAdapter(
                 }
             })
             .into(holder.imgOfferPoster)
+
         holder.txtAccesoriesName.text = data?.get(position)?.title
+
+        holder.linearMain.setOnClickListener {
+            homeFragment.goToAccesories(data?.get(position)?.subCategoryId!!,
+                data?.get(position)?.title!!
+            )
+        }
     }
 
 

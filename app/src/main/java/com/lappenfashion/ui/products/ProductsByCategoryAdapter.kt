@@ -44,6 +44,7 @@ class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter
         var productMrp = itemview.findViewById<TextView>(R.id.txtMrp)
         var relativeMain = itemview.findViewById<RelativeLayout>(R.id.relativeMain)
         var cardView = itemview.findViewById<CardView>(R.id.cardView)
+        var txtOutOfStock = itemview.findViewById<TextView>(R.id.txtOutOfStock)
         val progressBar: SpinKitView = itemview.findViewById(R.id.progressBar)
     }
 
@@ -80,6 +81,17 @@ class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter
                 }
             })
             .into(holder.productImage)
+
+        if(data[position]?.isStockAvailable!! > 0){
+            holder.txtOutOfStock.visibility = View.GONE
+            holder.productMrp.visibility = View.VISIBLE
+            holder.productPrice.visibility = View.VISIBLE
+        }else{
+            holder.txtOutOfStock.visibility = View.VISIBLE
+            holder.productMrp.visibility = View.GONE
+            holder.productPrice.visibility = View.GONE
+        }
+
         holder.productName.text = data[position]?.productName
         holder.productDetails.text = data[position]?.description
         holder.productPrice.text = "₹" + data[position]?.salePrice

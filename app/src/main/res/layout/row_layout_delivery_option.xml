@@ -19,6 +19,7 @@
     </TextView>
 
     <RelativeLayout
+        android:id="@+id/relativeRadio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtTitle">
@@ -41,7 +42,6 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
             android:buttonTint="@color/colorAccent"
             android:layout_alignParentRight="true">
 

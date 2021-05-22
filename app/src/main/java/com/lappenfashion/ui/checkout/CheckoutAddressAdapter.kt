@@ -80,6 +80,13 @@ class CheckoutAddressAdapter : RecyclerView.Adapter<CheckoutAddressAdapter.ViewH
             context.setDeliveryAddressId(data?.get(position)?.addressId)
         }
 
+        holder.radio.setOnClickListener {
+            rawIndex = position
+            notifyDataSetChanged()
+            context.setDeliveryAddressId(data?.get(position)?.addressId)
+        }
+
+
     }
 
     override fun getItemCount(): Int {

@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainDeliveryOption
-import com.lappenfashion.data.model.ResponseMainWishList
 
 
 class DeliveryOptionAdapter : RecyclerView.Adapter<DeliveryOptionAdapter.ViewHolder> {
@@ -30,6 +29,7 @@ class DeliveryOptionAdapter : RecyclerView.Adapter<DeliveryOptionAdapter.ViewHol
         var txtDescription = itemview.findViewById<TextView>(R.id.txtDescription)
         var radio = itemview.findViewById<RadioButton>(R.id.radio)
         var relativeMain = itemview.findViewById<RelativeLayout>(R.id.relativeMain)
+        var relativeRadio = itemview.findViewById<RelativeLayout>(R.id.relativeRadio)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,6 +52,14 @@ class DeliveryOptionAdapter : RecyclerView.Adapter<DeliveryOptionAdapter.ViewHol
             notifyDataSetChanged()
             context.setDeliveryOptionId(data?.get(position)?.deliveryOptionId)
         }
+
+        holder.radio.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                rawIndex = position
+                notifyDataSetChanged()
+                context.setDeliveryOptionId(data?.get(position)?.deliveryOptionId)
+            }
+        })
 
     }
 

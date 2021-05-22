@@ -25,8 +25,7 @@
             android:id="@+id/imgTrendingPoster"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_120sdp"
-            android:layout_gravity="center"
-            android:scaleType="fitXY" />
+            android:layout_gravity="center" />
     </RelativeLayout>
 
 

@@ -63,10 +63,15 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     private fun clickListener() {
         linearAddToBag.setOnClickListener {
-            if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
-                addToCartMain(productData)
-            } else {
-                addToCart()
+            if(txtMoveToBag.text.toString() == "Go to bag"){
+                var intent = Intent(this@ProductDetailsActivity, CartActivity::class.java)
+                startActivityForResult(intent,100)
+            }else{
+                if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
+                    addToCartMain(productData)
+                } else {
+                    addToCart()
+                }
             }
         }
 
@@ -76,7 +81,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         imgCart.setOnClickListener {
             var intent = Intent(this@ProductDetailsActivity, CartActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent,100)
         }
 
         imgLiked.setOnClickListener {
@@ -90,6 +95,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             finish()
         }
     }
+
 
     fun addToWishList(productId: Int?) {
         if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
@@ -327,6 +333,17 @@ class ProductDetailsActivity : AppCompatActivity() {
                     linearBottom.visibility = View.VISIBLE
                     linearNoData.visibility = View.GONE
                     productData = response.body()?.payload!!
+
+                    if(response.body()?.payload?.isStockAvailable!! > 0){
+                        linearWishList.visibility = View.VISIBLE
+                        linearAddToBag.visibility = View.VISIBLE
+                        txtOutOfStock.visibility = View.GONE
+                    }else{
+                        linearWishList.visibility = View.GONE
+                        linearAddToBag.visibility = View.GONE
+                        txtOutOfStock.visibility = View.VISIBLE
+                    }
+
                     if (response.body()?.payload!!.image != null && response.body()?.payload?.image?.size!! > 0) {
                         linearViewPager.visibility = View.VISIBLE
                         loadBanner(response.body()?.payload!!.image)
@@ -338,6 +355,10 @@ class ProductDetailsActivity : AppCompatActivity() {
                     }else{
                         txtDiscount.visibility = View.VISIBLE
                         txtDiscount.text = "( "+ response.body()?.payload?.discount!! + "% off )"
+                    }
+
+                    if(response.body()?.payload!!.is_cart == 1){
+                        txtMoveToBag.text = "Go to bag"
                     }
 
                     txtProductTitle.text = response.body()?.payload!!.productName
@@ -510,5 +531,13 @@ class ProductDetailsActivity : AppCompatActivity() {
         override fun getCount(): Int {
             return imageModelArrayList?.size!!
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        finish();
+        overridePendingTransition( 0, 0);
+        startActivity(getIntent());
+        overridePendingTransition( 0, 0);
     }
 }

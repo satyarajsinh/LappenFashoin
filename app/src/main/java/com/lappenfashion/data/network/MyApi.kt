@@ -96,6 +96,7 @@ interface MyApi {
         @Field("delivery_date") delivery_date: String?,
         @Field("grand_total") grand_total: String?,
         @Field("payment_id") payment_id: String?,
+        @Field("payment_method") payment_method: String?,
         @Field("products") products: String,
     ): Call<ResponseMainLogin>
 

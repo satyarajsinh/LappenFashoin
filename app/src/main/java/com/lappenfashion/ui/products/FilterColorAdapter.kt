@@ -1,6 +1,5 @@
 package com.lappenfashion.ui.products
 
-import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lappenfashion.R
 import com.lappenfashion.`interface`.CategoriesInterface
 import com.lappenfashion.data.model.ResponseMainFilter
-import kotlinx.android.synthetic.main.activity_categories_details.*
 
 class FilterColorAdapter : RecyclerView.Adapter<FilterColorAdapter.ViewHolder> {
 
@@ -21,10 +19,16 @@ class FilterColorAdapter : RecyclerView.Adapter<FilterColorAdapter.ViewHolder> {
     lateinit var categoriesInterface : CategoriesInterface
     lateinit var context: ProductsByProductCategoryActivity
     var data: List<ResponseMainFilter.Payload.Color?>
+    var selectedColor :String = ""
 
-    constructor(context: ProductsByProductCategoryActivity, data: List<ResponseMainFilter.Payload.Color?>) {
+    constructor(
+        context: ProductsByProductCategoryActivity,
+        data: List<ResponseMainFilter.Payload.Color?>,
+        selectedColor: String
+    ) {
         this.context = context
         this.data = data
+        this.selectedColor = selectedColor
     }
 
     class ViewHolder(view : View):RecyclerView.ViewHolder(view) {
@@ -48,6 +52,10 @@ class FilterColorAdapter : RecyclerView.Adapter<FilterColorAdapter.ViewHolder> {
 
         holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.colorCode))
 
+        if(selectedColor == data?.get(position)?.color){
+            rawIndex = position
+        }
+
         if(rawIndex == position){
             holder.imgCheck.visibility = View.VISIBLE
         }else{
@@ -56,6 +64,7 @@ class FilterColorAdapter : RecyclerView.Adapter<FilterColorAdapter.ViewHolder> {
 
         holder.relativeMain.setOnClickListener {
             rawIndex = position
+            selectedColor = data?.get(position)?.color!!
             context.selectedColor = data.get(position)?.color!!
             notifyDataSetChanged()
         }

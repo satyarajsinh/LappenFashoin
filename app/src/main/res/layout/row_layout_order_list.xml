@@ -1,37 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:padding="@dimen/_10sdp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtId"
+    <RelativeLayout
+        android:id="@+id/relativeImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/progressBar"
+            style="@style/SpinKitView.Circle"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            app:SpinKit_Style="FadingCircle"
+            app:SpinKit_Color="@color/pink" />
+
+        <ImageView
+            android:id="@+id/imgProductImage"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/_12ssp"
-        android:fontFamily="@font/poppins_medium">
+        android:paddingLeft="@dimen/_5sdp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/relativeImage"
+        android:orientation="vertical">
 
-    </TextView>
+        <TextView
+            android:id="@+id/txtId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_12ssp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_medium">
 
-    <TextView
-        android:id="@+id/txtOrderStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp"
-        android:fontFamily="@font/poppins_regular">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:id="@+id/txtOrderStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_below="@id/txtId"
+            android:textSize="@dimen/_12ssp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:fontFamily="@font/poppins_medium">
+
+        </TextView>
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_below="@id/relativeImage"
         android:background="@color/dark_light_grey">
 
     </View>
 
-</LinearLayout>
+</RelativeLayout>

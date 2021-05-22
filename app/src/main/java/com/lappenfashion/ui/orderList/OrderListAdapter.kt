@@ -1,10 +1,18 @@
 package com.lappenfashion.ui.orderList
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.github.ybq.android.spinkit.SpinKitView
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainOrderList
 import com.lappenfashion.data.model.ResponseMainProductDetails
@@ -27,6 +35,8 @@ class OrderListAdapter() :
     class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
         val txtId : TextView = view.findViewById(R.id.txtId)
         val txtOrderStatus : TextView = view.findViewById(R.id.txtOrderStatus)
+        val imgProductImage : ImageView = view.findViewById(R.id.imgProductImage)
+        val progressBar: SpinKitView = view.findViewById(R.id.progressBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,8 +53,36 @@ class OrderListAdapter() :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.txtId.text = "Order Number : "+data.get(position)?.orderId.toString()
-        holder.txtOrderStatus.text = "Status :  "+data.get(position)?.status.toString()
+
+        holder.progressBar.visibility = View.VISIBLE
+        Glide.with(context).load(data[position]?.products!![0]?.mainImageName)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    holder.progressBar.visibility = View.GONE
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    holder.progressBar.visibility = View.GONE
+                    return false
+                }
+            })
+            .into(holder.imgProductImage)
+
+
+        holder.txtId.text = data.get(position)?.status.toString()
+        holder.txtOrderStatus.text = data.get(position)?.products!![0]?.productName.toString()
     }
 
 
