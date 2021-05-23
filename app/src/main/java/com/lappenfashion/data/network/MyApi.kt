@@ -9,6 +9,7 @@ import com.lappenfashion.data.model.*
 import okhttp3.Cache
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -138,14 +139,14 @@ interface MyApi {
 
         ): Call<ResponseMainLogin>
 
-    @Multipart
     @POST(Constants.END_POINT_PROFILE)
+    @Multipart
     fun addProfile(
         @Header("Authorization") token: String,
-        @Query("name") name: String,
-        @Query("email") email: String,
-        @Query("gender") gender: String,
-        @Query("birth_date") birth_date: String,
+        @Part("name") name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("birth_date") birth_date: RequestBody,
         @Part file: MultipartBody.Part,
     ): Call<ResponseMainProfile>
 

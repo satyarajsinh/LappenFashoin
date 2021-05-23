@@ -89,7 +89,7 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
 
         imgLiked.setOnClickListener {
             var intent = Intent(this, WishListActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent,100)
         }
 
         imgCart.setOnClickListener {
@@ -675,4 +675,11 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
         })
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        finish();
+        overridePendingTransition( 0, 0);
+        startActivity(getIntent());
+        overridePendingTransition( 0, 0);
+    }
 }

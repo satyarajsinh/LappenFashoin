@@ -27,46 +27,85 @@
         <ImageView
             android:id="@+id/imgProductImage"
             android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_80sdp">
+            android:layout_height="@dimen/_85sdp">
 
         </ImageView>
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/_10sdp"
-        android:layout_centerVertical="true"
         android:layout_toRightOf="@id/relativeImage"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/_12ssp"
-            android:ellipsize="end"
-            android:fontFamily="@font/poppins_medium">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/txtOrderStatus"
+            android:id="@+id/txtProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_below="@id/txtId"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_10ssp"
             android:ellipsize="end"
             android:maxLines="2"
             android:fontFamily="@font/poppins_medium">
 
         </TextView>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/txtQty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_below="@id/txtProductName"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_medium">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtMrp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toRightOf="@id/txtQty"
+            android:layout_below="@id/txtProductName"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_medium">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtSize"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="30dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@id/txtMrp"
+            android:text="XL"
+            android:gravity="center"
+            android:background="@drawable/rounded_border_grey_20"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:layout_gravity="center">
+
+        </TextView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/txtId"
+            android:layout_below="@id/txtMrp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_toRightOf="@id/txtSize"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            app:cardCornerRadius="@dimen/_30sdp">
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

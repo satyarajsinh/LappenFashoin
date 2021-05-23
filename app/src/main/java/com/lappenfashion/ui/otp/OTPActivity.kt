@@ -10,6 +10,7 @@ import com.lappenfashion.data.model.ResponseMainVerifyOtp
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.ui.MainActivity
+import com.lappenfashion.ui.editProfile.EditProfileActivity
 import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_otp.*
@@ -99,10 +100,36 @@ class OTPActivity : AppCompatActivity() {
                 if (response.body() != null) {
                     if(response.body()?.result==true){
                         Prefs.putString(Constants.PREF_TOKEN,response.body()?.payload?.accessToken)
-                        Prefs.putString(Constants.PREF_PROFILE_MOBILE_NUMBER,response.body()?.payload?.mobileNumber)
                         Prefs.putInt(Constants.PREF_USER_ID,response.body()?.payload?.userId!!)
                         Prefs.putString(Constants.PREF_IS_LOGGED_IN,"1")
-                        finish()
+                        Prefs.putString(
+                            Constants.PREF_PROFILE_PICTURE,
+                            response.body()!!.payload?.image
+                        )
+                        Prefs.putString(
+                            Constants.PREF_PROFILE_FULL_NAME,
+                            response.body()!!.payload?.name
+                        )
+                        Prefs.putString(
+                            Constants.PREF_PROFILE_MOBILE_NUMBER,
+                            response.body()!!.payload?.mobileNumber
+                        )
+                        Prefs.putString(Constants.PREF_PROFILE_EMAIL, response.body()!!.payload?.email)
+                        Prefs.putString(
+                            Constants.PREF_PROFILE_DATE_OF_BIRTH,
+                            response.body()!!.payload?.birthDate
+                        )
+                        Prefs.putString(
+                            Constants.PREF_PROFILE_GENDER,
+                            response.body()!!.payload?.gender
+                        )
+                        if(response.body()?.payload!!.is_profile_setup == 0){
+                            var intent = Intent(this@OTPActivity,EditProfileActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }else{
+                            finish()
+                        }
                     }
                 } else {
                     com.lappenfashion.utils.Helper.showTost(this@OTPActivity, resources.getString(R.string.some_thing_happend_wrong))

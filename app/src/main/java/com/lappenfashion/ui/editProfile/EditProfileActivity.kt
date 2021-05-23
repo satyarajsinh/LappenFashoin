@@ -1,13 +1,16 @@
 package com.lappenfashion.ui.editProfile
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
+import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
@@ -38,6 +41,7 @@ import java.util.*
 
 class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener{
 
+    private var picturePath: String? = ""
     private var imagePath: String = ""
     private var gender: String = ""
     private var selectedUriList: MutableList<Uri> = arrayListOf()
@@ -104,9 +108,18 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
                 .errorListener { message -> Log.d("Lappen Fasion", "message: $message") }
                 .selectedUri(selectedUriList)
                 .startMultiImage { list: List<Uri> -> showMultiImage(list) }*/
+            if (ContextCompat.checkSelfPermission(this@EditProfileActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this@EditProfileActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(
+                    this@EditProfileActivity,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    101
+                )
+            } else {
+                val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(pickPhoto, 1)
+            }
 
-            val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(pickPhoto, 1)
 
         }
 
@@ -117,10 +130,14 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
                 edtFullName.error = "Field is required"
             } else if (edtEmail.text.toString() == "") {
                 edtEmail.error = "Field is required"
-            } else if (txtBirthDate.text.toString() == "Date Of Birth") {
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.text.toString()).matches()) {
+                edtEmail.error = "Enter valid email address"
+            }else if (txtBirthDate.text.toString() == "Date Of Birth") {
                 txtBirthDate.error = "Field is required"
             } else if (gender == "") {
                 Helper.showTost(this@EditProfileActivity, "Please select your gender")
+            }else if(imagePath == ""){
+                Helper.showTost(this@EditProfileActivity, "Please upload your image")
             } else {
                 if (NetworkConnection.checkConnection(this)) {
                     Helper.showLoader(this@EditProfileActivity)
@@ -172,18 +189,16 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
                 val selectedImageUri = data.data
                 val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
                 if (selectedImageUri != null) {
-                    val cursor: Cursor = contentResolver.query(
+                    val cursor: Cursor? = getContentResolver().query(
                         selectedImageUri,
                         filePathColumn, null, null, null
-                    )!!
+                    )
                     if (cursor != null) {
                         cursor.moveToFirst()
                         val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-                        val picturePath = cursor.getString(columnIndex)
-                        //                                Toast.makeText(mContext, "Chosen from storage: " + selectedImageUri, Toast.LENGTH_LONG).show();
-                        Log.e("Upload Photo", " Gallery Photo Path: $picturePath")
-                        imgProfile.setImageURI(picturePath.toUri())
-                        imagePath = picturePath
+                        imagePath = cursor.getString(columnIndex)
+                        imgProfile.setImageURI(selectedImageUri)
+//                        uploadPhotoMultipart(picturePath)
                         cursor.close()
                     }
                 }
@@ -203,10 +218,11 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
             "Bearer " + Prefs.getString(
                 Constants.PREF_TOKEN,
                 ""
-            ), edtFullName.text.toString(),
-            edtEmail.text.toString(),
-            gender,
-            txtBirthDate.text.toString(),
+            ),
+            RequestBody.create(MediaType.parse("text/plain"), edtFullName.text.toString()),
+            RequestBody.create(MediaType.parse("text/plain"), edtEmail.text.toString()),
+            RequestBody.create(MediaType.parse("text/plain"), gender),
+            RequestBody.create(MediaType.parse("text/plain"), txtBirthDate.text.toString()),
             body
         )
 
@@ -217,6 +233,7 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
             ) {
                 Helper.dismissLoader()
                 if (response.body() != null && response.body()!!.result == true) {
+
                     Helper.showTost(this@EditProfileActivity, response.body()!!.message!!)
                     Prefs.putString(
                         Constants.PREF_PROFILE_PICTURE,
@@ -239,6 +256,7 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
                         Constants.PREF_PROFILE_GENDER,
                         response.body()!!.payload?.gender
                     )
+                    finish()
                 }
             }
 

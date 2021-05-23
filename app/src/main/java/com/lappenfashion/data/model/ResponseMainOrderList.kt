@@ -2,6 +2,7 @@ package com.lappenfashion.data.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ResponseMainOrderList(
     @SerializedName("message")
@@ -10,7 +11,7 @@ data class ResponseMainOrderList(
     var payload: Payload?,
     @SerializedName("result")
     var result: Boolean?
-) {
+) :Serializable{
     data class Payload(
         @SerializedName("data")
         var `data`: List<Data?>?,
@@ -18,7 +19,7 @@ data class ResponseMainOrderList(
         var links: Links?,
         @SerializedName("meta")
         var meta: Meta?
-    ) {
+    ) :Serializable{
         data class Data(
             @SerializedName("grand_total")
             var grandTotal: Int?,
@@ -28,7 +29,7 @@ data class ResponseMainOrderList(
             var products: List<Product?>?,
             @SerializedName("status")
             var status: String?
-        ) {
+        ) :Serializable{
             data class Product(
                 @SerializedName("color")
                 var color: String?,
@@ -50,7 +51,7 @@ data class ResponseMainOrderList(
                 var size: String?,
                 @SerializedName("total_amount")
                 var totalAmount: Int?
-            )
+            ):Serializable
         }
 
         data class Links(
@@ -62,7 +63,7 @@ data class ResponseMainOrderList(
             var next: Any?,
             @SerializedName("prev")
             var prev: Any?
-        )
+        ):Serializable
 
         data class Meta(
             @SerializedName("current_page")
@@ -79,6 +80,6 @@ data class ResponseMainOrderList(
             var to: Int?,
             @SerializedName("total")
             var total: Int?
-        )
+        ):Serializable
     }
 }

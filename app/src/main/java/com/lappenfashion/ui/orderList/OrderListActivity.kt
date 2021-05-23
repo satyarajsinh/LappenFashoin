@@ -1,5 +1,6 @@
 package com.lappenfashion.ui.orderList
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -75,5 +76,11 @@ class OrderListActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    fun goToOrderDetails(get: ResponseMainOrderList.Payload.Data) {
+        var intent = Intent(this@OrderListActivity,OrderDetailsActivity::class.java)
+        intent.putExtra("orderDetails",get)
+        startActivity(intent)
     }
 }

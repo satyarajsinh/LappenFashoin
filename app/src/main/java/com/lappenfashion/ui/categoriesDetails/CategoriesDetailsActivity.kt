@@ -36,7 +36,6 @@ import kotlinx.android.synthetic.main.toolbar_with_like_cart.*
 
 class CategoriesDetailsActivity : AppCompatActivity() {
 
-
     lateinit var subCategoriesData: ResponseMainHome.Payload.Category
 
     override fun onCreate(savedInstanceState: Bundle?) {

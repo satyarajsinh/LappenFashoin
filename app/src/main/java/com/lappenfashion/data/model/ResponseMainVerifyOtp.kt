@@ -28,6 +28,8 @@ data class ResponseMainVerifyOtp(
         var name: String?,
         @SerializedName("token_type")
         var tokenType: String?,
+        @SerializedName("is_profile_setup")
+        var is_profile_setup: Int?,
         @SerializedName("user_id")
         var userId: Int?
     )

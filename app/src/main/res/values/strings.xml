@@ -95,6 +95,7 @@
     <string name="_40_and_above">40% and above</string>
     <string name="out_of_stock">Out of stock</string>
     <string name="payment_option">Payment Option</string>
+    <string name="grand_total">Grand Total</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

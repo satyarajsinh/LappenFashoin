@@ -43,6 +43,7 @@
         <activity android:name=".ui.cart.CartActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.wishlist.WishListActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.orderList.OrderListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.orderList.OrderDetailsActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.checkout.CheckoutDeliveryAddressActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.search.SearchProductActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.checkout.CheckoutActivity" android:screenOrientation="portrait" />
