@@ -80,7 +80,7 @@ class ProfileFragment : Fragment() {
         rootView.relativeEditProfile.setOnClickListener {
             if(Prefs.getString(Constants.PREF_IS_LOGGED_IN,"")=="1") {
                 var intent = Intent(mContext, EditProfileActivity::class.java)
-                startActivity(intent)
+                startActivityForResult(intent,101)
             }else{
                 displayLoginDialog()
             }
@@ -114,6 +114,8 @@ class ProfileFragment : Fragment() {
 
         }
     }
+
+
 
     private fun displayLoginDialog() {
         val dialog = BottomSheetDialog(mContext)

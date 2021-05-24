@@ -14,11 +14,16 @@ import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainCategories
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
+import com.lappenfashion.ui.cart.CartActivity
 import com.lappenfashion.ui.category.CategoriesAdapter
 import com.lappenfashion.ui.products.ProductsByProductCategoryActivity
+import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.fragment_category.*
+import kotlinx.android.synthetic.main.fragment_category.view.*
+import kotlinx.android.synthetic.main.toolbar_with_drawer.view.*
+import kotlinx.android.synthetic.main.toolbar_with_drawer.view.txtCartCount
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,7 +56,15 @@ class CategoryFragment : Fragment() {
     }
 
     private fun clickListener() {
+        imgLiked.setOnClickListener {
+            var intent = Intent(mContext, WishListActivity::class.java)
+            startActivity(intent)
+        }
 
+        imgBag.setOnClickListener {
+            var intent = Intent(mContext, CartActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun getCategories() {
@@ -86,6 +99,13 @@ class CategoryFragment : Fragment() {
 
     private fun initData() {
         recyclerCategoriesBottom = rootView.findViewById(R.id.recyclerCategoriesBottom)
+
+        if(Prefs.getInt(Constants.PREF_CART_COUNT,0) > 0){
+            rootView.txtCartCount.visibility = View.VISIBLE
+            rootView.txtCartCount.text = Prefs.getInt(Constants.PREF_CART_COUNT,0).toString()
+        }else{
+            rootView.txtCartCount.visibility = View.GONE
+        }
 
         getCategories()
     }

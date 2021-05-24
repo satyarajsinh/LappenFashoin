@@ -150,6 +150,16 @@ interface MyApi {
         @Part file: MultipartBody.Part,
     ): Call<ResponseMainProfile>
 
+    @POST(Constants.END_POINT_PROFILE)
+    @Multipart
+    fun addProfileWithoutPhoto(
+        @Header("Authorization") token: String,
+        @Part("name") name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("birth_date") birth_date: RequestBody,
+    ): Call<ResponseMainProfile>
+
 
     @FormUrlEncoded
     @POST(Constants.END_POINT_WISH_LIST)

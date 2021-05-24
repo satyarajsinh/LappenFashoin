@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +11,7 @@
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_light_arrow">
+        app:srcCompat="@drawable/ic_light_arrow">
 
     </ImageView>
 
@@ -65,6 +66,8 @@
                 android:paddingTop="@dimen/_10ssp"
                 android:fontFamily="@font/poppins_regular"
                 android:paddingBottom="@dimen/_10ssp"
+                android:maxLength="10"
+                android:enabled="false"
                 android:gravity="center_vertical"
                 android:background="@drawable/border_grey"
                 android:imeOptions="actionNext"

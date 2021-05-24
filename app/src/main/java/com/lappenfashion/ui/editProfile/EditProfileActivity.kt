@@ -96,18 +96,6 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
         }
 
         relativeImage.setOnClickListener {
-            /*TedImagePicker.with(this@EditProfileActivity)
-                .showCameraTile(false)
-                .title("Lappen Fashion")
-                .max(1, "You can select only 1 images at a time..")
-                //.mediaType(MediaType.IMAGE)
-                //.scrollIndicatorDateFormat("YYYYMMDD")
-                //.buttonGravity(ButtonGravity.BOTTOM)
-                //.buttonBackground(R.drawable.btn_sample_done_button)
-                //.buttonTextColor(R.color.sample_yellow)
-                .errorListener { message -> Log.d("Lappen Fasion", "message: $message") }
-                .selectedUri(selectedUriList)
-                .startMultiImage { list: List<Uri> -> showMultiImage(list) }*/
             if (ContextCompat.checkSelfPermission(this@EditProfileActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this@EditProfileActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
                 ActivityCompat.requestPermissions(
@@ -119,16 +107,14 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
                 val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(pickPhoto, 1)
             }
-
-
         }
 
         txtSaveDetails.setOnClickListener {
             if (edtMobileNumber.text.toString() == "") {
                 edtMobileNumber.error = "Field is required"
-            } else if (edtFullName.text.toString() == "") {
+            } else if (edtFullName.text.toString() == "" ) {
                 edtFullName.error = "Field is required"
-            } else if (edtEmail.text.toString() == "") {
+            } else if (edtEmail.text.toString() == "" ) {
                 edtEmail.error = "Field is required"
             } else if (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.text.toString()).matches()) {
                 edtEmail.error = "Enter valid email address"
@@ -136,12 +122,16 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
                 txtBirthDate.error = "Field is required"
             } else if (gender == "") {
                 Helper.showTost(this@EditProfileActivity, "Please select your gender")
-            }else if(imagePath == ""){
+            }else if(imagePath == "" && Prefs.getString(Constants.PREF_PROFILE_PICTURE, "") == ""){
                 Helper.showTost(this@EditProfileActivity, "Please upload your image")
             } else {
                 if (NetworkConnection.checkConnection(this)) {
                     Helper.showLoader(this@EditProfileActivity)
-                    updateProfile()
+                    if(imagePath == ""){
+                        updateProfileWithoutPhoto()
+                    }else{
+                        updateProfile()
+                    }
                 } else {
                     Helper.showTost(this, getString(R.string.no_internet))
                 }
@@ -167,6 +157,60 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
             var month : Int= Calendar.getInstance().get(Calendar.MONTH);
             showDate(year, month, day, R.style.NumberPickerStyle);
         }
+    }
+
+    private fun updateProfileWithoutPhoto() {
+        var api = MyApi(this)
+        val requestCall: Call<ResponseMainProfile> = api.addProfileWithoutPhoto(
+            "Bearer " + Prefs.getString(
+                Constants.PREF_TOKEN,
+                ""
+            ),
+            RequestBody.create(MediaType.parse("text/plain"), edtFullName.text.toString()),
+            RequestBody.create(MediaType.parse("text/plain"), edtEmail.text.toString()),
+            RequestBody.create(MediaType.parse("text/plain"), gender),
+            RequestBody.create(MediaType.parse("text/plain"), txtBirthDate.text.toString()),
+        )
+
+        requestCall.enqueue(object : Callback<ResponseMainProfile> {
+            override fun onResponse(
+                call: Call<ResponseMainProfile>,
+                response: Response<ResponseMainProfile>
+            ) {
+                Helper.dismissLoader()
+                if (response.body() != null && response.body()!!.result == true) {
+
+                    Helper.showTost(this@EditProfileActivity, response.body()!!.message!!)
+                    Prefs.putString(
+                        Constants.PREF_PROFILE_PICTURE,
+                        response.body()!!.payload?.image
+                    )
+                    Prefs.putString(
+                        Constants.PREF_PROFILE_FULL_NAME,
+                        response.body()!!.payload?.name
+                    )
+                    Prefs.putString(
+                        Constants.PREF_PROFILE_MOBILE_NUMBER,
+                        response.body()!!.payload?.mobileNumber
+                    )
+                    Prefs.putString(Constants.PREF_PROFILE_EMAIL, response.body()!!.payload?.email)
+                    Prefs.putString(
+                        Constants.PREF_PROFILE_DATE_OF_BIRTH,
+                        response.body()!!.payload?.birthDate
+                    )
+                    Prefs.putString(
+                        Constants.PREF_PROFILE_GENDER,
+                        response.body()!!.payload?.gender
+                    )
+                    finish()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMainProfile>, t: Throwable) {
+                Helper.dismissLoader()
+            }
+
+        })
     }
 
     private fun showDate(year: Int, monthOfYear: Int, dayOfMonth: Int, datePickerSpinner: Int) {

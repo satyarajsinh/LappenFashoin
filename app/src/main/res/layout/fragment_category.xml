@@ -42,10 +42,25 @@
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
             android:padding="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
             android:layout_alignParentRight="true"
             android:src="@mipmap/ic_light_bag">
 
         </ImageView>
+
+        <TextView
+            android:id="@+id/txtCartCount"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:background="@drawable/rounded_corner_cart_count"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"
+            android:text="1">
+
+        </TextView>
 
     </RelativeLayout>
 
