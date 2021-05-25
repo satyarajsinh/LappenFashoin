@@ -13,6 +13,7 @@ object Constants {
     const val END_POINT_CATEGORY = "category"
     const val END_POINT_LOGIN = "login"
     const val END_POINT_CART = "cart"
+    const val END_POINT_APPLY_COUPON = "apply-coupon-code"
     const val END_POINT_PLACE_ORDER = "order"
     const val END_POINT_OUT_OF_STOCK_PRODUCT = "out-off-stock-product"
     const val END_POINT_ADD_ADDRESS = "shipping-address"

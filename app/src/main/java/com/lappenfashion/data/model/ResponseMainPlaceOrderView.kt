@@ -16,12 +16,18 @@ data class ResponseMainPlaceOrderView(
         var address: Address?,
         @SerializedName("cart_count")
         var cartCount: Int?,
+        @SerializedName("list_price")
+        var list_price: Double?,
+        @SerializedName("selling_price")
+        var selling_price: Double?,
+        @SerializedName("shipping_fee")
+        var shipping_fee: Double?,
+        @SerializedName("total_cart_amount")
+        var total_cart_amount: Double?,
         @SerializedName("cart_list")
         var cartList: List<Cart?>?,
         @SerializedName("delivery_option")
-        var deliveryOption: DeliveryOption?,
-        @SerializedName("total_cart_amount")
-        var totalCartAmount: Int?
+        var deliveryOption: DeliveryOption?
     ) {
         data class Address(
             @SerializedName("address")

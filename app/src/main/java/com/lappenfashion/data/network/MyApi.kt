@@ -89,6 +89,14 @@ interface MyApi {
     ): Call<ResponseMainLogin>
 
     @FormUrlEncoded
+    @POST(Constants.END_POINT_APPLY_COUPON)
+    fun applyCouponCode(
+        @Header("Authorization") token: String,
+        @Field("coupon_code") coupon_code: String?
+    ): Call<ResponseMainApplyCoupon>
+
+
+    @FormUrlEncoded
     @POST(Constants.END_POINT_PLACE_ORDER)
     fun placeOrder(
         @Header("Authorization") token: String,

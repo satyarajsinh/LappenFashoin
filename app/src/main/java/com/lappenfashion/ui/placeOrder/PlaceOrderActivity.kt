@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.lappenfashion.R
+import com.lappenfashion.data.model.ResponseMainApplyCoupon
 import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.model.ResponseMainPlaceOrderView
 import com.lappenfashion.data.network.MyApi
@@ -35,6 +37,8 @@ import retrofit2.Response
 
 class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
 
+    private var totalAmountAfterCoupon: Double = 0.0
+    private var couponDiscount: Int = 0
     private lateinit var placeOrderData: ResponseMainPlaceOrderView.Payload
     private var addressId: Int = 0
     private var deliveryOptionId: Int = 0
@@ -56,6 +60,72 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
         relativeBottom.setOnClickListener {
             displaySortBottomSheet()
         }
+
+        txtApply.setOnClickListener {
+            if(txtApply.text.toString() == "Apply") {
+                if (edtCoupon.text.toString() != "") {
+                    if (NetworkConnection.checkConnection(this@PlaceOrderActivity)) {
+                        Helper.showLoader(this@PlaceOrderActivity)
+                        applyCouponCode(edtCoupon.text.toString())
+                    } else {
+                        Helper.showTost(this@PlaceOrderActivity, "No internet connection")
+                    }
+                } else {
+                    Helper.showTost(this@PlaceOrderActivity, "Please enter your coupon code")
+                }
+            }else{
+                txtCoupon.visibility = View.GONE
+                txtCouponDiscount.visibility = View.GONE
+                var discount = (placeOrderData.selling_price!! * couponDiscount)/100
+                txtCouponDiscount.text = "(-) ₹" + discount.toString()
+                txtTotaAmount.text = "₹" +placeOrderData.total_cart_amount.toString()
+                txtAmount.text = "₹" +placeOrderData.total_cart_amount.toString()
+                txtError.visibility = View.GONE
+                edtCoupon.setText("")
+                txtApply.setText("Apply")
+            }
+        }
+    }
+
+    private fun applyCouponCode(coupon: String) {
+        var api = MyApi(this@PlaceOrderActivity)
+        val requestCall: Call<ResponseMainApplyCoupon> = api.applyCouponCode(
+            "Bearer " + Prefs.getString(
+                Constants.PREF_TOKEN,
+                ""
+            ),coupon
+        )
+
+        requestCall.enqueue(object : Callback<ResponseMainApplyCoupon> {
+            override fun onResponse(
+                call: Call<ResponseMainApplyCoupon>,
+                response: Response<ResponseMainApplyCoupon>
+            ) {
+                Helper.dismissLoader()
+                if (response.body() != null && response.body()!!.result == true && response.body()!!.payload!=null) {
+                    txtCoupon.visibility = View.VISIBLE
+                    txtCouponDiscount.visibility = View.VISIBLE
+                    couponDiscount = response.body()!!.payload?.discount!!
+                    var discount = (placeOrderData.selling_price!! * response.body()!!.payload?.discount!!)/100
+                    txtCouponDiscount.text = "(-) ₹" + discount.toString()
+                    totalAmountAfterCoupon = placeOrderData.selling_price!! - response.body()!!.payload?.discount!!
+                    txtTotaAmount.text = "₹"+(placeOrderData.selling_price!! - response.body()!!.payload?.discount!!).toString()
+                    txtAmount.text = "₹"+(placeOrderData.selling_price!! - response.body()!!.payload?.discount!!).toString()
+                    txtApply.text = "Remove"
+                    txtError.visibility = View.VISIBLE
+                    txtError.text = "Coupon applied successfully"
+                } else {
+                    txtError.visibility = View.VISIBLE
+                    txtError.text = "Coupon not available"
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMainApplyCoupon>, t: Throwable) {
+                Helper.dismissLoader()
+                Helper.showTost(this@PlaceOrderActivity, t.message)
+            }
+
+        })
     }
 
     private fun displaySortBottomSheet() {
@@ -102,14 +172,18 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
         Helper.dismissLoader()
     }
 
-
     private fun startPayment() {
         /*
         *  You need to pass current activity in order to let Razorpay create CheckoutActivity
         * */
         val activity: Activity = this
         val co = Checkout()
-        var total = placeOrderData.totalCartAmount!! * 100
+        var total = 0
+        if(couponDiscount > 0){
+            total = totalAmountAfterCoupon.toInt() * 100
+        }else{
+            total = (placeOrderData.total_cart_amount!! * 100).toInt()
+        }
         try {
             val options = JSONObject()
             options.put("name","Lappen Fashion")
@@ -178,7 +252,7 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
             addressId.toString(),
             deliveryOptionId.toString(),
             "",
-            placeOrderData.totalCartAmount.toString(),
+            if(couponDiscount>0) totalAmountAfterCoupon.toString() else placeOrderData.total_cart_amount.toString(),
             paymentId,
             paymentMethod,
             array.toString()
@@ -236,6 +310,9 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
     }
 
     private fun getPlaceOrderDetails() {
+        Log.e("Address Id","Address Id : "+addressId.toString())
+        Log.e("delivery option Id","delivery option Id : "+deliveryOptionId.toString())
+
         var api = MyApi(this@PlaceOrderActivity)
         val requestCall: Call<ResponseMainPlaceOrderView> = api.placeOrderView(
             "Bearer " + Prefs.getString(
@@ -308,7 +385,12 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
                         txtDescription.text = response.body()!!.payload?.deliveryOption?.description
                     }
 
-                    txtAmount.text = "₹" + response.body()!!.payload?.totalCartAmount.toString()
+                    txtListPrice.text = "₹" + response.body()!!.payload?.list_price.toString()
+                    txtSellingPrice.text = "₹" + response.body()!!.payload?.selling_price.toString()
+                    txtShippingCharge.text = "(+) ₹" + response.body()!!.payload?.shipping_fee.toString()
+                    txtExtraDiscount.text = "(-) ₹" + (response.body()!!.payload?.list_price!! - response.body()!!.payload?.selling_price!!)
+                    txtTotaAmount.text = "₹" + response.body()!!.payload?.total_cart_amount.toString()
+                    txtAmount.text = "₹" + response.body()!!.payload?.total_cart_amount.toString()
 
                 } else {
                     Helper.showTost(this@PlaceOrderActivity, "No Data Found")

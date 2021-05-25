@@ -96,6 +96,8 @@
     <string name="out_of_stock">Out of stock</string>
     <string name="payment_option">Payment Option</string>
     <string name="grand_total">Grand Total</string>
+    <string name="enter_coupon_code">Enter coupon code</string>
+    <string name="price_details">Price Details</string>
 
     <array name="rangeSliderValues">
         <item>20</item>
