@@ -39,6 +39,7 @@ class OrderDetailsProductAdapter() :
         val txtQty : TextView = view.findViewById(R.id.txtQty)
         val txtMrp : TextView = view.findViewById(R.id.txtMrp)
         val txtSize : TextView = view.findViewById(R.id.txtSize)
+        val txtRating : TextView = view.findViewById(R.id.txtRating)
         val cardView : CardView = view.findViewById(R.id.txtId)
         val imgProductImage : ImageView = view.findViewById(R.id.imgProductImage)
         val progressBar: SpinKitView = view.findViewById(R.id.progressBar)
@@ -61,7 +62,7 @@ class OrderDetailsProductAdapter() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.progressBar.visibility = View.VISIBLE
-        Glide.with(context).load(data!![position]?.mainImageName)
+        Glide.with(context).load(data!![position]?.mainImageName).placeholder(R.mipmap.no_image)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
@@ -91,6 +92,10 @@ class OrderDetailsProductAdapter() :
         holder.txtQty.text = "Qty - "+data!!.get(position)?.quantity.toString()
         holder.txtMrp.text = "₹"+data!!.get(position)?.salePrice.toString()
         holder.txtSize.text = data!!.get(position)?.size.toString()
+
+        holder.txtRating.setOnClickListener {
+            context.displayDialog(data!!.get(position)?.orderProductId)
+        }
     }
 
 }

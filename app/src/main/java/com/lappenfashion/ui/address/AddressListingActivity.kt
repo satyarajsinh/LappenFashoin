@@ -110,6 +110,7 @@ class AddressListingActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseMainAddress>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@AddressListingActivity,t.message)
             }
 
         })
@@ -145,6 +146,7 @@ class AddressListingActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
                     Helper.dismissLoader()
+                    Helper.showTost(this@AddressListingActivity,t.message)
                 }
             })
         } else {

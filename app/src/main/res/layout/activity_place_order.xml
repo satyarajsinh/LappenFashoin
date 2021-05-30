@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include android:id="@+id/toolbar" layout="@layout/toolbar_with_back_button"></include>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_with_back_button"></include>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -20,8 +22,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_5sdp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/_5sdp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerProducts"
@@ -31,15 +33,72 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/border_grey">
+
+                    <EditText
+                        android:id="@+id/edtCoupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:layout_toLeftOf="@id/txtApply"
+                        android:background="@color/white"
+                        android:fontFamily="@font/poppins_regular"
+                        android:hint="@string/enter_coupon_code"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:padding="@dimen/_10sdp"
+                        android:text=""
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp">
+
+                    </EditText>
+
+                    <TextView
+                        android:id="@+id/txtApply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Apply"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="gone">
+
+                </TextView>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textColor="@color/colorAccent"
-                    android:text="Delivery Address"
                     android:layout_alignParentLeft="true"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_toLeftOf="@id/txtType"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Delivery Address"
+                    android:textColor="@color/colorAccent"
                     android:textSize="@dimen/_12ssp">
 
                 </TextView>
@@ -49,18 +108,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:elevation="@dimen/_5sdp"
-                    android:background="@color/white">
+                    android:background="@color/white"
+                    android:elevation="@dimen/_5sdp">
 
                     <TextView
                         android:id="@+id/txtName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_10sdp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/black"
                         android:layout_alignParentLeft="true"
                         android:layout_toLeftOf="@id/txtType"
+                        android:fontFamily="@font/poppins_regular"
+                        android:padding="@dimen/_10sdp"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp">
 
                     </TextView>
@@ -69,13 +128,13 @@
                         android:id="@+id/txtType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:paddingRight="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:background="@color/colorAccent"
                         android:layout_alignParentRight="true"
+                        android:background="@color/colorAccent"
                         android:fontFamily="@font/poppins_regular"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12ssp">
 
@@ -85,9 +144,9 @@
                         android:id="@+id/txtAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_10sdp"
                         android:layout_below="@id/txtName"
                         android:fontFamily="@font/poppins_regular"
+                        android:paddingLeft="@dimen/_10sdp"
                         android:textSize="@dimen/_10ssp">
 
                     </TextView>
@@ -96,10 +155,10 @@
                         android:id="@+id/txtLocality"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:layout_alignParentLeft="true"
                         android:layout_below="@id/txtAddress"
+                        android:layout_alignParentLeft="true"
                         android:fontFamily="@font/poppins_regular"
+                        android:paddingLeft="@dimen/_10sdp"
                         android:textSize="@dimen/_10ssp">
 
                     </TextView>
@@ -108,10 +167,10 @@
                         android:id="@+id/txtCity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:layout_toRightOf="@id/txtState"
                         android:layout_below="@id/txtLocality"
+                        android:layout_toRightOf="@id/txtState"
                         android:fontFamily="@font/poppins_regular"
+                        android:paddingLeft="@dimen/_5sdp"
                         android:textSize="@dimen/_10ssp">
 
                     </TextView>
@@ -120,8 +179,8 @@
                         android:id="@+id/txtPincode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/txtCity"
                         android:layout_below="@id/txtLocality"
+                        android:layout_toRightOf="@id/txtCity"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="@dimen/_10ssp">
 
@@ -131,9 +190,9 @@
                         android:id="@+id/txtState"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_10sdp"
                         android:layout_below="@id/txtLocality"
                         android:fontFamily="@font/poppins_regular"
+                        android:paddingLeft="@dimen/_10sdp"
                         android:textSize="@dimen/_10ssp">
 
                     </TextView>
@@ -142,11 +201,11 @@
                         android:id="@+id/txtNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:textColor="@color/black"
-                        android:paddingBottom="@dimen/_10sdp"
                         android:layout_below="@id/txtState"
                         android:fontFamily="@font/poppins_regular"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp">
 
                     </TextView>
@@ -156,20 +215,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textColor="@color/colorAccent"
-                    android:text="Delivery option details"
                     android:layout_alignParentLeft="true"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_toLeftOf="@id/txtType"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Delivery option details"
+                    android:textColor="@color/colorAccent"
                     android:textSize="@dimen/_12ssp">
 
                 </TextView>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/white"
+                    android:elevation="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -177,9 +238,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/black"
                         android:paddingLeft="@dimen/_5sdp"
                         android:paddingRight="@dimen/_5sdp"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp">
 
                     </TextView>
@@ -188,16 +249,203 @@
                         android:id="@+id/txtDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
                         android:layout_centerVertical="true"
+                        android:layout_below="@id/txtTitleDelivery"
+                        android:fontFamily="@font/poppins_regular"
                         android:paddingLeft="@dimen/_5sdp"
                         android:paddingRight="@dimen/_5sdp"
-                        android:layout_toLeftOf="@id/radio"
                         android:textSize="@dimen/_10ssp">
 
                     </TextView>
 
-                </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/price_details"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/_12ssp">
+
+                </TextView>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:text="List Price"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:layout_toLeftOf="@id/txtListPrice"
+                        android:layout_alignParentLeft="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtListPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:text="Selling Price"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_below="@id/txtListPrice"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:layout_toLeftOf="@id/txtSellingPrice"
+                        android:layout_alignParentLeft="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtSellingPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:layout_below="@id/txtListPrice"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:text="Extra discount"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_below="@id/txtSellingPrice"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:layout_toLeftOf="@id/txtSellingPrice"
+                        android:layout_alignParentLeft="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtExtraDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:layout_below="@id/txtSellingPrice"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtCoupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:text="Coupon discount"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_below="@id/txtExtraDiscount"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:layout_toLeftOf="@id/txtCouponDiscount"
+                        android:layout_alignParentLeft="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtCouponDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:visibility="gone"
+                        android:layout_below="@id/txtExtraDiscount"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:text="Shipping Charge"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_below="@id/txtCouponDiscount"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:layout_toLeftOf="@id/txtShippingCharge"
+                        android:layout_alignParentLeft="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtShippingCharge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:layout_below="@id/txtCouponDiscount"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:text="Total Amount"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_below="@id/txtShippingCharge"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:layout_toLeftOf="@id/txtShippingCharge"
+                        android:layout_alignParentLeft="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtTotaAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:layout_below="@id/txtShippingCharge"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/_12ssp">
+
+                    </TextView>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -209,18 +457,18 @@
         android:id="@+id/relativeBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorAccent"
-        android:layout_alignParentBottom="true">
+        android:padding="@dimen/_10sdp">
 
         <TextView
             android:id="@+id/txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/white"
             android:fontFamily="@font/poppins_medium"
-            android:text="@string/place_order">
+            android:text="@string/place_order"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp">
 
         </TextView>
 
@@ -228,10 +476,10 @@
             android:id="@+id/txtAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/white"
             android:layout_alignParentRight="true"
-            android:fontFamily="@font/poppins_bold">
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp">
 
         </TextView>
 

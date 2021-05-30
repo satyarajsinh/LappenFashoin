@@ -190,6 +190,8 @@ data class ResponseMainHome(
         ) :Serializable
 
         data class Trending(
+            @SerializedName("id")
+            var id: Int?,
             @SerializedName("image")
             var image: String?,
             @SerializedName("price")

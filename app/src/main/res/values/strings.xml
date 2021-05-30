@@ -98,6 +98,7 @@
     <string name="grand_total">Grand Total</string>
     <string name="enter_coupon_code">Enter coupon code</string>
     <string name="price_details">Price Details</string>
+    <string name="cancel_order">Cancel Order</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

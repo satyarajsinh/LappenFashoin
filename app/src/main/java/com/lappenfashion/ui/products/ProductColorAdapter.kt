@@ -69,7 +69,9 @@ class ProductColorAdapter() :
             }
         }
 
-        holder.cardView.setCardBackgroundColor(Color.parseColor(data.get(position)?.colorCode))
+        if(data.get(position)?.colorCode!=null) {
+            holder.cardView.setCardBackgroundColor(Color.parseColor(data.get(position)?.colorCode))
+        }
 
         holder.cardView.setOnClickListener {
             data.get(position)?.flag = 1

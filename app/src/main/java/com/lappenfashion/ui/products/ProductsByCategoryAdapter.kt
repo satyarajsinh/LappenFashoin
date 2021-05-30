@@ -57,7 +57,7 @@ class ProductsByCategoryAdapter : RecyclerView.Adapter<ProductsByCategoryAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.progressBar.visibility = View.VISIBLE
-        Glide.with(context).load(data[position]?.mainImageName)
+        Glide.with(context).load(data[position]?.mainImageName).placeholder(R.mipmap.no_image)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,

@@ -22,7 +22,17 @@ data class ResponseMainOrderList(
     ) :Serializable{
         data class Data(
             @SerializedName("grand_total")
-            var grandTotal: Int?,
+            var grandTotal: Double?,
+            @SerializedName("shipping_fee")
+            var shipping_fee: Int?,
+            @SerializedName("extra_discount")
+            var extra_discount: Double?,
+            @SerializedName("list_price")
+            var list_price: Double?,
+            @SerializedName("selling_price")
+            var selling_price: Double?,
+            @SerializedName("order_status_detail")
+            var orderStatusDetail: List<OrderStatusDetail?>?,
             @SerializedName("order_id")
             var orderId: Int?,
             @SerializedName("products")
@@ -30,6 +40,16 @@ data class ResponseMainOrderList(
             @SerializedName("status")
             var status: String?
         ) :Serializable{
+            data class OrderStatusDetail(
+                @SerializedName("created_at")
+                var createdAt: String?,
+                @SerializedName("description")
+                var description: String?,
+                @SerializedName("id")
+                var id: Int?,
+                @SerializedName("status")
+                var status: String?
+            ) : Serializable
             data class Product(
                 @SerializedName("color")
                 var color: String?,

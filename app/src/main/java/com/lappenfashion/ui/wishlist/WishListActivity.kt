@@ -107,6 +107,7 @@ class WishListActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseMainWishList>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@WishListActivity,t.message)
             }
 
         })
@@ -152,6 +153,7 @@ class WishListActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
+                    Helper.showTost(this@WishListActivity,t.message)
                     Helper.dismissLoader()
                 }
 
@@ -199,6 +201,7 @@ class WishListActivity : AppCompatActivity() {
 
                     override fun onFailure(call: Call<ResponseMainCartNew>, t: Throwable) {
                         Helper.dismissLoader()
+                        Helper.showTost(this@WishListActivity,t.message)
                     }
 
                 })
@@ -265,6 +268,7 @@ class WishListActivity : AppCompatActivity() {
             override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
                 txtLogin.isEnabled = true
                 Helper.dismissLoader()
+                Helper.showTost(this@WishListActivity,t.message)
             }
 
         })

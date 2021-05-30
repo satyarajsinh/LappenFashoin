@@ -58,7 +58,7 @@ class DealsOfTheDayAdapter(
         holder.txtSpaceName.text = TextUtils.concat(ss1 ,ss2)
 
         holder.progressBar.visibility = View.VISIBLE
-        Glide.with(context).load(data?.get(position)?.image)
+        Glide.with(context).load(data?.get(position)?.image).placeholder(R.mipmap.no_image)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,

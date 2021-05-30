@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -63,10 +64,10 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     private fun clickListener() {
         linearAddToBag.setOnClickListener {
-            if(txtMoveToBag.text.toString() == "Go to bag"){
-                var intent = Intent(this@ProductDetailsActivity, CartActivity::class.java)
-                startActivityForResult(intent,100)
-            }else{
+            if (txtMoveToBag.text.toString() == "Go to bag") {
+                val intent = Intent(this@ProductDetailsActivity, CartActivity::class.java)
+                startActivityForResult(intent, 100)
+            } else {
                 if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
                     addToCartMain(productData)
                 } else {
@@ -80,17 +81,17 @@ class ProductDetailsActivity : AppCompatActivity() {
         }
 
         imgCart.setOnClickListener {
-            var intent = Intent(this@ProductDetailsActivity, CartActivity::class.java)
-            startActivityForResult(intent,100)
+            val intent = Intent(this@ProductDetailsActivity, CartActivity::class.java)
+            startActivityForResult(intent, 100)
         }
 
         imgLiked.setOnClickListener {
-            var intent = Intent(this@ProductDetailsActivity, WishListActivity::class.java)
+            val intent = Intent(this@ProductDetailsActivity, WishListActivity::class.java)
             startActivity(intent)
         }
 
         txtGoToHome.setOnClickListener {
-            var intent = Intent(this@ProductDetailsActivity, MainActivity::class.java)
+            val intent = Intent(this@ProductDetailsActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -101,7 +102,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
             if (NetworkConnection.checkConnection(this@ProductDetailsActivity)) {
                 Helper.showLoader(this@ProductDetailsActivity)
-                var api = MyApi(this)
+                val api = MyApi(this)
                 val requestCall: Call<ResponseMainLogin> =
                     api.addToWishList(
                         "Bearer " + Prefs.getString(Constants.PREF_TOKEN, ""),
@@ -119,15 +120,18 @@ class ProductDetailsActivity : AppCompatActivity() {
                                 this@ProductDetailsActivity,
                                 response.body()!!.message!!
                             )
-                        }else{
-                            var message = Helper.getErrorBodyMessage(this@ProductDetailsActivity,response.errorBody())
-                            Helper.showTost(this@ProductDetailsActivity,message)
+                        } else {
+                            var message = Helper.getErrorBodyMessage(
+                                this@ProductDetailsActivity,
+                                response.errorBody()
+                            )
+                            Helper.showTost(this@ProductDetailsActivity, message)
                         }
                     }
 
                     override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
                         Helper.dismissLoader()
-                        Helper.showTost(this@ProductDetailsActivity,t.message)
+                        Helper.showTost(this@ProductDetailsActivity, t.message)
                     }
 
                 })
@@ -190,7 +194,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                         )
                         var intent = Intent(this@ProductDetailsActivity, OTPActivity::class.java)
                         intent.putExtra("mobile_number", mobileNumber)
-                        startActivityForResult(intent,200)
+                        startActivityForResult(intent, 200)
                     }
                 } else {
                     txtLogin.isEnabled = true
@@ -204,6 +208,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
                 txtLogin.isEnabled = true
                 com.lappenfashion.utils.Helper.dismissLoader()
+                Helper.showTost(this@ProductDetailsActivity,t.message)
             }
 
         })
@@ -249,6 +254,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<ResponseMainCartNew>, t: Throwable) {
                     Helper.dismissLoader()
+                    Helper.showTost(this@ProductDetailsActivity,t.message)
                 }
 
             })
@@ -269,7 +275,9 @@ class ProductDetailsActivity : AppCompatActivity() {
                 productData?.productId!!.toString(),
                 "1",
                 productData?.productName!!,
-                productData?.salePrice!!.toString(),productData?.size!!.toString(),productData.colorCode.toString()
+                productData?.salePrice!!.toString(),
+                productData?.size!!.toString(),
+                productData.colorCode.toString()
             )
             dbManager.insertCart(localCart)
 
@@ -285,9 +293,10 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        Prefs.putInt(Constants.PREF_SELECTED_COLOR,0)
-        if (intent != null) {
-            productId = intent.getIntExtra("productId", 0)
+        Prefs.putInt(Constants.PREF_SELECTED_COLOR, 0)
+
+        productId = Prefs.getInt(Constants.PREF_PRODUCT_ID,0)
+        if(productId!=0) {
             if (NetworkConnection.checkConnection(this@ProductDetailsActivity)) {
                 Helper.showLoader(this@ProductDetailsActivity)
                 getProductDetailsById(productId)
@@ -297,29 +306,32 @@ class ProductDetailsActivity : AppCompatActivity() {
                     resources.getString(R.string.no_internet)
                 )
             }
+        }else{
+            coordinator.visibility = View.GONE
+            linearBottom.visibility = View.GONE
+            linearNoData.visibility = View.VISIBLE
         }
 
-        if(Prefs.getInt(Constants.PREF_CART_COUNT, 0) == 0){
+        if (Prefs.getInt(Constants.PREF_CART_COUNT, 0) == 0) {
             txtCartCount.visibility = View.GONE
-        }else{
+        } else {
             txtCartCount.visibility = View.VISIBLE
             txtCartCount.text = Prefs.getInt(Constants.PREF_CART_COUNT, 0).toString()
         }
     }
 
     fun getProductDetailsById(productId: Int) {
-        Log.e("product id","product id"+productId.toString())
-        Log.e("user id","userid"+Prefs.getInt(
-            Constants.PREF_USER_ID,
-            0
-        ).toString())
-
-        var api = MyApi(this@ProductDetailsActivity)
-        val requestCall : Call<ResponseMainProductDetails> = api.getProductDetails(
-            Constants.END_POINT_PRODUCTS + "/" + productId + "?user_id" + Prefs.putInt(
+        Log.e("product id", "product id" + productId.toString())
+        Log.e(
+            "user id", "userid" + Prefs.getInt(
                 Constants.PREF_USER_ID,
                 0
-            )
+            ).toString()
+        )
+
+        var api = MyApi(this@ProductDetailsActivity)
+        val requestCall: Call<ResponseMainProductDetails> = api.getProductDetails(
+            Constants.END_POINT_PRODUCTS + "/" + productId + "?user_id=" + Prefs.getInt(Constants.PREF_USER_ID, 0)
         )
 
         requestCall.enqueue(object : Callback<ResponseMainProductDetails> {
@@ -334,14 +346,21 @@ class ProductDetailsActivity : AppCompatActivity() {
                     linearNoData.visibility = View.GONE
                     productData = response.body()?.payload!!
 
-                    if(response.body()?.payload?.isStockAvailable!! > 0){
+                    if (response.body()?.payload?.isStockAvailable!! > 0) {
                         linearWishList.visibility = View.VISIBLE
                         linearAddToBag.visibility = View.VISIBLE
                         txtOutOfStock.visibility = View.GONE
-                    }else{
+                    } else {
                         linearWishList.visibility = View.GONE
                         linearAddToBag.visibility = View.GONE
                         txtOutOfStock.visibility = View.VISIBLE
+                    }
+
+                    if(response.body()?.payload?.isWishList!! == 1){
+                        imgWish.setColorFilter(
+                            ContextCompat.getColor(this@ProductDetailsActivity, R.color.colorAccent),
+                            android.graphics.PorterDuff.Mode.SRC_ATOP
+                        )
                     }
 
                     if (response.body()?.payload!!.image != null && response.body()?.payload?.image?.size!! > 0) {
@@ -350,21 +369,21 @@ class ProductDetailsActivity : AppCompatActivity() {
                     } else {
                         linearViewPager.visibility = View.GONE
                     }
-                    if(response.body()?.payload?.discount!! <= 0){
+                    if (response.body()?.payload?.discount!! <= 0) {
                         txtDiscount.visibility = View.GONE
-                    }else{
+                    } else {
                         txtDiscount.visibility = View.VISIBLE
-                        txtDiscount.text = "( "+ response.body()?.payload?.discount!! + "% off )"
+                        txtDiscount.text = "( " + response.body()?.payload?.discount!! + "% off )"
                     }
 
-                    if(response.body()?.payload!!.is_cart == 1){
+                    if (response.body()?.payload!!.is_cart == 1) {
                         txtMoveToBag.text = "Go to bag"
                     }
 
                     txtProductTitle.text = response.body()?.payload!!.productName
-                    txtProductMrp.text = "₹"+response.body()?.payload!!.mrp.toString()
+                    txtProductMrp.text = "₹" + response.body()?.payload!!.mrp.toString()
                     txtProductMrp.setPaintFlags(txtProductMrp.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
-                    txtProductSalePrice.text = "₹"+response.body()?.payload!!.salePrice.toString()
+                    txtProductSalePrice.text = "₹" + response.body()?.payload!!.salePrice.toString()
                     txtSizeFit.text = response.body()?.payload!!.brandFit.toString()
                     txtMaterialCare.text = response.body()?.payload!!.material.toString()
                     txtStyleNote.text = response.body()?.payload!!.pocketStyle.toString()
@@ -377,52 +396,60 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                     txtDetails.text = response.body()?.payload!!.description
 
-                    recyclerSize.layoutManager = LinearLayoutManager(
-                        this@ProductDetailsActivity,
-                        LinearLayoutManager.HORIZONTAL,
-                        false
-                    )
-                    recyclerSize.setHasFixedSize(true)
-                    var productSizeAdapter = ProductSizeAdapter(
-                        this@ProductDetailsActivity,
-                        response.body()?.payload!!.sizeList as List<ResponseMainProductDetails.Payload.Size>,
-                        productId
-                    )
-                    recyclerSize.adapter = productSizeAdapter
-
-                    recyclerColor.layoutManager = LinearLayoutManager(
-                        this@ProductDetailsActivity,
-                        LinearLayoutManager.HORIZONTAL,
-                        false
-                    )
-                    recyclerColor.setHasFixedSize(true)
-
-                    var colorList : ArrayList<ResponseMainProductDetails.Payload.Color?> = arrayListOf()
-
-                    var flag = 0
-                    for(i in response.body()?.payload!!.colorList!!.indices){
-                        if(colorList.size > 0){
-                            for(j in colorList.indices){
-                                if(colorList.get(j)?.colorCode == response.body()?.payload!!.colorList!!.get(i)!!.colorCode){
-                                    flag = 0
-                                    break
-                                }else{
-                                    flag = 1
-                                }
-                            }
-                            if(flag == 1){
-                                colorList.add(response.body()?.payload!!.colorList!![i])
-                            }
-                        }else{
-                            colorList.add(response.body()?.payload!!.colorList!![i])
-                        }
+                    if (response.body()?.payload?.sizeList?.size!! > 0) {
+                        recyclerSize.layoutManager = LinearLayoutManager(
+                            this@ProductDetailsActivity,
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+                        recyclerSize.setHasFixedSize(true)
+                        var productSizeAdapter = ProductSizeAdapter(
+                            this@ProductDetailsActivity,
+                            response.body()?.payload!!.sizeList as List<ResponseMainProductDetails.Payload.Size>,
+                            productId
+                        )
+                        recyclerSize.adapter = productSizeAdapter
                     }
 
-                    var productColorAdapter = ProductColorAdapter(
-                        this@ProductDetailsActivity,
-                        colorList,productId
-                    )
-                    recyclerColor.adapter = productColorAdapter
+                    if (response.body()?.payload!!.colorList!!.size > 0) {
+                        recyclerColor.layoutManager = LinearLayoutManager(
+                            this@ProductDetailsActivity,
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+                        recyclerColor.setHasFixedSize(true)
+
+                        var colorList: ArrayList<ResponseMainProductDetails.Payload.Color?> =
+                            arrayListOf()
+
+                        var flag = 0
+                        for (i in response.body()?.payload!!.colorList!!.indices) {
+                            if (colorList.size > 0) {
+                                for (j in colorList.indices) {
+                                    if (colorList.get(j)?.colorCode == response.body()?.payload!!.colorList!!.get(
+                                            i
+                                        )!!.colorCode
+                                    ) {
+                                        flag = 0
+                                        break
+                                    } else {
+                                        flag = 1
+                                    }
+                                }
+                                if (flag == 1) {
+                                    colorList.add(response.body()?.payload!!.colorList!![i])
+                                }
+                            } else {
+                                colorList.add(response.body()?.payload!!.colorList!![i])
+                            }
+                        }
+
+                        var productColorAdapter = ProductColorAdapter(
+                            this@ProductDetailsActivity,
+                            colorList, productId
+                        )
+                        recyclerColor.adapter = productColorAdapter
+                    }
                 } else {
                     coordinator.visibility = View.GONE
                     linearBottom.visibility = View.GONE
@@ -435,6 +462,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                 txtNoDataFound.setText(resources.getString(R.string.no_data_found))
                 linearNoData.visibility = View.VISIBLE
                 Helper.dismissLoader()
+                Helper.showTost(this@ProductDetailsActivity,t.message)
             }
 
         })
@@ -536,8 +564,8 @@ class ProductDetailsActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         finish();
-        overridePendingTransition( 0, 0);
+        overridePendingTransition(0, 0);
         startActivity(getIntent());
-        overridePendingTransition( 0, 0);
+        overridePendingTransition(0, 0);
     }
 }

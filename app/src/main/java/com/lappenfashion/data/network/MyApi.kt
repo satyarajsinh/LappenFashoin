@@ -26,6 +26,9 @@ interface MyApi {
     fun getHome(@Url url: String): Call<JsonObject>
 
     @GET
+    fun checkPincode(@Url url: String): Call<JsonObject>
+
+    @GET
     fun searchProduct(@Url url: String): Call<ResponseMainSearchProduct>
 
     @GET(Constants.END_POINT_PLACE_ORDER)
@@ -89,6 +92,24 @@ interface MyApi {
     ): Call<ResponseMainLogin>
 
     @FormUrlEncoded
+    @POST(Constants.END_POINT_CANCEL_ORDER)
+    fun cancelOrder(
+        @Header("Authorization") token: String,
+        @Field("status") status: String?,
+        @Field("order_id") order_id: String?,
+        @Field("description") description: String?,
+    ): Call<ResponseMainOrderCanceled>
+
+    @FormUrlEncoded
+    @POST(Constants.END_POINT_APPLY_RATING)
+    fun applyRating(
+        @Header("Authorization") token: String,
+        @Field("product_id") product_id: String?,
+        @Field("ratting") ratting: String?,
+        @Field("review") review: String?,
+    ): Call<ResponseMainOrderCanceled>
+
+    @FormUrlEncoded
     @POST(Constants.END_POINT_APPLY_COUPON)
     fun applyCouponCode(
         @Header("Authorization") token: String,
@@ -107,6 +128,9 @@ interface MyApi {
         @Field("payment_id") payment_id: String?,
         @Field("payment_method") payment_method: String?,
         @Field("products") products: String,
+        @Field("coupon_code_id") coupon_code_id: String?,
+        @Field("extra_discount") extra_discount: String?,
+        @Field("shipping_fee") shipping_fee: String?
     ): Call<ResponseMainLogin>
 
 

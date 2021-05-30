@@ -24,6 +24,7 @@ import com.lappenfashion.ui.editProfile.EditProfileActivity
 import com.lappenfashion.ui.orderList.OrderListActivity
 import com.lappenfashion.ui.otp.OTPActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
+import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_edit_profile.imgProfile
@@ -172,6 +173,7 @@ class ProfileFragment : Fragment() {
             override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
                 txtLogin.isEnabled = true
                 com.lappenfashion.utils.Helper.dismissLoader()
+                Helper.showTost(mContext,t.message)
             }
 
         })

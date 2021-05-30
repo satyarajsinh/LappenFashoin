@@ -47,7 +47,7 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        Glide.with(context).load(data!![position]?.product?.mainImageName).into(holder.productImage)
+        Glide.with(context).load(data!![position]?.product?.mainImageName).placeholder(R.mipmap.no_image).into(holder.productImage)
 
         holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.product?.colorCode))
         holder.txtSize.text = data?.get(position)?.product?.size

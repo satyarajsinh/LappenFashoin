@@ -134,6 +134,7 @@ class CheckoutDeliveryAddressActivity : AppCompatActivity(){
 
             override fun onFailure(call: Call<ResponseMainAddress>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@CheckoutDeliveryAddressActivity,t.message)
             }
 
         })

@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:background="@drawable/border_grey"
     android:paddingBottom="@dimen/_2sdp"
-    android:paddingTop="@dimen/_2ssp"
     android:id="@+id/relativeMain">
 
     <RelativeLayout

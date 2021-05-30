@@ -5,7 +5,9 @@
     android:id="@+id/relativeMain"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:padding="@dimen/_10sdp"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingLeft="@dimen/_5sdp"
+    android:paddingRight="@dimen/_5sdp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -71,9 +73,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_below="@id/relativeImage"
-        android:background="@color/dark_light_grey">
+        android:background="@color/background">
 
     </View>
 

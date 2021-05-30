@@ -51,7 +51,7 @@ class PlaceOrderProductAdapter(
         holder.txtSize.text = "Size : "+cartList?.get(position)?.product?.size.toString()
 
         if(cartList?.get(position)?.product?.mainImageName!=null){
-            Glide.with(context).load(cartList?.get(position)?.product?.mainImageName).into(holder.imgProductImage)
+            Glide.with(context).load(cartList?.get(position)?.product?.mainImageName).placeholder(R.mipmap.no_image).into(holder.imgProductImage)
         }
     }
 

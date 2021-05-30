@@ -2,17 +2,19 @@ package com.example.simplemvvm.utils
 
 object Constants {
     const val BASE_URL = "https://lappen.in/lappen_app/api/"
-
-    const val BASE_URL_MAIN = "https://brokenheartshayar.in/lappen_app/public/api/"
+    const val BASE_URL_ZIP_CODE = "https://staging-express.delhivery.com/c/api/pin-codes/json/"
 
     const val END_POINT = BASE_URL+"spacecrafts.json"
 
     const val END_POINT_HOME = "home"
+    const val END_POINT_ZIP_CODE = ""
     const val END_POINT_PRODUCTS = "products"
     const val END_POINT_SEARCH_PRODUCT = "search-product?search="
     const val END_POINT_CATEGORY = "category"
     const val END_POINT_LOGIN = "login"
     const val END_POINT_CART = "cart"
+    const val END_POINT_CANCEL_ORDER = "order-status"
+    const val END_POINT_APPLY_RATING = "review"
     const val END_POINT_APPLY_COUPON = "apply-coupon-code"
     const val END_POINT_PLACE_ORDER = "order"
     const val END_POINT_OUT_OF_STOCK_PRODUCT = "out-off-stock-product"
@@ -50,5 +52,6 @@ object Constants {
     const val PREF_PRODUCT_CATEGORY_ID = "PREF_PRODUCT_CATEGORY_ID"
     const val PREFS_SEARCH_STRING = "PREFS_SEARCH_STRING"
     const val PREF_PRODUCT_TITLE = "PREF_PRODUCT_TITLE"
+    const val PREF_PRODUCT_ID = "PREF_PRODUCT_ID"
     const val PREF_OFFER_AMOUNT = "PREF_OFFER_AMOUNT"
 }

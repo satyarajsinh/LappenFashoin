@@ -52,7 +52,7 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
         holder.txtCategoryName.text = data?.get(position)?.title
 
         holder.progressBar.visibility = View.VISIBLE
-        Glide.with(context).load(data?.get(position)?.image)
+        Glide.with(context).load(data?.get(position)?.image).placeholder(R.mipmap.no_image)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,

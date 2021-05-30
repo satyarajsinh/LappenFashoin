@@ -9,15 +9,32 @@
     android:layout_marginLeft="@dimen/_1sdp"
     android:layout_marginRight="@dimen/_1sdp">
 
-
-    <ImageView
-        android:id="@+id/imgProudctImage"
+    <RelativeLayout
+        android:id="@+id/relativeImage"
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/_2sdp"
-        android:layout_height="@dimen/_200sdp"
-        android:background="@color/white">
+        android:layout_height="wrap_content">
 
-    </ImageView>
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/progressBar"
+            style="@style/SpinKitView.Circle"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:SpinKit_Style="FadingCircle"
+            app:SpinKit_Color="@color/pink" />
+
+        <ImageView
+            android:id="@+id/imgProudctImage"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_2sdp"
+            android:layout_height="@dimen/_200sdp"
+            android:background="@color/white">
+
+        </ImageView>
+
+    </RelativeLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -68,7 +85,7 @@
         android:fontFamily="@font/poppins_medium"
         android:textSize="@dimen/_12ssp"
         android:textColor="@color/black"
-        android:layout_below="@id/imgProudctImage">
+        android:layout_below="@id/relativeImage">
 
     </TextView>
 

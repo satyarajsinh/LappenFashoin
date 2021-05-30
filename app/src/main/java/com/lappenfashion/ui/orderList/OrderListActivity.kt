@@ -72,6 +72,7 @@ class OrderListActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResponseMainOrderList>, t: Throwable) {
+                Helper.showTost(this@OrderListActivity,t.message)
                 Helper.dismissLoader()
             }
 
@@ -81,6 +82,11 @@ class OrderListActivity : AppCompatActivity() {
     fun goToOrderDetails(get: ResponseMainOrderList.Payload.Data) {
         var intent = Intent(this@OrderListActivity,OrderDetailsActivity::class.java)
         intent.putExtra("orderDetails",get)
-        startActivity(intent)
+        startActivityForResult(intent,100)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        initData()
     }
 }

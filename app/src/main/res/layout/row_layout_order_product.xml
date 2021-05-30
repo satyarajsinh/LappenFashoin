@@ -5,7 +5,9 @@
     android:id="@+id/relativeMain"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:padding="@dimen/_10sdp"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingLeft="@dimen/_5sdp"
+    android:paddingRight="@dimen/_5sdp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -107,11 +109,29 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/txtRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_accent"
+        android:text="Add Rating"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_below="@id/ll">
+
+    </TextView>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_below="@id/relativeImage"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_below="@id/txtRating"
         android:background="@color/dark_light_grey">
 
     </View>

@@ -48,7 +48,7 @@ class AccessoriesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.progressBar.visibility = View.VISIBLE
-        Glide.with(context).load(data?.get(position)?.image)
+        Glide.with(context).load(data?.get(position)?.image).placeholder(R.mipmap.no_image)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,

@@ -75,6 +75,7 @@ class CheckoutActivity : AppCompatActivity(),
 
             override fun onFailure(call: Call<ResponseMainDeliveryOption>, t: Throwable) {
                     Helper.dismissLoader()
+                Helper.showTost(this@CheckoutActivity,t.message)
             }
 
         })

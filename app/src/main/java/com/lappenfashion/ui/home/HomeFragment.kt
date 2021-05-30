@@ -222,7 +222,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
         var trendingAdapter = TrendingAdapter(
             mContext,
-            homeResponse.payload?.trending
+            homeResponse.payload?.trending, activity as MainActivity?
         )
         rootView.recyclerTrending.adapter = trendingAdapter
 

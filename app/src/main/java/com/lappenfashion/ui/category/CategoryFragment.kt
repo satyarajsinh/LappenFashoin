@@ -89,6 +89,7 @@ class CategoryFragment : Fragment() {
 
                 override fun onFailure(call: Call<ResponseMainCategories>, t: Throwable) {
                     Helper.dismissLoader()
+                    Helper.showTost(mContext,t.message)
                 }
 
             })

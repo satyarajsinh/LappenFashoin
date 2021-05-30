@@ -427,7 +427,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
@@ -461,9 +461,10 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/imgWish"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
-                android:src="@mipmap/ic_light_heart">
+                android:src="@mipmap/ic_whishlist">
             </ImageView>
 
             <TextView

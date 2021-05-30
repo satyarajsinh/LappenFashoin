@@ -208,6 +208,7 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
 
             override fun onFailure(call: Call<ResponseMainProfile>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@EditProfileActivity,t.message)
             }
 
         })
@@ -306,6 +307,7 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
 
             override fun onFailure(call: Call<ResponseMainProfile>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@EditProfileActivity,t.message)
             }
 
         })

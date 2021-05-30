@@ -21,6 +21,7 @@ import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.model.ResponseMainPlaceOrderView
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
+import com.lappenfashion.sqlitedb.DBManager
 import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
 import com.razorpay.Checkout
@@ -33,10 +34,14 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.roundToInt
 
 
 class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
 
+    private var shippingCharge: String = ""
+    private var couponId: Int? = 0
+    private var couponDiscountValue: Double = 0.0
     private var totalAmountAfterCoupon: Double = 0.0
     private var couponDiscount: Int = 0
     private lateinit var placeOrderData: ResponseMainPlaceOrderView.Payload
@@ -106,11 +111,12 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
                     txtCoupon.visibility = View.VISIBLE
                     txtCouponDiscount.visibility = View.VISIBLE
                     couponDiscount = response.body()!!.payload?.discount!!
-                    var discount = (placeOrderData.selling_price!! * response.body()!!.payload?.discount!!)/100
-                    txtCouponDiscount.text = "(-) ₹" + discount.toString()
-                    totalAmountAfterCoupon = placeOrderData.selling_price!! - response.body()!!.payload?.discount!!
-                    txtTotaAmount.text = "₹"+(placeOrderData.selling_price!! - response.body()!!.payload?.discount!!).toString()
-                    txtAmount.text = "₹"+(placeOrderData.selling_price!! - response.body()!!.payload?.discount!!).toString()
+                    couponId = response.body()!!.payload?.id
+                    couponDiscountValue = (placeOrderData.selling_price!! * response.body()!!.payload?.discount!!)/100
+                    txtCouponDiscount.text = "(-) ₹" + couponDiscountValue.toString()
+                    totalAmountAfterCoupon = (placeOrderData.selling_price!! + placeOrderData.shipping_fee!!) - couponDiscountValue
+                    txtTotaAmount.text = "₹"+totalAmountAfterCoupon.toString()
+                    txtAmount.text = "₹"+totalAmountAfterCoupon.toString()
                     txtApply.text = "Remove"
                     txtError.visibility = View.VISIBLE
                     txtError.text = "Coupon applied successfully"
@@ -255,7 +261,10 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
             if(couponDiscount>0) totalAmountAfterCoupon.toString() else placeOrderData.total_cart_amount.toString(),
             paymentId,
             paymentMethod,
-            array.toString()
+            array.toString(),
+            couponId.toString(),
+            couponDiscountValue.toString(),
+            shippingCharge
         )
 
         requestCall.enqueue(object : Callback<ResponseMainLogin> {
@@ -264,6 +273,19 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
                 response: Response<ResponseMainLogin>
             ) {
                 if (response.body() != null && response.body()!!.result == true) {
+
+                    var dbManager = DBManager(this@PlaceOrderActivity)
+                    dbManager.open()
+                    val cartItem = dbManager.fetchCart()
+
+                    if (cartItem.size > 0) {
+                        for (i in 0 until cartItem.size) {
+                            dbManager.deleteCart(cartItem.get(i).cartId.toLong())
+                        }
+                    }
+
+                    Prefs.putInt(Constants.PREF_CART_COUNT, 0)
+
                     Helper.showTost(this@PlaceOrderActivity, response.body()!!.message)
                     var intent = Intent(this@PlaceOrderActivity, OrderPlacedActivity::class.java)
                     startActivity(intent)
@@ -276,6 +298,7 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
 
             override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@PlaceOrderActivity,t.message)
             }
 
         })
@@ -387,6 +410,7 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
 
                     txtListPrice.text = "₹" + response.body()!!.payload?.list_price.toString()
                     txtSellingPrice.text = "₹" + response.body()!!.payload?.selling_price.toString()
+                    shippingCharge = response.body()!!.payload?.shipping_fee.toString()
                     txtShippingCharge.text = "(+) ₹" + response.body()!!.payload?.shipping_fee.toString()
                     txtExtraDiscount.text = "(-) ₹" + (response.body()!!.payload?.list_price!! - response.body()!!.payload?.selling_price!!)
                     txtTotaAmount.text = "₹" + response.body()!!.payload?.total_cart_amount.toString()
@@ -400,6 +424,7 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
 
             override fun onFailure(call: Call<ResponseMainPlaceOrderView>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@PlaceOrderActivity,t.message)
             }
 
         })

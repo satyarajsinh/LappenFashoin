@@ -155,6 +155,7 @@ class CartActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseMainCartNew>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@CartActivity,t.message)
             }
 
         })
@@ -233,6 +234,7 @@ class CartActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<ResponseMainCartNew>, t: Throwable) {
                     Helper.dismissLoader()
+                    Helper.showTost(this@CartActivity,t.message)
                 }
 
             })
@@ -275,6 +277,7 @@ class CartActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseMainCheckoutCart>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@CartActivity,t.message)
             }
 
         })
@@ -359,6 +362,7 @@ class CartActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseMainDeleteCheckoutCart>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@CartActivity,t.message)
             }
 
         })
@@ -429,6 +433,7 @@ class CartActivity : AppCompatActivity() {
             override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
                 txtLogin.isEnabled = true
                 com.lappenfashion.utils.Helper.dismissLoader()
+                Helper.showTost(this@CartActivity,t.message)
             }
 
         })
@@ -513,6 +518,7 @@ class CartActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseMainCartNew>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@CartActivity,t.message)
             }
 
         })
@@ -564,6 +570,7 @@ class CartActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseMainCartNew>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@CartActivity,t.message)
             }
 
         })

@@ -101,6 +101,7 @@ class SearchProductActivity : AppCompatActivity() {
                 recyclerProductList.visibility = View.GONE
                 relativeNoData.visibility = View.VISIBLE
                 Helper.dismissLoader()
+                Helper.showTost(this@SearchProductActivity,t.message)
             }
         })
     }

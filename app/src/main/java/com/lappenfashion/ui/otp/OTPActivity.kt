@@ -82,6 +82,7 @@ class OTPActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
                 Helper.dismissLoader()
+                Helper.showTost(this@OTPActivity,t.message)
             }
 
         })
@@ -138,6 +139,7 @@ class OTPActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseMainVerifyOtp>, t: Throwable) {
                 com.lappenfashion.utils.Helper.dismissLoader()
+                Helper.showTost(this@OTPActivity,t.message)
             }
 
         })

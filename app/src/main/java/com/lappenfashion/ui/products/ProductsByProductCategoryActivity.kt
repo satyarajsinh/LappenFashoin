@@ -547,6 +547,7 @@ class ProductsByProductCategoryActivity : AppCompatActivity() {
     }
 
     fun goToDetails(data: ResponseMainProductsByCategory.Payload.Data?) {
+        Prefs.putInt(Constants.PREF_PRODUCT_ID, data?.productId!!)
         var intent = Intent(
             this@ProductsByProductCategoryActivity,
             ProductDetailsActivity::class.java
