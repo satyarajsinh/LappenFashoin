@@ -1,5 +1,6 @@
 package com.lappenfashion.ui.orderList
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -15,9 +16,12 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.example.simplemvvm.utils.Constants
 import com.github.ybq.android.spinkit.SpinKitView
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainOrderList
+import com.lappenfashion.ui.products.ProductDetailsActivity
+import com.pixplicity.easyprefs.library.Prefs
 
 
 class OrderDetailsProductAdapter() :
@@ -95,6 +99,12 @@ class OrderDetailsProductAdapter() :
 
         holder.txtRating.setOnClickListener {
             context.displayDialog(data!!.get(position)?.orderProductId)
+        }
+
+        holder.relativeMain.setOnClickListener {
+            Prefs.putInt(Constants.PREF_PRODUCT_ID, data!!.get(position)?.orderProductId!!)
+            val intent = Intent(context,ProductDetailsActivity::class.java)
+            context.startActivity(intent)
         }
     }
 

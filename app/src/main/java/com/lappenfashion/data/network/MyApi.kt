@@ -34,6 +34,9 @@ interface MyApi {
     @GET(Constants.END_POINT_PLACE_ORDER)
     fun getOrders(@Header("Authorization") token: String): Call<ResponseMainOrderList>
 
+    @GET(Constants.END_POINT_VERSION_UPDATE)
+    fun getVersionUpdate(): Call<ResponseMainVersionUpdate>
+
     @GET
     fun getProducts(@Url url: String): Call<JsonObject>
 
@@ -54,6 +57,9 @@ interface MyApi {
 
     @GET(Constants.END_POINT_GET_ADDRESS)
     fun getAddress(@Header("Authorization") token: String): Call<ResponseMainAddress>
+
+    @GET(Constants.END_POINT_GET_NOTIFICATION)
+    fun getNotification(@Header("Authorization") token: String): Call<ResponseMainNotification>
 
     @GET(Constants.END_POINT_DELIVERY_OPTION)
     fun getDeliveryOption(): Call<ResponseMainDeliveryOption>
@@ -98,6 +104,7 @@ interface MyApi {
         @Field("status") status: String?,
         @Field("order_id") order_id: String?,
         @Field("description") description: String?,
+        @Field("reason") reason: String?
     ): Call<ResponseMainOrderCanceled>
 
     @FormUrlEncoded
@@ -208,6 +215,8 @@ interface MyApi {
     fun verifyOtp(
         @Field("mobile_number") mobile_number: String?,
         @Field("otp_code") otp_code: String?,
+        @Field("push_token") push_token:String?,
+        @Field("device_type") device_type:String?
     ): Call<ResponseMainVerifyOtp>
 
     @FormUrlEncoded

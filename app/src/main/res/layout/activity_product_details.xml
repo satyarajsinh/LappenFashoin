@@ -11,7 +11,7 @@
         android:id="@+id/coordinator"
         android:layout_above="@id/linearBottom"
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar">
 
@@ -112,6 +112,45 @@
                         android:fontFamily="@font/poppins_regular">
 
                     </TextView>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:id="@+id/llRating"
+                        android:visibility="gone"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingBottom="@dimen/_3sdp"
+                        android:paddingLeft="@dimen/_12sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_12sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/rounded_corner_accent">
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:adjustViewBounds="true"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            app:srcCompat="@drawable/ic_star"
+                            android:tint="@color/white" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10ssp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
                 </LinearLayout>
 
@@ -414,8 +453,29 @@
 
                     </TextView>
 
-
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtProductReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/product_review"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_medium">
+
+                </TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:scrollbars="none">
+
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

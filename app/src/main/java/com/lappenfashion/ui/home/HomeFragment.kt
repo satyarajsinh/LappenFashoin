@@ -1,8 +1,14 @@
 package com.lappenfashion.ui.home
 
+import android.Manifest
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -12,6 +18,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,12 +37,14 @@ import com.google.gson.JsonObject
 import com.lappenfashion.R
 import com.lappenfashion.`interface`.CategoriesInterface
 import com.lappenfashion.data.model.ResponseMainHome
+import com.lappenfashion.data.model.ResponseMainVersionUpdate
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.sqlitedb.DBManager
 import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.cart.CartActivity
 import com.lappenfashion.ui.categoriesDetails.CategoriesDetailsActivity
+import com.lappenfashion.ui.notification.NotificationActivity
 import com.lappenfashion.ui.products.ProductsByProductCategoryActivity
 import com.lappenfashion.ui.search.SearchProductActivity
 import com.lappenfashion.ui.wishlist.WishListActivity
@@ -97,6 +107,15 @@ class HomeFragment : Fragment(),CategoriesInterface {
             txtCartCount.visibility = View.GONE
         }
 
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                101
+            )
+        }
+
         dbManager = DBManager(mContext)
         dbManager.open()
 
@@ -130,6 +149,60 @@ class HomeFragment : Fragment(),CategoriesInterface {
                 }
             }
         }
+
+        if (NetworkConnection.checkConnection(mContext)) {
+            getVersionUpdate()
+        }else {
+            Helper.showTost(mContext, "No internet connection")
+        }
+    }
+
+    private fun getVersionUpdate() {
+        var api = MyApi(mContext)
+        val requestCall: Call<ResponseMainVersionUpdate> = api.getVersionUpdate()
+
+        requestCall.enqueue(object : Callback<ResponseMainVersionUpdate> {
+            override fun onResponse(
+                call: Call<ResponseMainVersionUpdate>,
+                response: Response<ResponseMainVersionUpdate>
+            ) {
+                Helper.dismissLoader()
+                if (response.body() != null && response.body()!!.result == true && response.body()!!.payload!=null) {
+                    try {
+                        val pInfo =
+                            context!!.packageManager.getPackageInfo(context!!.packageName, 0)
+                        val version = pInfo.versionName.toFloat()
+                        if (version != response.body()!!.payload!!.appVersion?.toFloat()) {
+                            showVersionUpdate()
+                        }
+                    } catch (e: PackageManager.NameNotFoundException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMainVersionUpdate>, t: Throwable) {
+                Helper.dismissLoader()
+            }
+        })
+    }
+
+    private fun showVersionUpdate() {
+        val versionUpdateDialog = Dialog(requireContext())
+        versionUpdateDialog.setCancelable(false)
+        versionUpdateDialog.setContentView(R.layout.dialog_version_update)
+        versionUpdateDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val txtAlertMessage = versionUpdateDialog.findViewById<TextView>(R.id.txtAlertMessage)
+        val txtUpdate = versionUpdateDialog.findViewById<TextView>(R.id.txtUpdate)
+        txtUpdate.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=" + requireContext().packageName)
+                )
+            )
+        }
+        versionUpdateDialog.show()
     }
 
     override fun onResume() {
@@ -464,6 +537,7 @@ class HomeFragment : Fragment(),CategoriesInterface {
         val imgCart = rootView.findViewById<ImageView>(R.id.imgCart)
         val imgWishList = rootView.findViewById<ImageView>(R.id.imgLiked)
         val imgSearch = rootView.findViewById<ImageView>(R.id.imgSearch)
+        val imgNotification = rootView.findViewById<ImageView>(R.id.imgNotification)
 
         imgDrawer.setOnClickListener {
             (mContext as MainActivity).openDrawer()
@@ -471,6 +545,11 @@ class HomeFragment : Fragment(),CategoriesInterface {
 
         imgCart.setOnClickListener {
             var intent = Intent(mContext, CartActivity::class.java)
+            startActivity(intent)
+        }
+
+        imgNotification.setOnClickListener {
+            var intent = Intent(mContext, NotificationActivity::class.java)
             startActivity(intent)
         }
 

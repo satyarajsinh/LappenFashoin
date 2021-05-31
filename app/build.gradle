@@ -73,6 +73,7 @@ dependencies {
     implementation Dependencies.otp
     implementation Dependencies.datePicker
     implementation Dependencies.firebaseCrashlytics
+    implementation Dependencies.firebase_message
     implementation platform(Dependencies.firebaseBom)
     implementation Dependencies.razorpay
 

@@ -80,8 +80,6 @@ data class ResponseMainProductDetails(
         var productWeight: String?,
         @SerializedName("reversible")
         var reversible: String?,
-        @SerializedName("reviews")
-        var reviews: List<Any?>?,
         @SerializedName("sale_price")
         var salePrice: Int?,
         @SerializedName("seller_sku_id")
@@ -102,6 +100,10 @@ data class ResponseMainProductDetails(
         var surfaceStyling: String?,
         @SerializedName("technology_used")
         var technologyUsed: String?,
+        @SerializedName("rating_avg")
+        var rating_avg: Double?,
+        @SerializedName("reviews")
+        var reviews: List<Review?>?,
         @SerializedName("type")
         var type: String?
     ) {
@@ -121,6 +123,36 @@ data class ResponseMainProductDetails(
             @SerializedName("product_image_id")
             var productImageId: Int?
         )
+
+        data class Review(
+            @SerializedName("ratting")
+            var ratting: Int?,
+            @SerializedName("review")
+            var review: String?,
+            @SerializedName("review_id")
+            var reviewId: Int?,
+            @SerializedName("user")
+            var user: User?
+        ) {
+            data class User(
+                @SerializedName("birth_date")
+                var birthDate: String?,
+                @SerializedName("email")
+                var email: String?,
+                @SerializedName("gender")
+                var gender: String?,
+                @SerializedName("image")
+                var image: String?,
+                @SerializedName("is_profile_setup")
+                var isProfileSetup: Int?,
+                @SerializedName("mobile_number")
+                var mobileNumber: String?,
+                @SerializedName("name")
+                var name: String?,
+                @SerializedName("user_id")
+                var userId: Int?
+            )
+        }
 
         data class Size(
             @SerializedName("product_id")

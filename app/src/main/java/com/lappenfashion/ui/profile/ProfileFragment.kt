@@ -2,6 +2,7 @@ package com.lappenfashion.ui.profile
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,6 @@ import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.ui.MainActivity
-import com.lappenfashion.ui.address.AddAddressActivity
 import com.lappenfashion.ui.address.AddressListingActivity
 import com.lappenfashion.ui.editProfile.EditProfileActivity
 import com.lappenfashion.ui.orderList.OrderListActivity
@@ -27,7 +27,6 @@ import com.lappenfashion.ui.wishlist.WishListActivity
 import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_edit_profile.*
-import kotlinx.android.synthetic.main.activity_edit_profile.imgProfile
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import retrofit2.Call
@@ -85,6 +84,16 @@ class ProfileFragment : Fragment() {
             }else{
                 displayLoginDialog()
             }
+        }
+
+        rootView.relativePrivacyPolicy.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://lappenfashion.com/privacy-policy/"))
+            startActivity(browserIntent)
+        }
+
+        rootView.relativeTerms.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://lappenfashion.com/terms-conditions/"))
+            startActivity(browserIntent)
         }
 
         rootView.relativeWishlist.setOnClickListener {

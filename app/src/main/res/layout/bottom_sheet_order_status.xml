@@ -34,7 +34,7 @@
                 android:padding="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/_12ssp"
-                android:text="Price for the product has decreased">
+                android:text="Wrong Item Selected">
 
             </TextView>
 
@@ -46,7 +46,7 @@
                 android:padding="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/_12ssp"
-                android:text="I want to change address for the order">
+                android:text="Wrong Size Selected">
 
             </TextView>
 
@@ -58,9 +58,51 @@
                 android:padding="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/_12ssp"
-                android:text="I want to buy diffrent product due to quality issue">
+                android:text="Color Issues">
 
             </TextView>
+
+            <TextView
+                android:id="@+id/txtStatus4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/wishlist_desc_color"
+                android:padding="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="@dimen/_12ssp"
+                android:text="Change of Mind">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtStatus5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/wishlist_desc_color"
+                android:padding="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="@dimen/_12ssp"
+                android:text="Lacking Trust of delivery">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/edtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/_100sdp"
+                android:background="@drawable/border_grey"
+                android:imeOptions="actionDone"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:padding="@dimen/_10sdp"
+                android:gravity="start"
+                android:textColor="@color/black"
+                android:hint="Write your comment *"
+                android:inputType="textMultiLine">
+
+            </EditText>
 
             <TextView
                 android:id="@+id/txtApply"

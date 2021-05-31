@@ -17,6 +17,7 @@ object Constants {
     const val END_POINT_APPLY_RATING = "review"
     const val END_POINT_APPLY_COUPON = "apply-coupon-code"
     const val END_POINT_PLACE_ORDER = "order"
+    const val END_POINT_VERSION_UPDATE = "app-version"
     const val END_POINT_OUT_OF_STOCK_PRODUCT = "out-off-stock-product"
     const val END_POINT_ADD_ADDRESS = "shipping-address"
     const val END_POINT_RESEND_OTP = "resend-otp"
@@ -28,6 +29,7 @@ object Constants {
     const val END_POINT_GET_WISH_LIST = "wish-list"
     const val END_POINT_CHECKOUT_CART = "check-out"
     const val END_POINT_GET_ADDRESS = "shipping-address"
+    const val END_POINT_GET_NOTIFICATION = "user-notification-list"
     const val END_POINT_DELIVERY_OPTION = "delivery-option"
     const val END_POINT_DELETE_WISH_LIST = "wish-list"
 

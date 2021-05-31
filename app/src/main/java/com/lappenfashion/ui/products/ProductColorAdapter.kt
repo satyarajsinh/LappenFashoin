@@ -69,7 +69,7 @@ class ProductColorAdapter() :
             }
         }
 
-        if(data.get(position)?.colorCode!=null) {
+        if(data.get(position)?.colorCode!=null && data.get(position)?.colorCode != "") {
             holder.cardView.setCardBackgroundColor(Color.parseColor(data.get(position)?.colorCode))
         }
 

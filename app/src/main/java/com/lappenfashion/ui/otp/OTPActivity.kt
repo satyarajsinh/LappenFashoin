@@ -2,14 +2,16 @@ package com.lappenfashion.ui.otp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.simplemvvm.utils.Constants
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.model.ResponseMainVerifyOtp
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
-import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.editProfile.EditProfileActivity
 import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
@@ -20,6 +22,7 @@ import retrofit2.Response
 
 class OTPActivity : AppCompatActivity() {
 
+    private var firebaseToken: String = ""
     private var mobileNumber: String =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +31,20 @@ class OTPActivity : AppCompatActivity() {
 
         if(intent!=null){
             mobileNumber = intent.getStringExtra("mobile_number")!!
+        }
+
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+            if (!it.isSuccessful) {
+                Log.w("TAG", "getInstanceId failed", it.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get new Instance ID token
+            val token: String = it.result?.getToken()!!
+
+            // Log and toast
+            firebaseToken = token
+            Log.e("Firebase token : ", firebaseToken)
         }
 
         imgBack.setOnClickListener {
@@ -40,15 +57,15 @@ class OTPActivity : AppCompatActivity() {
 
         txtLogin.setOnClickListener {
             if(NetworkConnection.checkConnection(this)) {
-                com.lappenfashion.utils.Helper.showLoader(this@OTPActivity)
+                Helper.showLoader(this@OTPActivity)
                 if(et_otp.text.toString()!="" && et_otp.text.toString().length == 6) {
-                    com.lappenfashion.utils.Helper.showLoader(this@OTPActivity)
+                    Helper.showLoader(this@OTPActivity)
                     verifyOTP(mobileNumber,et_otp.text.toString())
                 }else{
-                    com.lappenfashion.utils.Helper.showTost(this, "Please enter valid OTP")
+                    Helper.showTost(this, "Please enter valid OTP")
                 }
             }else{
-                com.lappenfashion.utils.Helper.showTost(this, getString(R.string.no_internet))
+                Helper.showTost(this, getString(R.string.no_internet))
             }
         }
 
@@ -90,14 +107,13 @@ class OTPActivity : AppCompatActivity() {
 
     private fun verifyOTP(mobileNumber: String, otp: String) {
         var api = MyApi(this)
-        val requestCall: Call<ResponseMainVerifyOtp> = api.verifyOtp(mobileNumber,otp)
+        val requestCall: Call<ResponseMainVerifyOtp> = api.verifyOtp(mobileNumber,otp,firebaseToken,"android")
         requestCall.enqueue(object : Callback<ResponseMainVerifyOtp> {
             override fun onResponse(
                 call: Call<ResponseMainVerifyOtp>,
                 response: Response<ResponseMainVerifyOtp>
             ) {
                 Helper.dismissLoader()
-
                 if (response.body() != null) {
                     if(response.body()?.result==true){
                         Prefs.putString(Constants.PREF_TOKEN,response.body()?.payload?.accessToken)
@@ -133,12 +149,12 @@ class OTPActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    com.lappenfashion.utils.Helper.showTost(this@OTPActivity, resources.getString(R.string.some_thing_happend_wrong))
+                    Helper.showTost(this@OTPActivity, resources.getString(R.string.some_thing_happend_wrong))
                 }
             }
 
             override fun onFailure(call: Call<ResponseMainVerifyOtp>, t: Throwable) {
-                com.lappenfashion.utils.Helper.dismissLoader()
+                Helper.dismissLoader()
                 Helper.showTost(this@OTPActivity,t.message)
             }
 

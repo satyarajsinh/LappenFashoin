@@ -31,6 +31,7 @@ import kotlin.math.roundToInt
 
 class OrderDetailsActivity : AppCompatActivity() {
 
+    private var orderCancel: Int = 0
     private var cancelOrderStatus: String = ""
     private var orderDetails: ResponseMainOrderList.Payload.Data? = null
 
@@ -61,19 +62,30 @@ class OrderDetailsActivity : AppCompatActivity() {
         var txtStatus1 = dialog.findViewById<TextView>(R.id.txtStatus1)
         var txtStatus2 = dialog.findViewById<TextView>(R.id.txtStatus2)
         var txtStatus3 = dialog.findViewById<TextView>(R.id.txtStatus3)
+        var txtStatus4 = dialog.findViewById<TextView>(R.id.txtStatus4)
+        var txtStatus5 = dialog.findViewById<TextView>(R.id.txtStatus5)
+        var edtDescription = dialog.findViewById<EditText>(R.id.edtDescription)
         var txtApply = dialog.findViewById<TextView>(R.id.txtApply)
 
         txtApply?.setOnClickListener {
-            if(cancelOrderStatus != "") {
+            if(cancelOrderStatus != "" && edtDescription?.text.toString()!="") {
                 dialog.dismiss()
                 if (NetworkConnection.checkConnection(this@OrderDetailsActivity)) {
                     Helper.showLoader(this@OrderDetailsActivity)
-                    cancelOrder()
+                    if(txtCancelOrder.text.toString() == "Cancel Order") {
+                        cancelOrder(edtDescription?.text.toString(),"cancelled")
+                    }else{
+                        cancelOrder(edtDescription?.text.toString(),"returned")
+                    }
                 } else {
                     Helper.showTost(this@OrderDetailsActivity, "No internet connection")
                 }
             }else{
-                Helper.showTost(this@OrderDetailsActivity,"Please select your option")
+                if(cancelOrderStatus == "") {
+                    Helper.showTost(this@OrderDetailsActivity, "Please select your option")
+                }else{
+                    Helper.showTost(this@OrderDetailsActivity, "Please enter description")
+                }
             }
         }
 
@@ -82,6 +94,8 @@ class OrderDetailsActivity : AppCompatActivity() {
             txtStatus1?.setBackgroundColor(resources.getColor(R.color.background))
             txtStatus2?.setBackgroundColor(resources.getColor(R.color.white))
             txtStatus3?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus4?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus5?.setBackgroundColor(resources.getColor(R.color.white))
         }
 
         txtStatus2?.setOnClickListener {
@@ -89,6 +103,8 @@ class OrderDetailsActivity : AppCompatActivity() {
             txtStatus1?.setBackgroundColor(resources.getColor(R.color.white))
             txtStatus2?.setBackgroundColor(resources.getColor(R.color.background))
             txtStatus3?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus4?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus5?.setBackgroundColor(resources.getColor(R.color.white))
         }
 
         txtStatus3?.setOnClickListener {
@@ -96,15 +112,35 @@ class OrderDetailsActivity : AppCompatActivity() {
             txtStatus1?.setBackgroundColor(resources.getColor(R.color.white))
             txtStatus2?.setBackgroundColor(resources.getColor(R.color.white))
             txtStatus3?.setBackgroundColor(resources.getColor(R.color.background))
+            txtStatus4?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus5?.setBackgroundColor(resources.getColor(R.color.white))
+        }
+
+        txtStatus4?.setOnClickListener {
+            cancelOrderStatus = txtStatus4.text.toString()
+            txtStatus1?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus2?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus3?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus4?.setBackgroundColor(resources.getColor(R.color.background))
+            txtStatus5?.setBackgroundColor(resources.getColor(R.color.white))
+        }
+
+        txtStatus5?.setOnClickListener {
+            cancelOrderStatus = txtStatus5.text.toString()
+            txtStatus1?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus2?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus3?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus4?.setBackgroundColor(resources.getColor(R.color.white))
+            txtStatus5?.setBackgroundColor(resources.getColor(R.color.background))
         }
 
         dialog.show()
         Helper.dismissLoader()
     }
 
-    private fun cancelOrder() {
+    private fun cancelOrder(description: String,orderStatus: String) {
         var api = MyApi(this@OrderDetailsActivity)
-        val requestCall: Call<ResponseMainOrderCanceled> = api.cancelOrder("Bearer " +Prefs.getString(Constants.PREF_TOKEN,""),"cancelled",orderDetails?.orderId.toString(),cancelOrderStatus)
+        val requestCall: Call<ResponseMainOrderCanceled> = api.cancelOrder("Bearer " +Prefs.getString(Constants.PREF_TOKEN,""),orderStatus,orderDetails?.orderId.toString(),description,cancelOrderStatus)
 
         requestCall.enqueue(object : Callback<ResponseMainOrderCanceled> {
             override fun onResponse(
@@ -131,6 +167,7 @@ class OrderDetailsActivity : AppCompatActivity() {
         if(intent!=null){
             orderDetails = intent.getSerializableExtra("orderDetails") as ResponseMainOrderList.Payload.Data?
 
+
             recyclerProducts.layoutManager = LinearLayoutManager(
                 this@OrderDetailsActivity,
                 LinearLayoutManager.VERTICAL,
@@ -155,6 +192,18 @@ class OrderDetailsActivity : AppCompatActivity() {
                     orderDetails!!.orderStatusDetail!!
                 )
                 recyclerOrderStatus.adapter = orderStatusAdapter
+            }
+
+            if(orderDetails?.orderStatusDetail!!.size > 0){
+                for(i in 0 until orderDetails?.orderStatusDetail!!.size){
+                    if(orderDetails?.orderStatusDetail!![i]?.status == "cancelled"){
+                        orderCancel = 1
+                    }
+                }
+            }
+
+            if(orderCancel == 1){
+                txtCancelOrder.text = "Return Order"
             }
 
             txtTitle.text = "Order Number - "+orderDetails!!.orderId

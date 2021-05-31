@@ -6,6 +6,7 @@ object Dependencies {
 
     //rounded imageview
     const val rounded_imageview = "com.makeramen:roundedimageview:2.3.0"
+    const val circle_imageview = "de.hdodenhof:circleimageview:3.1.0"
 
     //retrofit
     const val retrofit = "com.squareup.retrofit2:retrofit:2.6.2"
@@ -39,5 +40,18 @@ object Dependencies {
     //seekbar
     const val seekbar = "com.github.warkiz.widget:indicatorseekbar:2.1.2"
 
+    //firebase
+    const val firebaseBom = "com.google.firebase:firebase-bom:26.7.0"
+    const val firebase_message =  "com.google.firebase:firebase-messaging"
+    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
+    const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
 
+    //otp Activity
+    const val otp = "com.github.mukeshsolanki:android-otpview-pinview:2.1.2"
+
+    //date picker
+    const val datePicker = "com.github.drawers:SpinnerDatePicker:2.0.1"
+
+    //razor pay
+    const val razorpay = "com.razorpay:checkout:1.5.13"
 }

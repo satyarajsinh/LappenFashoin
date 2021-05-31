@@ -356,6 +356,30 @@ class ProductDetailsActivity : AppCompatActivity() {
                         txtOutOfStock.visibility = View.VISIBLE
                     }
 
+                    if(response.body()?.payload?.reviews?.size!! > 0){
+                        llRating.visibility = View.VISIBLE
+                        txtProductReview.visibility = View.VISIBLE
+                        recyclerReview.layoutManager = LinearLayoutManager(
+                            this@ProductDetailsActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                        recyclerReview.setHasFixedSize(true)
+                        var productReviewAdapter = ProductReviewAdapter(
+                            this@ProductDetailsActivity,
+                            response.body()?.payload!!.reviews,
+                            productId
+                        )
+                        recyclerReview.adapter = productReviewAdapter
+                    }else{
+                        llRating.visibility = View.GONE
+                        txtProductReview.visibility = View.GONE
+                    }
+
+                    if(response.body()?.payload?.rating_avg!! > 0){
+                        tvRating.text = response.body()?.payload?.rating_avg!!.toString()
+                    }
+
                     if(response.body()?.payload?.isWishList!! == 1){
                         imgWish.setColorFilter(
                             ContextCompat.getColor(this@ProductDetailsActivity, R.color.colorAccent),

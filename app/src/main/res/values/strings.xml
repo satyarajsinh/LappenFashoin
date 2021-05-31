@@ -99,6 +99,10 @@
     <string name="enter_coupon_code">Enter coupon code</string>
     <string name="price_details">Price Details</string>
     <string name="cancel_order">Cancel Order</string>
+    <string name="privacy_policy"><![CDATA[Privacy & Policy]]></string>
+    <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="product_review">Product Review</string>
+    <string name="notification">Notification</string>
 
     <array name="rangeSliderValues">
         <item>20</item>
