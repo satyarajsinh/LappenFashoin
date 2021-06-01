@@ -49,7 +49,9 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         Glide.with(context).load(data!![position]?.product?.mainImageName).placeholder(R.mipmap.no_image).into(holder.productImage)
 
-        holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.product?.colorCode))
+        if(data?.get(position)?.product?.colorCode!=null && data?.get(position)?.product?.colorCode !="") {
+            holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.product?.colorCode))
+        }
         holder.txtSize.text = data?.get(position)?.product?.size
         holder.productName.text = data!![position]?.product?.productName
         holder.productPrice.text = "₹" + data!![position]?.amount.toString()

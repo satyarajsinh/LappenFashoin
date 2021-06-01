@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lapp.service
+package com.lappenfashion.utils
 
 import android.app.ActivityManager
 import android.app.NotificationChannel

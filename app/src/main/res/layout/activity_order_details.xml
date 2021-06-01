@@ -60,6 +60,7 @@
                 android:id="@+id/recyclerOrderStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:scrollbars="none">
 
             </androidx.recyclerview.widget.RecyclerView>

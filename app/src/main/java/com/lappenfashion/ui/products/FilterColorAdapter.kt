@@ -50,7 +50,9 @@ class FilterColorAdapter : RecyclerView.Adapter<FilterColorAdapter.ViewHolder> {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtColor.text = data?.get(position)?.color
 
-        holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.colorCode))
+        if(data?.get(position)?.colorCode!=null && data?.get(position)?.colorCode!="") {
+            holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.colorCode))
+        }
 
         if(selectedColor == data?.get(position)?.color){
             rawIndex = position

@@ -171,8 +171,8 @@ class HomeFragment : Fragment(),CategoriesInterface {
                     try {
                         val pInfo =
                             context!!.packageManager.getPackageInfo(context!!.packageName, 0)
-                        val version = pInfo.versionName.toFloat()
-                        if (version != response.body()!!.payload!!.appVersion?.toFloat()) {
+                        var version = pInfo.versionCode
+                        if (version != response.body()!!.payload!!.appVersion?.toInt()) {
                             showVersionUpdate()
                         }
                     } catch (e: PackageManager.NameNotFoundException) {

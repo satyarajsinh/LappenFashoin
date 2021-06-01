@@ -82,7 +82,7 @@ class OrderListAdapter() :
             })
             .into(holder.imgProductImage)
 
-        holder.txtId.text = data.get(position)?.status.toString()
+        holder.txtId.text = data.get(position)?.display_status.toString()
         holder.txtOrderStatus.text = data.get(position)?.products!![0]?.productName.toString()
 
         holder.relativeMain.setOnClickListener {

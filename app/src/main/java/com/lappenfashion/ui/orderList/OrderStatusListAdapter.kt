@@ -58,7 +58,7 @@ class OrderStatusListAdapter() :
                 holder.cardView.setCardBackgroundColor(context.resources.getColor(R.color.green))
                 holder.view.setBackgroundColor(context.resources.getColor(R.color.green))
             }
-            holder.txtOrderStatus.text = data.get(position)?.status
+            holder.txtOrderStatus.text = data.get(position)?.display_status
         }
 
         if (data.get(position)?.createdAt != null) {

@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.EditText
@@ -196,7 +197,7 @@ class OrderDetailsActivity : AppCompatActivity() {
 
             if(orderDetails?.orderStatusDetail!!.size > 0){
                 for(i in 0 until orderDetails?.orderStatusDetail!!.size){
-                    if(orderDetails?.orderStatusDetail!![i]?.status == "cancelled"){
+                    if(orderDetails?.orderStatusDetail!![i]?.status == "delivered"){
                         orderCancel = 1
                     }
                 }
@@ -204,6 +205,12 @@ class OrderDetailsActivity : AppCompatActivity() {
 
             if(orderCancel == 1){
                 txtCancelOrder.text = "Return Order"
+            }
+
+            if(orderDetails?.is_return == 1){
+                txtCancelOrder.visibility = View.VISIBLE
+            }else{
+                txtCancelOrder.visibility = View.GONE
             }
 
             txtTitle.text = "Order Number - "+orderDetails!!.orderId

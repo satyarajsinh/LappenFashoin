@@ -1,4 +1,4 @@
-package com.lapp.service
+package com.lappenfashion.utils
 
 import android.util.Log
 import com.google.firebase.iid.FirebaseInstanceId

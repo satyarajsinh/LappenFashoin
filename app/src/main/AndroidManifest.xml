@@ -11,16 +11,18 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
 
-        <activity android:name=".ui.splash.SplashActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,44 +30,100 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.MainActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.placeOrder.PlaceOrderActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.placeOrder.OrderPlacedActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.login.LoginActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.editProfile.EditProfileActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"  />
-        <activity android:name=".ui.otp.OTPActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.address.AddressListingActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.address.AddAddressActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.products.ProductDetailsActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.products.ProductsByProductCategoryActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.categoriesDetails.CategoriesDetailsActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.filter.FilterActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.cart.CartActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.wishlist.WishListActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.orderList.OrderListActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.orderList.OrderDetailsActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.checkout.CheckoutDeliveryAddressActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.search.SearchProductActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.checkout.CheckoutActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.notification.NotificationActivity" android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.placeOrder.PlaceOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.placeOrder.OrderPlacedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.editProfile.EditProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.otp.OTPActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.address.AddressListingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.address.AddAddressActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.products.ProductDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.products.ProductsByProductCategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.categoriesDetails.CategoriesDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.filter.FilterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.cart.CartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.wishlist.WishListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.orderList.OrderListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.orderList.OrderDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ui.checkout.CheckoutDeliveryAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.SearchProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.checkout.CheckoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.notification.NotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.faq.FaqActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.razorpay.CheckoutActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"
             tools:ignore="Instantiatable" />
+
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_test_HNF5JraqbWhWNM"
-            />
+            android:value="rzp_test_HNF5JraqbWhWNM" />
+
         <service
-            android:name="com.lapp.service.MyFirebaseInstanceIdService"
+            android:name=".service.MessageService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".utils.MyFirebaseInstanceIdService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".service.FirebaseMessageReceiver">
+        <service android:name=".utils.FirebaseMessageReceiver">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

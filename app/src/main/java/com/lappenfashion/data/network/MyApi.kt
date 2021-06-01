@@ -28,6 +28,9 @@ interface MyApi {
     @GET
     fun checkPincode(@Url url: String): Call<JsonObject>
 
+    @GET(Constants.END_POINT_FAQ)
+    fun getFaq(): Call<ResponseMainFaq>
+
     @GET
     fun searchProduct(@Url url: String): Call<ResponseMainSearchProduct>
 

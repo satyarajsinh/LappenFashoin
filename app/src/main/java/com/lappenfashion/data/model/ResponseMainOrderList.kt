@@ -27,6 +27,10 @@ data class ResponseMainOrderList(
             var shipping_fee: Int?,
             @SerializedName("extra_discount")
             var extra_discount: Double?,
+            @SerializedName("display_status")
+            var display_status: String?,
+            @SerializedName("is_return")
+            var is_return: Int?,
             @SerializedName("list_price")
             var list_price: Double?,
             @SerializedName("selling_price")
@@ -47,6 +51,8 @@ data class ResponseMainOrderList(
                 var description: String?,
                 @SerializedName("id")
                 var id: Int?,
+                @SerializedName("display_status")
+                var display_status: String?,
                 @SerializedName("status")
                 var status: String?
             ) : Serializable

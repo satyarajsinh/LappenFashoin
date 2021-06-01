@@ -35,6 +35,7 @@ class LocalCartAdapter : RecyclerView.Adapter<LocalCartAdapter.ViewHolder> {
         var txtRemove = itemview.findViewById<TextView>(R.id.txtRemove)
         var cardView = itemview.findViewById<CardView>(R.id.cardView)
         var txtSize = itemview.findViewById<TextView>(R.id.txtSize)
+        var txtMoveToWishList = itemview.findViewById<TextView>(R.id.txtMoveToWishList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,7 +46,9 @@ class LocalCartAdapter : RecyclerView.Adapter<LocalCartAdapter.ViewHolder> {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         Glide.with(context).load(data!![position]?.cartImage).placeholder(R.mipmap.no_image).into(holder.productImage)
-        holder.cardView.setCardBackgroundColor(Color.parseColor(data.get(position)?.color))
+        if(data.get(position)?.color!=null && data.get(position)?.color != "") {
+            holder.cardView.setCardBackgroundColor(Color.parseColor(data.get(position)?.color))
+        }
         holder.txtSize.text = data.get(position).size
         holder.productName.text = data!![position]?.cartTitle
         holder.productPrice.text = "₹"+data!![position]?.cartAmount
@@ -68,6 +71,10 @@ class LocalCartAdapter : RecyclerView.Adapter<LocalCartAdapter.ViewHolder> {
             context.removeProduct(data!![position])
             data.removeAt(position)
             notifyDataSetChanged()
+        }
+
+        holder.txtMoveToWishList.setOnClickListener {
+            context.addToWishList(data!![position]?.productId.toInt())
         }
     }
 

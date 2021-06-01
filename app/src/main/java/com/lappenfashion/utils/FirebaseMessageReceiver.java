@@ -1,4 +1,4 @@
-package com.lappenfashion.service;
+package com.lappenfashion.utils;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

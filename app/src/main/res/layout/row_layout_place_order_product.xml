@@ -11,8 +11,7 @@
     <ImageView
         android:id="@+id/imgProductImage"
         android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:scaleType="fitXY">
+        android:layout_height="@dimen/_60sdp">
 
     </ImageView>
 

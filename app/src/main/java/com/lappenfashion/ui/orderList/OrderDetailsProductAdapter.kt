@@ -91,7 +91,10 @@ class OrderDetailsProductAdapter() :
             })
             .into(holder.imgProductImage)
 
-        holder.cardView.setCardBackgroundColor(Color.parseColor(data!!.get(position)?.colorCode!!))
+        if(data!!.get(position)?.colorCode!! !=null && data!!.get(position)?.colorCode!! !="") {
+            holder.cardView.setCardBackgroundColor(Color.parseColor(data!!.get(position)?.colorCode!!))
+        }
+
         holder.txtProductName.text = data!!.get(position)?.productName.toString()
         holder.txtQty.text = "Qty - "+data!!.get(position)?.quantity.toString()
         holder.txtMrp.text = "₹"+data!!.get(position)?.salePrice.toString()
