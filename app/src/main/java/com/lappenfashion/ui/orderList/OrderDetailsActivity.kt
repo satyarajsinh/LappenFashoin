@@ -32,6 +32,8 @@ import kotlin.math.roundToInt
 
 class OrderDetailsActivity : AppCompatActivity() {
 
+    private var orderCancelNew: Int = 0
+    private var orderReturned: Int = 0
     private var orderCancel: Int = 0
     private var cancelOrderStatus: String = ""
     private var orderDetails: ResponseMainOrderList.Payload.Data? = null
@@ -200,6 +202,12 @@ class OrderDetailsActivity : AppCompatActivity() {
                     if(orderDetails?.orderStatusDetail!![i]?.status == "delivered"){
                         orderCancel = 1
                     }
+                    if(orderDetails?.orderStatusDetail!![i]?.status == "cancelled"){
+                        orderCancelNew = 1
+                    }
+                    if(orderDetails?.orderStatusDetail!![i]?.status == "returned"){
+                        orderReturned = 1
+                    }
                 }
             }
 
@@ -207,9 +215,17 @@ class OrderDetailsActivity : AppCompatActivity() {
                 txtCancelOrder.text = "Return Order"
             }
 
-            if(orderDetails?.is_return == 1){
-                txtCancelOrder.visibility = View.VISIBLE
+            if(orderCancelNew == 1){
+                txtCancelOrder.visibility = View.GONE
             }else{
+                if(orderDetails?.is_return == 1){
+                    txtCancelOrder.visibility = View.VISIBLE
+                }else{
+                    txtCancelOrder.visibility = View.GONE
+                }
+            }
+
+            if(orderReturned == 1){
                 txtCancelOrder.visibility = View.GONE
             }
 
