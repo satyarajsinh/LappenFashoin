@@ -101,11 +101,11 @@ class OrderDetailsProductAdapter() :
         holder.txtSize.text = data!!.get(position)?.size.toString()
 
         holder.txtRating.setOnClickListener {
-            context.displayDialog(data!!.get(position)?.orderProductId)
+            context.displayDialog(data!!.get(position)?.product_id)
         }
 
         holder.relativeMain.setOnClickListener {
-            Prefs.putInt(Constants.PREF_PRODUCT_ID, data!!.get(position)?.orderProductId!!)
+            Prefs.putInt(Constants.PREF_PRODUCT_ID, data!!.get(position)?.product_id!!)
             val intent = Intent(context,ProductDetailsActivity::class.java)
             context.startActivity(intent)
         }

@@ -86,7 +86,7 @@
             android:id="@+id/txtNoDataFound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/no_data_found"
+            android:text="@string/your_wishlist_is_empty"
             android:paddingLeft="@dimen/_10sdp"
             android:textSize="@dimen/_14ssp"
             android:gravity="center"

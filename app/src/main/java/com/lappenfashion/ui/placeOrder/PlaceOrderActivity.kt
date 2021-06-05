@@ -163,14 +163,15 @@ class PlaceOrderActivity : AppCompatActivity(), PaymentResultListener {
                     startPayment()
                     Helper.dismissLoader()
                 }, 2000)
-            }else{
+            }else if(flag == 2){
                 if (NetworkConnection.checkConnection(this@PlaceOrderActivity)) {
                     Helper.showLoader(this@PlaceOrderActivity)
                     placeOrder("",2)
                 } else {
                     Helper.showTost(this@PlaceOrderActivity, "No internet connection")
                 }
-
+            }else{
+                Helper.showTost(this@PlaceOrderActivity, "Please select your payment option")
             }
         }
 

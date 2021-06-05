@@ -78,7 +78,7 @@
     <string name="genuine_product">Genuine Product</string>
     <string name="quality_checked">Quality Checked</string>
     <string name="cash_on_delivery_available">Cash on delivery available</string>
-    <string name="easy_30_days_return_exchange_available"><![CDATA[Easy 30 days return & exchange available]]></string>
+    <string name="easy_30_days_return_exchange_available"><![CDATA[Easy 7 days return & exchange available]]></string>
     <string name="no_products_available_for_this_category">No products available for this category!</string>
     <string name="sort_by">Sort By</string>
     <string name="apply">Apply</string>
@@ -103,6 +103,16 @@
     <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="product_review">Product Review</string>
     <string name="notification">Notification</string>
+    <string name="pocket_style">Pocket Style</string>
+    <string name="sleeve">Sleeve</string>
+    <string name="sleeve_fit">Sleeve Fit</string>
+    <string name="fabric">Fabric</string>
+    <string name="fabric_care">Fabric Care</string>
+    <string name="key_features">Key Features</string>
+    <string name="technology_used">Technology Used</string>
+    <string name="reversible">Reversible</string>
+    <string name="country_of_origin">Country of origin</string>
+    <string name="your_wishlist_is_empty">Your wishlist is empty</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

@@ -170,7 +170,6 @@ class OrderDetailsActivity : AppCompatActivity() {
         if(intent!=null){
             orderDetails = intent.getSerializableExtra("orderDetails") as ResponseMainOrderList.Payload.Data?
 
-
             recyclerProducts.layoutManager = LinearLayoutManager(
                 this@OrderDetailsActivity,
                 LinearLayoutManager.VERTICAL,

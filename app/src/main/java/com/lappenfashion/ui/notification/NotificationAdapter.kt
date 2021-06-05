@@ -24,6 +24,7 @@ class NotificationAdapter : RecyclerView.Adapter<NotificationAdapter.ViewHolder>
 
     class ViewHolder(view : View):RecyclerView.ViewHolder(view) {
         val txtName : TextView = view.findViewById(R.id.txtName)
+        val txtDescription : TextView = view.findViewById(R.id.txtDescription)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,6 +38,7 @@ class NotificationAdapter : RecyclerView.Adapter<NotificationAdapter.ViewHolder>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtName.text = data?.get(position)?.title
+        holder.txtDescription.text = data?.get(position)?.description
     }
 
 

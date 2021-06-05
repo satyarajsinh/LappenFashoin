@@ -67,6 +67,8 @@ data class ResponseMainOrderList(
                 var mrp: Int?,
                 @SerializedName("order_product_id")
                 var orderProductId: Int?,
+                @SerializedName("product_id")
+                var product_id: Int?,
                 @SerializedName("product_name")
                 var productName: String?,
                 @SerializedName("quantity")

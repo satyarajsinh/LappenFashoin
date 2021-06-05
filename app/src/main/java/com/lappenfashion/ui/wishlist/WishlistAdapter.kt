@@ -52,60 +52,63 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        if(data?.get(position)?.product?.isStockAvailable!! > 0){
-            holder.txtMoveToBag.visibility = View.VISIBLE
-            holder.txtOutOfStock.visibility = View.GONE
-        }else{
-            holder.txtMoveToBag.visibility = View.GONE
-            holder.txtOutOfStock.visibility = View.VISIBLE
-        }
+        if(data?.get(position)?.product!=null) {
+            if (data?.get(position)?.product?.isStockAvailable!! > 0) {
+                holder.txtMoveToBag.visibility = View.VISIBLE
+                holder.txtOutOfStock.visibility = View.GONE
+            } else {
+                holder.txtMoveToBag.visibility = View.GONE
+                holder.txtOutOfStock.visibility = View.VISIBLE
+            }
 
-        holder.progressBar.visibility = View.VISIBLE
-        Glide.with(context).load(data?.get(position)?.product?.mainImageName).placeholder(R.mipmap.no_image)
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    holder.progressBar.visibility = View.GONE
-                    return false
-                }
+            holder.progressBar.visibility = View.VISIBLE
+            Glide.with(context).load(data?.get(position)?.product?.mainImageName)
+                .placeholder(R.mipmap.no_image)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        holder.progressBar.visibility = View.GONE
+                        return false
+                    }
 
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    holder.progressBar.visibility = View.GONE
-                    return false
-                }
-            })
-            .into(holder.productImage)
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        holder.progressBar.visibility = View.GONE
+                        return false
+                    }
+                })
+                .into(holder.productImage)
 
-        holder.productName.text = data?.get(position)?.product?.productName
-        holder.productDetails.text = data?.get(position)?.product?.description
+            holder.productName.text = data?.get(position)?.product?.productName
+            holder.productDetails.text = data?.get(position)?.product?.description
 
-        holder.productPrice.text = "₹"+data?.get(position)?.product?.salePrice
-        holder.productMrp.text = "₹" + data!![position]?.product?.mrp
-        holder.productMrp.setPaintFlags(holder.productMrp.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+            holder.productPrice.text = "₹" + data?.get(position)?.product?.salePrice
+            holder.productMrp.text = "₹" + data!![position]?.product?.mrp
+            holder.productMrp.setPaintFlags(holder.productMrp.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
 
-        holder.imgClose.setOnClickListener {
-            context.removeFromWishList(data?.get(position),position)
-        }
+            holder.imgClose.setOnClickListener {
+                context.removeFromWishList(data?.get(position), position)
+            }
 
-        if(data?.get(position)?.product?.discount!! <= 0){
-            holder.cardView.visibility = View.GONE
-        }else{
-            holder.txtDiscount.setText(data?.get(position)?.product?.discount.toString()+"%")
-            holder.cardView.visibility = View.VISIBLE
-        }
+            if (data?.get(position)?.product?.discount!! <= 0) {
+                holder.txtDiscount.visibility = View.GONE
+            } else {
+                holder.txtDiscount.setText("( "+data?.get(position)?.product?.discount.toString() + "% )")
+                holder.txtDiscount.visibility = View.VISIBLE
+            }
 
-        holder.txtMoveToBag.setOnClickListener {
-            context.addToCart(data?.get(position),position)
+            holder.txtMoveToBag.setOnClickListener {
+                context.addToCart(data?.get(position), position)
+            }
         }
     }
 

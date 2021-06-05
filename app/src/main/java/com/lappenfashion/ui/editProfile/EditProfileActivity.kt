@@ -41,6 +41,7 @@ import java.util.*
 
 class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener{
 
+    private var selectedDate: String = ""
     private var picturePath: String? = ""
     private var imagePath: String = ""
     private var gender: String = ""
@@ -122,12 +123,10 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
                 txtBirthDate.error = "Field is required"
             } else if (gender == "") {
                 Helper.showTost(this@EditProfileActivity, "Please select your gender")
-            }else if(imagePath == "" && Prefs.getString(Constants.PREF_PROFILE_PICTURE, "") == ""){
-                Helper.showTost(this@EditProfileActivity, "Please upload your image")
             } else {
                 if (NetworkConnection.checkConnection(this)) {
                     Helper.showLoader(this@EditProfileActivity)
-                    if(imagePath == ""){
+                    if(imagePath == "" && Prefs.getString(Constants.PREF_PROFILE_PICTURE, "") == ""){
                         updateProfileWithoutPhoto()
                     }else{
                         updateProfile()
@@ -169,9 +168,18 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
             RequestBody.create(MediaType.parse("text/plain"), edtFullName.text.toString()),
             RequestBody.create(MediaType.parse("text/plain"), edtEmail.text.toString()),
             RequestBody.create(MediaType.parse("text/plain"), gender),
-            RequestBody.create(MediaType.parse("text/plain"), txtBirthDate.text.toString()),
+            RequestBody.create(MediaType.parse("text/plain"), selectedDate),
         )
-
+     /*   val requestCall: Call<ResponseMainProfile> = api.addProfileWithoutPhoto(
+            "Bearer " + Prefs.getString(
+                Constants.PREF_TOKEN,
+                ""
+            ),
+            edtFullName.text.toString(),
+            edtEmail.text.toString(),
+            gender,
+            selectedDate,
+        )*/
         requestCall.enqueue(object : Callback<ResponseMainProfile> {
             override fun onResponse(
                 call: Call<ResponseMainProfile>,
@@ -314,6 +322,23 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        txtBirthDate.text = year.toString()+"-"+(monthOfYear+1).toString()+"-"+dayOfMonth.toString()
+        selectedDate = year.toString()+"-"+(monthOfYear+1).toString()+"-"+dayOfMonth.toString()
+        var month = "";
+        var dateOne = ""
+
+        if((monthOfYear+1).toString().length == 1){
+            month = "0"+(monthOfYear+1)
+        }else{
+            month = (monthOfYear+1).toString()
+        }
+
+        if(dayOfMonth.toString().length == 1){
+            dateOne = "0"+dayOfMonth
+        }else{
+            dateOne = dayOfMonth.toString()
+        }
+
+
+        txtBirthDate.text = dateOne+"/"+month+"/"+year.toString()
     }
 }

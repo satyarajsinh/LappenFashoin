@@ -36,6 +36,7 @@ class OrderListAdapter() :
     class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
         val txtId : TextView = view.findViewById(R.id.txtId)
         val txtOrderStatus : TextView = view.findViewById(R.id.txtOrderStatus)
+        val txtOrderNumber : TextView = view.findViewById(R.id.txtOrderNumber)
         val imgProductImage : ImageView = view.findViewById(R.id.imgProductImage)
         val progressBar: SpinKitView = view.findViewById(R.id.progressBar)
         val relativeMain : RelativeLayout = view.findViewById(R.id.relativeMain)
@@ -83,6 +84,7 @@ class OrderListAdapter() :
             .into(holder.imgProductImage)
 
         holder.txtId.text = data.get(position)?.display_status.toString()
+        holder.txtOrderNumber.text = "Order Number : "+data.get(position)?.orderId
         holder.txtOrderStatus.text = data.get(position)?.products!![0]?.productName.toString()
 
         holder.relativeMain.setOnClickListener {

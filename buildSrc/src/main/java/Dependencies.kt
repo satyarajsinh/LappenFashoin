@@ -16,6 +16,9 @@ object Dependencies {
     //error handling
     const val multidex = "com.android.support:multidex:1.0.3"
 
+    //image Slider
+    const val imageSlider = "com.github.denzcoskun:ImageSlideshow:0.1.0"
+
     //slider indicator
     const val viewpager_indicator = "com.github.JakeWharton:ViewPagerIndicator:2.4.1"
 

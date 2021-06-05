@@ -45,6 +45,16 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/txtOrderNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10ssp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_medium">
+
+        </TextView>
+
+        <TextView
             android:id="@+id/txtId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

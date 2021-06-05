@@ -18,6 +18,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/scrollview"
             android:scrollbars="none">
 
             <LinearLayout
@@ -229,6 +230,7 @@
                     android:textSize="@dimen/_12ssp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:fontFamily="@font/sfpro_medium">
 
                 </TextView>
@@ -288,7 +290,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/style_note"
+                    android:text="@string/pocket_style"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
@@ -310,6 +312,278 @@
                     android:fontFamily="@font/sfpro_medium">
 
                 </TextView>
+
+                <LinearLayout
+                    android:id="@+id/linearSleeve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sleeve"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtSleeve"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:fontFamily="@font/sfpro_medium">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearSleeveFit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sleeve_fit"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtSleeveFit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:fontFamily="@font/sfpro_medium">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearFabric"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fabric"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtFabric"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:fontFamily="@font/sfpro_medium">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearFabricCare"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fabric_care"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtFabricCare"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:fontFamily="@font/sfpro_medium">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearKeyFeature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/key_features"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtKeyFeature"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:fontFamily="@font/sfpro_medium">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearTechnology"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/technology_used"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtTechnology"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:fontFamily="@font/sfpro_medium">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearRevise"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reversible"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtRevise"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:fontFamily="@font/sfpro_medium">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/country_of_origin"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtCountry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:fontFamily="@font/sfpro_medium">
+
+                    </TextView>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -461,7 +735,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/product_review"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins_medium">

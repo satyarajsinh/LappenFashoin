@@ -1,6 +1,6 @@
 package com.lappenfashion.ui.products
 
-import android.content.Context
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,6 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.models.SlideModel
 import com.example.simplemvvm.utils.Constants
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
@@ -44,6 +47,7 @@ import kotlinx.android.synthetic.main.toolbar_with_like_cart.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class ProductDetailsActivity : AppCompatActivity() {
 
@@ -74,6 +78,10 @@ class ProductDetailsActivity : AppCompatActivity() {
                     addToCart()
                 }
             }
+        }
+
+        llRating.setOnClickListener {
+            scrollview.fullScroll(View.FOCUS_DOWN)
         }
 
         linearWishList.setOnClickListener {
@@ -116,9 +124,9 @@ class ProductDetailsActivity : AppCompatActivity() {
                     ) {
                         Helper.dismissLoader()
                         if (response.body() != null && response.body()!!.result == true) {
-                            Helper.showTost(
-                                this@ProductDetailsActivity,
-                                response.body()!!.message!!
+                            imgWish.setColorFilter(
+                                    ContextCompat.getColor(this@ProductDetailsActivity, R.color.colorAccent),
+                            android.graphics.PorterDuff.Mode.SRC_ATOP
                             )
                         } else {
                             var message = Helper.getErrorBodyMessage(
@@ -412,6 +420,61 @@ class ProductDetailsActivity : AppCompatActivity() {
                     txtMaterialCare.text = response.body()?.payload!!.material.toString()
                     txtStyleNote.text = response.body()?.payload!!.pocketStyle.toString()
 
+                    if(response.body()?.payload!!.sleeve !=null && response.body()?.payload!!.sleeve.toString() != ""){
+                        linearSleeve.visibility = View.VISIBLE
+                        txtSleeve.text = response.body()?.payload!!.sleeve
+                    }else{
+                        linearSleeve.visibility = View.GONE
+                    }
+
+                    if(response.body()?.payload!!.sleeveFit !=null && response.body()?.payload!!.sleeveFit.toString() != ""){
+                        linearSleeveFit.visibility = View.VISIBLE
+                        txtSleeveFit.text = response.body()?.payload!!.sleeveFit
+                    }else{
+                        linearSleeveFit.visibility = View.GONE
+                    }
+
+                    if(response.body()?.payload!!.fabric !=null && response.body()?.payload!!.fabric.toString() != ""){
+                        linearFabric.visibility = View.VISIBLE
+                        txtFabric.text = response.body()?.payload!!.fabric
+                    }else{
+                        linearFabric.visibility = View.GONE
+                    }
+
+                    if(response.body()?.payload!!.fabricCare !=null && response.body()?.payload!!.fabricCare.toString() != ""){
+                        linearFabricCare.visibility = View.VISIBLE
+                        txtFabricCare.text = response.body()?.payload!!.fabricCare
+                    }else{
+                        linearFabricCare.visibility = View.GONE
+                    }
+
+                    if(response.body()?.payload!!.keyFeatures !=null && response.body()?.payload!!.keyFeatures.toString() != ""){
+                        linearKeyFeature.visibility = View.VISIBLE
+                        txtKeyFeature.text = response.body()?.payload!!.keyFeatures
+                    }else{
+                        linearKeyFeature.visibility = View.GONE
+                    }
+
+                    if(response.body()?.payload!!.technologyUsed !=null && response.body()?.payload!!.technologyUsed.toString() != ""){
+                        linearTechnology.visibility = View.VISIBLE
+                        txtTechnology.text = response.body()?.payload!!.technologyUsed
+                    }else{
+                        linearTechnology.visibility = View.GONE
+                    }
+
+                    if(response.body()?.payload!!.reversible !=null && response.body()?.payload!!.reversible.toString() != ""){
+                        linearRevise.visibility = View.VISIBLE
+                        txtRevise.text = response.body()?.payload!!.reversible
+                    }else{
+                        linearRevise.visibility = View.GONE
+                    }
+
+                    if(response.body()?.payload!!.countryOfOrigin !=null && response.body()?.payload!!.countryOfOrigin.toString() != ""){
+                        linearCountry.visibility = View.VISIBLE
+                        txtCountry.text = response.body()?.payload!!.countryOfOrigin
+                    }else{
+                        linearCountry.visibility = View.GONE
+                    }
                     /*try {
                         txtColor.setBackgroundColor(Color.parseColor(productData?.color!!))
                     } catch (e: Exception) {
@@ -499,6 +562,7 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     private fun loadBanner(body: List<ResponseMainProductDetails.Payload.Image?>?) {
+        Collections.reverse(body)
         mPager!!.adapter = SlidingImageAdapter(this@ProductDetailsActivity, body)
 
         indicator.setViewPager(mPager)
@@ -544,7 +608,7 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     class SlidingImageAdapter(
-        private val mContext: Context,
+        private val mContext: ProductDetailsActivity,
         private val imageModelArrayList: List<ResponseMainProductDetails.Payload.Image?>?
     ) : PagerAdapter() {
 
@@ -571,6 +635,10 @@ class ProductDetailsActivity : AppCompatActivity() {
 
 //            txtBannerTitle.text = imageModelArrayList?.get(position)?.image
 
+            imageView.setOnClickListener {
+                mContext.displayImageFullscreen(imageModelArrayList)
+            }
+
             view.addView(imageLayout, 0)
 
             return imageLayout
@@ -582,6 +650,35 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         override fun getCount(): Int {
             return imageModelArrayList?.size!!
+        }
+    }
+
+    fun displayImageFullscreen(image: List<ResponseMainProductDetails.Payload.Image?>?) {
+        var dialog = Dialog(this@ProductDetailsActivity,android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setContentView(R.layout.dialog_full_screen_image)
+
+        var imgImage = dialog.findViewById<ImageView>(R.id.imgImage)
+        var imgClose = dialog.findViewById<ImageView>(R.id.imgClose)
+        var image_slider = dialog.findViewById<ImageSlider>(R.id.image_slider)
+
+        val imageList = ArrayList<SlideModel>() // Create image list
+
+        for(i in 0 until image?.size!!){
+            imageList.add(SlideModel(image.get(i)?.image))
+        }
+
+        image_slider.setImageList(imageList)
+
+        Glide.with(this).load(image).placeholder(R.mipmap.no_image)
+            .into(imgImage)
+
+        dialog.show()
+
+        imgClose.setOnClickListener {
+            dialog.dismiss()
         }
     }
 

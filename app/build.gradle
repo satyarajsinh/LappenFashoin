@@ -76,6 +76,7 @@ dependencies {
     implementation Dependencies.firebase_message
     implementation platform(Dependencies.firebaseBom)
     implementation Dependencies.razorpay
+    implementation Dependencies.imageSlider
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
