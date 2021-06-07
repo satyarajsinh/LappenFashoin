@@ -59,7 +59,6 @@ class OTPActivity : AppCompatActivity() {
             if(NetworkConnection.checkConnection(this)) {
                 Helper.showLoader(this@OTPActivity)
                 if(et_otp.text.toString()!="" && et_otp.text.toString().length == 6) {
-                    Helper.showLoader(this@OTPActivity)
                     verifyOTP(mobileNumber,et_otp.text.toString())
                 }else{
                     Helper.showTost(this, "Please enter valid OTP")

@@ -249,9 +249,9 @@ class ProductDetailsActivity : AppCompatActivity() {
                             Constants.PREF_CART_COUNT,
                             response.body()!!.payload?.cartCount!!
                         )
+                        txtMoveToBag.text = "Go to bag"
                         txtCartCount.visibility = View.VISIBLE
                         txtCartCount.text = response.body()!!.payload?.cartCount.toString()
-                        Helper.showTost(this@ProductDetailsActivity, response.body()!!.message!!)
                     } else {
                         Helper.showTost(
                             this@ProductDetailsActivity,
@@ -293,8 +293,8 @@ class ProductDetailsActivity : AppCompatActivity() {
             txtCartCount.visibility = View.VISIBLE
             txtCartCount.text = count.toString()
             Prefs.putInt(Constants.PREF_CART_COUNT, count)
+            txtMoveToBag.text = "Go to bag"
 
-            Helper.showTost(this@ProductDetailsActivity, "Product added to cart")
             Helper.dismissLoader()
         }, 2000)
 
@@ -484,6 +484,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                     txtDetails.text = response.body()?.payload!!.description
 
                     if (response.body()?.payload?.sizeList?.size!! > 0) {
+                        linearSize.visibility = View.VISIBLE
                         recyclerSize.layoutManager = LinearLayoutManager(
                             this@ProductDetailsActivity,
                             LinearLayoutManager.HORIZONTAL,
@@ -496,9 +497,12 @@ class ProductDetailsActivity : AppCompatActivity() {
                             productId
                         )
                         recyclerSize.adapter = productSizeAdapter
+                    }else{
+                        linearSize.visibility = View.GONE
                     }
 
                     if (response.body()?.payload!!.colorList!!.size > 0) {
+                        linearColor.visibility = View.VISIBLE
                         recyclerColor.layoutManager = LinearLayoutManager(
                             this@ProductDetailsActivity,
                             LinearLayoutManager.HORIZONTAL,
@@ -536,6 +540,8 @@ class ProductDetailsActivity : AppCompatActivity() {
                             colorList, productId
                         )
                         recyclerColor.adapter = productColorAdapter
+                    }else{
+                        linearColor.visibility = View.GONE
                     }
                 } else {
                     coordinator.visibility = View.GONE

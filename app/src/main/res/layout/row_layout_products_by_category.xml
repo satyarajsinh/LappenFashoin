@@ -130,7 +130,6 @@
             android:layout_toRightOf="@id/txtPrice"
             android:fontFamily="@font/poppins_medium"
             android:textSize="@dimen/_10ssp"
-            android:textColor="@color/black"
             android:layout_below="@id/txtProductDetails">
 
         </TextView>

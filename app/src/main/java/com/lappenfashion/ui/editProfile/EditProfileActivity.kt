@@ -126,7 +126,7 @@ class EditProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
             } else {
                 if (NetworkConnection.checkConnection(this)) {
                     Helper.showLoader(this@EditProfileActivity)
-                    if(imagePath == "" && Prefs.getString(Constants.PREF_PROFILE_PICTURE, "") == ""){
+                    if(imagePath == ""){
                         updateProfileWithoutPhoto()
                     }else{
                         updateProfile()

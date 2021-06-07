@@ -23,11 +23,15 @@ class NotificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification)
 
-        if (NetworkConnection.checkConnection(this@NotificationActivity)) {
-            Helper.showLoader(this@NotificationActivity)
-            getNotification()
-        }else {
-            Helper.showTost(this@NotificationActivity, "No internet connection")
+        if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
+            if (NetworkConnection.checkConnection(this@NotificationActivity)) {
+                Helper.showLoader(this@NotificationActivity)
+                getNotification()
+            }else {
+                Helper.showTost(this@NotificationActivity, "No internet connection")
+            }
+        }else{
+            txtNoData.visibility = View.VISIBLE
         }
 
         imgBack.setOnClickListener {

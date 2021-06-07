@@ -84,7 +84,7 @@
                         android:paddingLeft="@dimen/_10sdp"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/poppins_regular">
+                        android:fontFamily="@font/poppins_medium">
 
                     </TextView>
 
@@ -109,7 +109,6 @@
                         android:paddingLeft="@dimen/_10sdp"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/colorAccent"
-                        android:text="(50% discount)"
                         android:fontFamily="@font/poppins_regular">
 
                     </TextView>
@@ -155,46 +154,63 @@
 
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/linearSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/size"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium">
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical">
 
-                </TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/size"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerSize"
+                    </TextView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        android:scrollbars="none">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_10sdp"
-                    android:scrollbars="none">
+                    android:orientation="vertical">
 
-                </androidx.recyclerview.widget.RecyclerView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/color"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/color"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium">
+                    </TextView>
 
-                </TextView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        android:scrollbars="none">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerColor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_10sdp"
-                    android:scrollbars="none">
+                    </androidx.recyclerview.widget.RecyclerView>
 
-                </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/txtColor"

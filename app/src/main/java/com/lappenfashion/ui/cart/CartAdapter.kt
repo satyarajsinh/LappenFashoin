@@ -47,15 +47,29 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        Glide.with(context).load(data!![position]?.product?.mainImageName).placeholder(R.mipmap.no_image).into(holder.productImage)
+        if(data!![position]?.product?.mainImageName!=null && data!![position]?.product?.mainImageName!="") {
+            Glide.with(context).load(data!![position]?.product?.mainImageName)
+                .placeholder(R.mipmap.no_image).into(holder.productImage)
+        }
 
         if(data?.get(position)?.product?.colorCode!=null && data?.get(position)?.product?.colorCode !="") {
+            holder.cardView.visibility = View.VISIBLE
             holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.product?.colorCode))
+        }else{
+            holder.cardView.visibility = View.GONE
         }
-        holder.txtSize.text = data?.get(position)?.product?.size
+
+        if(data?.get(position)?.product?.size!=null && data?.get(position)?.product?.size!="") {
+            holder.txtSize.visibility = View.VISIBLE
+            holder.txtSize.text = data?.get(position)?.product?.size
+        }else{
+            holder.txtSize.visibility = View.GONE
+        }
+
         holder.productName.text = data!![position]?.product?.productName
         holder.productPrice.text = "₹" + data!![position]?.amount.toString()
         holder.txtQty.text = data!![position]?.quantity.toString()
+
         holder.imgAdd.setOnClickListener {
             holder.txtQty.text = (holder.txtQty.text.toString().toInt() + 1).toString()
             if (NetworkConnection.checkConnection(context)) {

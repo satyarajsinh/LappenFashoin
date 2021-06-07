@@ -139,6 +139,7 @@ class CartActivity : AppCompatActivity() {
                     recyclerCart.visibility = View.VISIBLE
                     recyclerLocalCart.visibility = View.GONE
                     linearNoCart.visibility = View.GONE
+
                     recyclerCart.layoutManager =
                         LinearLayoutManager(this@CartActivity, LinearLayoutManager.VERTICAL, false)
                     var adapter = CartAdapter(

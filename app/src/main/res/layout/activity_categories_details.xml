@@ -33,97 +33,110 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/linearViewPager"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_below="@id/recyclerCategories"
-        android:orientation="vertical">
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/mPagerSubCategories"
-            android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:paddingRight="2dp" />
-
-        <com.viewpagerindicator.CirclePageIndicator
-            android:id="@+id/indicatorSubCategories"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            app:centered="true"
-            app:fillColor="@color/black"
-            app:pageColor="@color/background"
-            app:snap="false" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerCategories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
         android:scrollbars="none">
 
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_below="@id/recyclerCategories"
-        android:orientation="vertical">
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/mPagerBottom"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:paddingRight="2dp" />
-
-        <com.viewpagerindicator.CirclePageIndicator
-            android:id="@+id/indicatorBottom"
-            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            app:centered="true"
-            app:fillColor="@color/black"
-            app:pageColor="@color/background"
-            app:snap="false" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_below="@id/recyclerCategories"
+                android:orientation="vertical">
 
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/mPagerSubCategories"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:paddingRight="2dp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/indicatorSubCategories"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    app:centered="true"
+                    app:fillColor="@color/black"
+                    app:pageColor="@color/background"
+                    app:snap="false" />
 
-        <com.github.ybq.android.spinkit.SpinKitView
-            android:id="@+id/progressBottomBanner"
-            style="@style/SpinKitView.Circle"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            app:SpinKit_Style="FadingCircle"
-            app:SpinKit_Color="@color/pink" />
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imgBottomBanner"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
-            android:scaleType="fitXY">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:scrollbars="none">
 
-        </ImageView>
+            </androidx.recyclerview.widget.RecyclerView>
 
-    </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_below="@id/recyclerCategories"
+                android:orientation="vertical">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/mPagerBottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:paddingRight="2dp" />
+
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/indicatorBottom"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    app:centered="true"
+                    app:fillColor="@color/black"
+                    app:pageColor="@color/background"
+                    app:snap="false" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <com.github.ybq.android.spinkit.SpinKitView
+                    android:id="@+id/progressBottomBanner"
+                    style="@style/SpinKitView.Circle"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    app:SpinKit_Style="FadingCircle"
+                    app:SpinKit_Color="@color/pink" />
+
+                <ImageView
+                    android:id="@+id/imgBottomBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150sdp"
+                    android:scaleType="fitXY">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

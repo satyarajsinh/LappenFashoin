@@ -14,10 +14,13 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.simplemvvm.utils.Constants
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainLogin
 import com.lappenfashion.data.network.MyApi
 import com.lappenfashion.data.network.NetworkConnection
+import com.lappenfashion.sqlitedb.DBManager
 import com.lappenfashion.ui.MainActivity
 import com.lappenfashion.ui.address.AddressListingActivity
 import com.lappenfashion.ui.editProfile.EditProfileActivity
@@ -40,6 +43,7 @@ class ProfileFragment : Fragment() {
     private lateinit var rootView: View
     private lateinit var mContext: Context
     private lateinit var txtName: TextView
+    private lateinit var dbManager: DBManager
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -114,9 +118,22 @@ class ProfileFragment : Fragment() {
         }
 
         rootView.relativeLogout.setOnClickListener {
-            var count = Prefs.getInt(Constants.PREF_CART_COUNT, 0)
             Prefs.clear()
-            Prefs.putInt(Constants.PREF_CART_COUNT, count)
+            val cartItem = dbManager.fetchCart()
+
+            val array = JsonArray()
+            if (cartItem.size > 0) {
+                for (i in 0 until cartItem.size) {
+                    var cartObject = JsonObject()
+                    cartObject.addProperty("product_id", cartItem.get(i).productId)
+                    cartObject.addProperty("quantity", cartItem.get(i).cartQty)
+                    cartObject.addProperty("amount", cartItem.get(i).cartAmount)
+                    array.add(cartObject)
+                    dbManager.deleteCart(cartItem.get(i).cartId.toLong())
+                }
+            }
+
+            Prefs.putInt(Constants.PREF_CART_COUNT, 0)
             var intent = Intent(mContext, MainActivity::class.java)
             startActivity(intent)
         }
@@ -205,6 +222,9 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initData() {
+
+        dbManager = DBManager(mContext)
+        dbManager.open()
 
         if (Prefs.getString(Constants.PREF_IS_LOGGED_IN, "") == "1") {
             rootView.relativeProfile.visibility = View.VISIBLE
