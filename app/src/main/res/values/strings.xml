@@ -113,6 +113,7 @@
     <string name="reversible">Reversible</string>
     <string name="country_of_origin">Country of origin</string>
     <string name="your_wishlist_is_empty">Your wishlist is empty</string>
+    <string name="size_chart">Size Chart</string>
 
     <array name="rangeSliderValues">
         <item>20</item>

@@ -51,6 +51,7 @@ import java.util.*
 
 class ProductDetailsActivity : AppCompatActivity() {
 
+    private var sizeChartImage: String? = ""
     private lateinit var productData: ResponseMainProductDetails.Payload
     private lateinit var dbManager: DBManager
     private var productId = 0
@@ -78,6 +79,10 @@ class ProductDetailsActivity : AppCompatActivity() {
                     addToCart()
                 }
             }
+        }
+
+        txtSizeChart.setOnClickListener {
+            displaySizeChart()
         }
 
         llRating.setOnClickListener {
@@ -125,8 +130,11 @@ class ProductDetailsActivity : AppCompatActivity() {
                         Helper.dismissLoader()
                         if (response.body() != null && response.body()!!.result == true) {
                             imgWish.setColorFilter(
-                                    ContextCompat.getColor(this@ProductDetailsActivity, R.color.colorAccent),
-                            android.graphics.PorterDuff.Mode.SRC_ATOP
+                                ContextCompat.getColor(
+                                    this@ProductDetailsActivity,
+                                    R.color.colorAccent
+                                ),
+                                android.graphics.PorterDuff.Mode.SRC_ATOP
                             )
                         } else {
                             var message = Helper.getErrorBodyMessage(
@@ -216,7 +224,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             override fun onFailure(call: Call<ResponseMainLogin>, t: Throwable) {
                 txtLogin.isEnabled = true
                 com.lappenfashion.utils.Helper.dismissLoader()
-                Helper.showTost(this@ProductDetailsActivity,t.message)
+                Helper.showTost(this@ProductDetailsActivity, t.message)
             }
 
         })
@@ -262,7 +270,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<ResponseMainCartNew>, t: Throwable) {
                     Helper.dismissLoader()
-                    Helper.showTost(this@ProductDetailsActivity,t.message)
+                    Helper.showTost(this@ProductDetailsActivity, t.message)
                 }
 
             })
@@ -303,8 +311,8 @@ class ProductDetailsActivity : AppCompatActivity() {
     private fun initData() {
         Prefs.putInt(Constants.PREF_SELECTED_COLOR, 0)
 
-        productId = Prefs.getInt(Constants.PREF_PRODUCT_ID,0)
-        if(productId!=0) {
+        productId = Prefs.getInt(Constants.PREF_PRODUCT_ID, 0)
+        if (productId != 0) {
             if (NetworkConnection.checkConnection(this@ProductDetailsActivity)) {
                 Helper.showLoader(this@ProductDetailsActivity)
                 getProductDetailsById(productId)
@@ -314,7 +322,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                     resources.getString(R.string.no_internet)
                 )
             }
-        }else{
+        } else {
             coordinator.visibility = View.GONE
             linearBottom.visibility = View.GONE
             linearNoData.visibility = View.VISIBLE
@@ -339,7 +347,10 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         var api = MyApi(this@ProductDetailsActivity)
         val requestCall: Call<ResponseMainProductDetails> = api.getProductDetails(
-            Constants.END_POINT_PRODUCTS + "/" + productId + "?user_id=" + Prefs.getInt(Constants.PREF_USER_ID, 0)
+            Constants.END_POINT_PRODUCTS + "/" + productId + "?user_id=" + Prefs.getInt(
+                Constants.PREF_USER_ID,
+                0
+            )
         )
 
         requestCall.enqueue(object : Callback<ResponseMainProductDetails> {
@@ -364,7 +375,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                         txtOutOfStock.visibility = View.VISIBLE
                     }
 
-                    if(response.body()?.payload?.reviews?.size!! > 0){
+                    if (response.body()?.payload?.reviews?.size!! > 0) {
                         llRating.visibility = View.VISIBLE
                         txtProductReview.visibility = View.VISIBLE
                         recyclerReview.layoutManager = LinearLayoutManager(
@@ -379,18 +390,25 @@ class ProductDetailsActivity : AppCompatActivity() {
                             productId
                         )
                         recyclerReview.adapter = productReviewAdapter
-                    }else{
+                    } else {
                         llRating.visibility = View.GONE
                         txtProductReview.visibility = View.GONE
                     }
 
-                    if(response.body()?.payload?.rating_avg!! > 0){
+                    if (response.body()?.payload?.rating_avg!! > 0) {
                         tvRating.text = response.body()?.payload?.rating_avg!!.toString()
                     }
 
-                    if(response.body()?.payload?.isWishList!! == 1){
+                    if(response.body()?.payload?.size_chart_image!=null) {
+                        sizeChartImage = response.body()?.payload?.size_chart_image
+                    }
+
+                    if (response.body()?.payload?.isWishList!! == 1) {
                         imgWish.setColorFilter(
-                            ContextCompat.getColor(this@ProductDetailsActivity, R.color.colorAccent),
+                            ContextCompat.getColor(
+                                this@ProductDetailsActivity,
+                                R.color.colorAccent
+                            ),
                             android.graphics.PorterDuff.Mode.SRC_ATOP
                         )
                     }
@@ -420,59 +438,59 @@ class ProductDetailsActivity : AppCompatActivity() {
                     txtMaterialCare.text = response.body()?.payload!!.material.toString()
                     txtStyleNote.text = response.body()?.payload!!.pocketStyle.toString()
 
-                    if(response.body()?.payload!!.sleeve !=null && response.body()?.payload!!.sleeve.toString() != ""){
+                    if (response.body()?.payload!!.sleeve != null && response.body()?.payload!!.sleeve.toString() != "") {
                         linearSleeve.visibility = View.VISIBLE
                         txtSleeve.text = response.body()?.payload!!.sleeve
-                    }else{
+                    } else {
                         linearSleeve.visibility = View.GONE
                     }
 
-                    if(response.body()?.payload!!.sleeveFit !=null && response.body()?.payload!!.sleeveFit.toString() != ""){
+                    if (response.body()?.payload!!.sleeveFit != null && response.body()?.payload!!.sleeveFit.toString() != "") {
                         linearSleeveFit.visibility = View.VISIBLE
                         txtSleeveFit.text = response.body()?.payload!!.sleeveFit
-                    }else{
+                    } else {
                         linearSleeveFit.visibility = View.GONE
                     }
 
-                    if(response.body()?.payload!!.fabric !=null && response.body()?.payload!!.fabric.toString() != ""){
+                    if (response.body()?.payload!!.fabric != null && response.body()?.payload!!.fabric.toString() != "") {
                         linearFabric.visibility = View.VISIBLE
                         txtFabric.text = response.body()?.payload!!.fabric
-                    }else{
+                    } else {
                         linearFabric.visibility = View.GONE
                     }
 
-                    if(response.body()?.payload!!.fabricCare !=null && response.body()?.payload!!.fabricCare.toString() != ""){
+                    if (response.body()?.payload!!.fabricCare != null && response.body()?.payload!!.fabricCare.toString() != "") {
                         linearFabricCare.visibility = View.VISIBLE
                         txtFabricCare.text = response.body()?.payload!!.fabricCare
-                    }else{
+                    } else {
                         linearFabricCare.visibility = View.GONE
                     }
 
-                    if(response.body()?.payload!!.keyFeatures !=null && response.body()?.payload!!.keyFeatures.toString() != ""){
+                    if (response.body()?.payload!!.keyFeatures != null && response.body()?.payload!!.keyFeatures.toString() != "") {
                         linearKeyFeature.visibility = View.VISIBLE
                         txtKeyFeature.text = response.body()?.payload!!.keyFeatures
-                    }else{
+                    } else {
                         linearKeyFeature.visibility = View.GONE
                     }
 
-                    if(response.body()?.payload!!.technologyUsed !=null && response.body()?.payload!!.technologyUsed.toString() != ""){
+                    if (response.body()?.payload!!.technologyUsed != null && response.body()?.payload!!.technologyUsed.toString() != "") {
                         linearTechnology.visibility = View.VISIBLE
                         txtTechnology.text = response.body()?.payload!!.technologyUsed
-                    }else{
+                    } else {
                         linearTechnology.visibility = View.GONE
                     }
 
-                    if(response.body()?.payload!!.reversible !=null && response.body()?.payload!!.reversible.toString() != ""){
+                    if (response.body()?.payload!!.reversible != null && response.body()?.payload!!.reversible.toString() != "") {
                         linearRevise.visibility = View.VISIBLE
                         txtRevise.text = response.body()?.payload!!.reversible
-                    }else{
+                    } else {
                         linearRevise.visibility = View.GONE
                     }
 
-                    if(response.body()?.payload!!.countryOfOrigin !=null && response.body()?.payload!!.countryOfOrigin.toString() != ""){
+                    if (response.body()?.payload!!.countryOfOrigin != null && response.body()?.payload!!.countryOfOrigin.toString() != "") {
                         linearCountry.visibility = View.VISIBLE
                         txtCountry.text = response.body()?.payload!!.countryOfOrigin
-                    }else{
+                    } else {
                         linearCountry.visibility = View.GONE
                     }
                     /*try {
@@ -497,7 +515,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                             productId
                         )
                         recyclerSize.adapter = productSizeAdapter
-                    }else{
+                    } else {
                         linearSize.visibility = View.GONE
                     }
 
@@ -540,7 +558,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                             colorList, productId
                         )
                         recyclerColor.adapter = productColorAdapter
-                    }else{
+                    } else {
                         linearColor.visibility = View.GONE
                     }
                 } else {
@@ -555,7 +573,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                 txtNoDataFound.setText(resources.getString(R.string.no_data_found))
                 linearNoData.visibility = View.VISIBLE
                 Helper.dismissLoader()
-                Helper.showTost(this@ProductDetailsActivity,t.message)
+                Helper.showTost(this@ProductDetailsActivity, t.message)
             }
 
         })
@@ -637,6 +655,8 @@ class ProductDetailsActivity : AppCompatActivity() {
 
             Glide.with(mContext)
                 .load(imageModelArrayList?.get(position)?.image)
+                .placeholder(R.mipmap.loading)
+                .error(R.mipmap.no_image)
                 .into(imageView)
 
 //            txtBannerTitle.text = imageModelArrayList?.get(position)?.image
@@ -660,7 +680,8 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     fun displayImageFullscreen(image: List<ResponseMainProductDetails.Payload.Image?>?) {
-        var dialog = Dialog(this@ProductDetailsActivity,android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        var dialog =
+            Dialog(this@ProductDetailsActivity, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
@@ -672,7 +693,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         val imageList = ArrayList<SlideModel>() // Create image list
 
-        for(i in 0 until image?.size!!){
+        for (i in 0 until image?.size!!) {
             imageList.add(SlideModel(image.get(i)?.image))
         }
 
@@ -680,6 +701,31 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         Glide.with(this).load(image).placeholder(R.mipmap.no_image)
             .into(imgImage)
+
+        dialog.show()
+
+        imgClose.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    fun displaySizeChart() {
+        var dialog =
+            Dialog(this@ProductDetailsActivity, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setContentView(R.layout.dialog_full_screen_image)
+
+        var imgImage = dialog.findViewById<ImageView>(R.id.imgImage)
+        var imgClose = dialog.findViewById<ImageView>(R.id.imgClose)
+        var image_slider = dialog.findViewById<ImageSlider>(R.id.image_slider)
+
+        val imageList = ArrayList<SlideModel>() // Create image list
+
+        imageList.add(SlideModel(sizeChartImage))
+
+        image_slider.setImageList(imageList)
 
         dialog.show()
 

@@ -54,6 +54,8 @@ data class ResponseMainProductDetails(
         var keyFeatures: String?,
         @SerializedName("main_image_name")
         var mainImageName: String?,
+        @SerializedName("size_chart_image")
+        var size_chart_image: String?,
         @SerializedName("mrp")
         var mrp: Int?,
         @SerializedName("occasion")
