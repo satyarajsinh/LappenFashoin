@@ -555,7 +555,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                         var productColorAdapter = ProductColorAdapter(
                             this@ProductDetailsActivity,
-                            colorList, productId
+                            colorList, response.body()?.payload!!.colorCode!!
                         )
                         recyclerColor.adapter = productColorAdapter
                     } else {

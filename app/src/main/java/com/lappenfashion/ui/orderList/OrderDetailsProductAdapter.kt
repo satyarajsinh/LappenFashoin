@@ -21,7 +21,10 @@ import com.github.ybq.android.spinkit.SpinKitView
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainOrderList
 import com.lappenfashion.ui.products.ProductDetailsActivity
+import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class OrderDetailsProductAdapter() :
@@ -91,8 +94,17 @@ class OrderDetailsProductAdapter() :
             })
             .into(holder.imgProductImage)
 
-        if(data!!.get(position)?.colorCode!! !=null && data!!.get(position)?.colorCode!! !="") {
-            holder.cardView.setCardBackgroundColor(Color.parseColor(data!!.get(position)?.colorCode!!))
+        try {
+            if (isValidHexaCode(data!!.get(position)?.colorCode!!)) {
+                if(data!!.get(position)?.colorCode!! !=null && data!!.get(position)?.colorCode!! !="") {
+                    holder.cardView.visibility = View.VISIBLE
+                    holder.cardView.setCardBackgroundColor(Color.parseColor(data!!.get(position)?.colorCode!!))
+                }
+            } else {
+                holder.cardView.visibility = View.GONE
+            }
+        } catch (e: Exception) {
+            Helper.showTost(context, "Display color issues.")
         }
 
         holder.txtProductName.text = data!!.get(position)?.productName.toString()
@@ -109,6 +121,13 @@ class OrderDetailsProductAdapter() :
             val intent = Intent(context,ProductDetailsActivity::class.java)
             context.startActivity(intent)
         }
+    }
+
+    fun isValidHexaCode(colorCode : String): Boolean {
+        val regex = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        val p: Pattern = Pattern.compile(regex)
+        val m: Matcher = p.matcher(colorCode)
+        return m.matches()
     }
 
 }

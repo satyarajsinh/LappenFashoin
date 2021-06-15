@@ -12,7 +12,7 @@
         android:padding="@dimen/_5sdp"
         android:visibility="visible"
         android:layout_margin="@dimen/_10sdp"
-        android:src="@drawable/ic_light_arrow">
+        app:srcCompat="@drawable/ic_light_arrow">
 
     </ImageView>
 
@@ -84,6 +84,20 @@
             android:fontFamily="@font/poppins_medium"
             android:layout_marginRight="@dimen/_20sdp"
             android:text="Resend OTP ?">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtResendOtpTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium">
 
         </TextView>
 

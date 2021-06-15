@@ -13,6 +13,8 @@ import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainCartNew
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.utils.Helper
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
@@ -47,22 +49,29 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        if(data!![position]?.product?.mainImageName!=null && data!![position]?.product?.mainImageName!="") {
+        if (data!![position]?.product?.mainImageName != null && data!![position]?.product?.mainImageName != "") {
             Glide.with(context).load(data!![position]?.product?.mainImageName)
                 .placeholder(R.mipmap.no_image).into(holder.productImage)
         }
 
-        if(data?.get(position)?.product?.colorCode!=null && data?.get(position)?.product?.colorCode !="") {
-            holder.cardView.visibility = View.VISIBLE
-            holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.product?.colorCode))
-        }else{
-            holder.cardView.visibility = View.GONE
+        try {
+            if (isValidHexaCode(data?.get(position)?.product?.colorCode!!)) {
+                if (data?.get(position)?.product?.colorCode != null && data?.get(position)?.product?.colorCode != "") {
+                    holder.cardView.visibility = View.VISIBLE
+                    holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.product?.colorCode))
+                }
+            } else {
+                holder.cardView.visibility = View.GONE
+            }
+        } catch (e: Exception) {
+            Helper.showTost(context, "Display color issues.")
         }
 
-        if(data?.get(position)?.product?.size!=null && data?.get(position)?.product?.size!="") {
+
+        if (data?.get(position)?.product?.size != null && data?.get(position)?.product?.size != "") {
             holder.txtSize.visibility = View.VISIBLE
             holder.txtSize.text = data?.get(position)?.product?.size
-        }else{
+        } else {
             holder.txtSize.visibility = View.GONE
         }
 
@@ -104,6 +113,13 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.txtMoveToWishList.setOnClickListener {
             context.addToWishList(data!![position]?.product?.productId)
         }
+    }
+
+    fun isValidHexaCode(colorCode : String): Boolean {
+        val regex = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        val p: Pattern = Pattern.compile(regex)
+        val m: Matcher = p.matcher(colorCode)
+        return m.matches()
     }
 
     override fun getItemCount(): Int {

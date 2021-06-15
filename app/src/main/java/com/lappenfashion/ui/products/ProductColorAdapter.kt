@@ -14,6 +14,8 @@ import com.lappenfashion.data.model.ResponseMainProductDetails
 import com.lappenfashion.data.network.NetworkConnection
 import com.lappenfashion.utils.Helper
 import com.pixplicity.easyprefs.library.Prefs
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class ProductColorAdapter() :
@@ -21,15 +23,15 @@ class ProductColorAdapter() :
 
     lateinit var context: ProductDetailsActivity
     lateinit var data: List<ResponseMainProductDetails.Payload.Color?>
-    var productId: Int = 0
+    var colorCode: String = ""
 
     constructor(
         context: ProductDetailsActivity,
-        data: List<ResponseMainProductDetails.Payload.Color?>?, productId: Int
+        data: List<ResponseMainProductDetails.Payload.Color?>?, colorcode: String
     ) : this() {
         this.context = context
         this.data = data!!
-        this.productId = productId
+        this.colorCode = colorcode
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -62,16 +64,26 @@ class ProductColorAdapter() :
             }*/
             holder.imgCheck.visibility = View.VISIBLE
         }else{
-            if(data.get(position)?.productId == productId){
+            if(data.get(position)?.colorCode == colorCode){
                 holder.imgCheck.visibility = View.VISIBLE
             }else{
                 holder.imgCheck.visibility = View.GONE
             }
         }
 
-        if(data.get(position)?.colorCode!=null && data.get(position)?.colorCode != "") {
-            holder.cardView.setCardBackgroundColor(Color.parseColor(data.get(position)?.colorCode))
+        try{
+            if(isValidHexaCode(data.get(position)?.colorCode!!)) {
+                if (data.get(position)?.colorCode != null && data.get(position)?.colorCode != "") {
+                    holder.cardView.visibility = View.VISIBLE
+                    holder.cardView.setCardBackgroundColor(Color.parseColor(data.get(position)?.colorCode))
+                }
+            }else{
+                holder.cardView.visibility = View.GONE
+            }
+        }catch (e : Exception){
+            Helper.showTost(context,"Display color issues.")
         }
+
 
         holder.cardView.setOnClickListener {
             data.get(position)?.flag = 1
@@ -84,6 +96,13 @@ class ProductColorAdapter() :
             }
 
         }
+    }
+
+    fun isValidHexaCode(colorCode : String): Boolean {
+        val regex = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        val p: Pattern = Pattern.compile(regex)
+        val m: Matcher = p.matcher(colorCode)
+        return m.matches()
     }
 
 

@@ -2,10 +2,11 @@ package com.lappenfashion.ui.otp
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.simplemvvm.utils.Constants
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainLogin
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_otp.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class OTPActivity : AppCompatActivity() {
 
@@ -52,6 +54,20 @@ class OTPActivity : AppCompatActivity() {
         }
 
         txtResendOtp.setOnClickListener {
+            txtResendOtpTime.visibility = View.VISIBLE
+            txtResendOtp.isClickable = false
+            object : CountDownTimer(30000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    txtResendOtpTime.setText("seconds remaining: " + millisUntilFinished / 1000)
+                }
+
+                override fun onFinish() {
+                    txtResendOtp.isClickable = true
+                    txtResendOtpTime.visibility = View.GONE
+                    txtResendOtpTime.setText("done!")
+                }
+            }.start()
+
             resendOTP()
         }
 

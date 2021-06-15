@@ -155,35 +155,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/size"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:textSize="@dimen/_12ssp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/poppins_medium">
-
-                    </TextView>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerSize"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_10sdp"
-                        android:scrollbars="none">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/linearColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -203,6 +174,55 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        android:scrollbars="none">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/size"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:textSize="@dimen/_12ssp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins_medium">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/txtSizeChart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/size_chart"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:layout_alignParentRight="true"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:textSize="@dimen/_12ssp"
+                            android:textColor="@color/colorAccent"
+                            android:fontFamily="@font/poppins_medium">
+
+                        </TextView>
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerSize"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_10sdp"

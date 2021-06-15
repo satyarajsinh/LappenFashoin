@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lappenfashion.R
 import com.lappenfashion.`interface`.CategoriesInterface
 import com.lappenfashion.data.model.ResponseMainFilter
+import com.lappenfashion.utils.Helper
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class FilterColorAdapter : RecyclerView.Adapter<FilterColorAdapter.ViewHolder> {
 
@@ -50,9 +53,19 @@ class FilterColorAdapter : RecyclerView.Adapter<FilterColorAdapter.ViewHolder> {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtColor.text = data?.get(position)?.color
 
-        if(data?.get(position)?.colorCode!=null && data?.get(position)?.colorCode!="") {
-            holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.colorCode))
+        try{
+            if(isValidHexaCode(data.get(position)?.colorCode!!)) {
+                if(data?.get(position)?.colorCode!=null && data?.get(position)?.colorCode!="") {
+                    holder.cardView.visibility = View.VISIBLE
+                    holder.cardView.setCardBackgroundColor(Color.parseColor(data?.get(position)?.colorCode))
+                }
+            }else{
+                holder.cardView.visibility = View.GONE
+            }
+        }catch (e : Exception){
+            Helper.showTost(context,"Display color issues.")
         }
+
 
         if(selectedColor == data?.get(position)?.color){
             rawIndex = position
@@ -72,5 +85,10 @@ class FilterColorAdapter : RecyclerView.Adapter<FilterColorAdapter.ViewHolder> {
         }
     }
 
-
+    fun isValidHexaCode(colorCode : String): Boolean {
+        val regex = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        val p: Pattern = Pattern.compile(regex)
+        val m: Matcher = p.matcher(colorCode)
+        return m.matches()
+    }
 }
