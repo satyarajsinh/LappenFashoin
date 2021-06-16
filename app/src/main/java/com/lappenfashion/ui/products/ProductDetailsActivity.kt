@@ -82,7 +82,14 @@ class ProductDetailsActivity : AppCompatActivity() {
         }
 
         txtSizeChart.setOnClickListener {
-            displaySizeChart()
+            if(sizeChartImage!="") {
+                displaySizeChart()
+            }else{
+                 Helper.showTost(
+                    this@ProductDetailsActivity,
+                    "No Image Found"
+                )
+            }
         }
 
         llRating.setOnClickListener {
@@ -312,6 +319,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         Prefs.putInt(Constants.PREF_SELECTED_COLOR, 0)
 
         productId = Prefs.getInt(Constants.PREF_PRODUCT_ID, 0)
+        Log.e("Product id","Product id"+productId.toString())
         if (productId != 0) {
             if (NetworkConnection.checkConnection(this@ProductDetailsActivity)) {
                 Helper.showLoader(this@ProductDetailsActivity)
@@ -419,6 +427,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                     } else {
                         linearViewPager.visibility = View.GONE
                     }
+
                     if (response.body()?.payload?.discount!! <= 0) {
                         txtDiscount.visibility = View.GONE
                     } else {
@@ -434,9 +443,27 @@ class ProductDetailsActivity : AppCompatActivity() {
                     txtProductMrp.text = "₹" + response.body()?.payload!!.mrp.toString()
                     txtProductMrp.setPaintFlags(txtProductMrp.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
                     txtProductSalePrice.text = "₹" + response.body()?.payload!!.salePrice.toString()
-                    txtSizeFit.text = response.body()?.payload!!.brandFit.toString()
-                    txtMaterialCare.text = response.body()?.payload!!.material.toString()
-                    txtStyleNote.text = response.body()?.payload!!.pocketStyle.toString()
+
+                    if(response.body()?.payload!!.brandFit !=null && response.body()?.payload!!.brandFit.toString() != ""){
+                        linearSizeFit.visibility = View.VISIBLE
+                        txtSizeFit.text = response.body()?.payload!!.brandFit.toString()
+                    }else{
+                        linearSizeFit.visibility = View.GONE
+                    }
+
+                    if(response.body()?.payload!!.material !=null && response.body()?.payload!!.material.toString() != ""){
+                        linearMaterial.visibility = View.VISIBLE
+                        txtMaterialCare.text = response.body()?.payload!!.material.toString()
+                    }else{
+                        linearMaterial.visibility = View.GONE
+                    }
+
+                    if(response.body()?.payload!!.pocketStyle !=null && response.body()?.payload!!.pocketStyle.toString() != ""){
+                        linearPocket.visibility = View.VISIBLE
+                        txtStyleNote.text = response.body()?.payload!!.pocketStyle.toString()
+                    }else{
+                        linearPocket.visibility = View.GONE
+                    }
 
                     if (response.body()?.payload!!.sleeve != null && response.body()?.payload!!.sleeve.toString() != "") {
                         linearSleeve.visibility = View.VISIBLE

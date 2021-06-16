@@ -24,7 +24,7 @@
         app:iss_unselected_dot="@drawable/ic_slider_unchecked"
         app:iss_error_image="@mipmap/no_image"
         app:iss_placeholder="@mipmap/loading"
-        app:iss_period="1000"
+        app:iss_period="3000"
         app:iss_delay="0"/>
 
     <ImageView

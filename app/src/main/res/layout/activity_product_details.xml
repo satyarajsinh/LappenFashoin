@@ -271,57 +271,79 @@
 
                 </TextView>
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/linearSizeFit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/size_fit"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_10sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium">
+                    android:orientation="vertical">
 
-                </TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/size_fit"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
 
-                <TextView
-                    android:id="@+id/txtSizeFit"
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtSizeFit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:fontFamily="@font/sfpro_medium">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearMaterial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_12ssp"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_10sdp"
-                    android:fontFamily="@font/sfpro_medium">
+                    android:orientation="vertical">
 
-                </TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/material_care"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/material_care"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_10sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_medium">
+                    </TextView>
 
-                </TextView>
+                    <TextView
+                        android:id="@+id/txtMaterialCare"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:fontFamily="@font/sfpro_medium">
 
-                <TextView
-                    android:id="@+id/txtMaterialCare"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_12ssp"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_10sdp"
-                    android:fontFamily="@font/sfpro_medium">
+                    </TextView>
 
-                </TextView>
+                </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearPocket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -348,6 +370,9 @@
                     android:fontFamily="@font/sfpro_medium">
 
                 </TextView>
+
+            </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/linearSleeve"
