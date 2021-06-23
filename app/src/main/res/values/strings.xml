@@ -12,7 +12,7 @@
     <string name="profile">Profile</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="shipping_address">Shipping Address</string>
-    <string name="track_order">Track Order</string>
+    <string name="my_orders">My Orders</string>
     <string name="cards">Cards</string>
     <string name="logout">Logout</string>
     <string name="signup">Signup</string>

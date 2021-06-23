@@ -48,6 +48,8 @@ data class ResponseMainProductDetails(
         var isStockAvailable: Int?,
         @SerializedName("is_cart")
         var is_cart: Int?,
+        @SerializedName("size_view_flag")
+        var size_view_flag: Int?,
         @SerializedName("is_wish_list")
         var isWishList: Int?,
         @SerializedName("key_features")

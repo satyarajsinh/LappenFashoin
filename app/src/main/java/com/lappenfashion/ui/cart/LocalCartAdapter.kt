@@ -35,6 +35,7 @@ class LocalCartAdapter : RecyclerView.Adapter<LocalCartAdapter.ViewHolder> {
         var txtRemove = itemview.findViewById<TextView>(R.id.txtRemove)
         var cardView = itemview.findViewById<CardView>(R.id.cardView)
         var txtSize = itemview.findViewById<TextView>(R.id.txtSize)
+        var txtSizeOther = itemview.findViewById<TextView>(R.id.txtSizeOther)
         var txtMoveToWishList = itemview.findViewById<TextView>(R.id.txtMoveToWishList)
     }
 
@@ -49,7 +50,15 @@ class LocalCartAdapter : RecyclerView.Adapter<LocalCartAdapter.ViewHolder> {
         if(data.get(position)?.color!=null && data.get(position)?.color != "") {
             holder.cardView.setCardBackgroundColor(Color.parseColor(data.get(position)?.color))
         }
-        holder.txtSize.text = data.get(position).size
+        if(data.get(position).sizeFlag == 1) {
+            holder.txtSize.visibility = View.VISIBLE
+            holder.txtSizeOther.visibility = View.GONE
+            holder.txtSize.text = data.get(position).size
+        }else{
+            holder.txtSize.visibility = View.GONE
+            holder.txtSizeOther.visibility = View.VISIBLE
+            holder.txtSizeOther.text = data.get(position).size
+        }
         holder.productName.text = data!![position]?.cartTitle
         holder.productPrice.text = "₹"+data!![position]?.cartAmount
         holder.productPrice.text = "₹"+data!![position]?.cartAmount

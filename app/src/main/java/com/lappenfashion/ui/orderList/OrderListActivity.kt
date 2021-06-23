@@ -2,6 +2,7 @@ package com.lappenfashion.ui.orderList
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simplemvvm.utils.Constants
@@ -54,6 +55,8 @@ class OrderListActivity : AppCompatActivity() {
                 response: Response<ResponseMainOrderList>
             ) {
                 if (response.body() != null && response.body()?.result == true && response.body()?.payload!=null && response.body()?.payload?.data?.size!! > 0) {
+                    txtNoDataFound.visibility = View.GONE
+                    recyclerOrderList.visibility = View.VISIBLE
                     recyclerOrderList.layoutManager = LinearLayoutManager(
                         this@OrderListActivity,
                         LinearLayoutManager.VERTICAL,
@@ -66,6 +69,8 @@ class OrderListActivity : AppCompatActivity() {
                     )
                     recyclerOrderList.adapter = orderListAdapter
                 } else {
+                    txtNoDataFound.visibility = View.VISIBLE
+                    recyclerOrderList.visibility = View.GONE
                     Helper.showTost(this@OrderListActivity, "No Data Found")
                 }
                 Helper.dismissLoader()

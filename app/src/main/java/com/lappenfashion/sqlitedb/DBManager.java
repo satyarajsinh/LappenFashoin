@@ -47,6 +47,7 @@ public class DBManager {
         contentValue.put(DatabaseHelper.CART_AMOUNT, cart.getCartAmount());
         contentValue.put(DatabaseHelper.CART_SIZE, cart.getSize());
         contentValue.put(DatabaseHelper.CART_COLOR, cart.getColor());
+        contentValue.put(DatabaseHelper.CART_SIZE_FLAG, String.valueOf(cart.getSizeFlag()));
         database.insert(DatabaseHelper.TABLE_CART, null, contentValue);
     }
 
@@ -61,7 +62,7 @@ public class DBManager {
 
     public ArrayList<ResponseMainLocalCart> fetchCart() {
         ArrayList<ResponseMainLocalCart> cartList = new ArrayList<>();
-        String[] columns = new String[] { DatabaseHelper.CART_ID, DatabaseHelper.CART_IMAGE, DatabaseHelper.CART_PRODUCT_ID, DatabaseHelper.CART_QTY,DatabaseHelper.CART_TITLE,DatabaseHelper.CART_AMOUNT,DatabaseHelper.CART_SIZE,DatabaseHelper.CART_COLOR};
+        String[] columns = new String[] { DatabaseHelper.CART_ID, DatabaseHelper.CART_IMAGE, DatabaseHelper.CART_PRODUCT_ID, DatabaseHelper.CART_QTY,DatabaseHelper.CART_TITLE,DatabaseHelper.CART_AMOUNT,DatabaseHelper.CART_SIZE,DatabaseHelper.CART_COLOR,DatabaseHelper.CART_SIZE_FLAG};
         Cursor cursor = database.query(DatabaseHelper.TABLE_CART, columns, null, null, null, null, null);
         if (cursor != null) {
             if(cursor.getCount()>0) {
@@ -70,7 +71,8 @@ public class DBManager {
                     ResponseMainLocalCart cart = new ResponseMainLocalCart(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.CART_ID)), cursor.getString(cursor.getColumnIndex(DatabaseHelper.CART_IMAGE)),
                             cursor.getString(cursor.getColumnIndex(DatabaseHelper.CART_PRODUCT_ID)), cursor.getString(cursor.getColumnIndex(DatabaseHelper.CART_QTY)),
                             cursor.getString(cursor.getColumnIndex(DatabaseHelper.CART_TITLE)), cursor.getString(cursor.getColumnIndex(DatabaseHelper.CART_AMOUNT))
-                            , cursor.getString(cursor.getColumnIndex(DatabaseHelper.CART_SIZE)), cursor.getString(cursor.getColumnIndex(DatabaseHelper.CART_COLOR)));
+                            , cursor.getString(cursor.getColumnIndex(DatabaseHelper.CART_SIZE)), cursor.getString(cursor.getColumnIndex(DatabaseHelper.CART_COLOR)),
+                            Integer.parseInt(cursor.getString(cursor.getColumnIndex(DatabaseHelper.CART_SIZE_FLAG))));
 
                     cartList.add(cart);
                 } while (cursor.moveToNext());

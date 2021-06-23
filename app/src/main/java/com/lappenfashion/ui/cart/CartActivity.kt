@@ -124,7 +124,8 @@ class CartActivity : AppCompatActivity() {
                                 response.body()!!.payload?.cartList?.get(i)?.product?.productName!!,
                                 response.body()!!.payload?.cartList?.get(i)?.product?.mrp!!.toString(),
                                 response.body()!!.payload?.cartList?.get(i)?.product?.size!!,
-                                response.body()!!.payload?.cartList?.get(i)?.product?.colorCode!!
+                                response.body()!!.payload?.cartList?.get(i)?.product?.colorCode!!,
+                                response.body()!!.payload?.cartList?.get(i)?.product?.size_view_flag!!
                             )
                             dbManager.insertCart(localCart)
 

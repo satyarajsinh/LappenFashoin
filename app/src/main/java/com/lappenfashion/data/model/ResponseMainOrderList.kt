@@ -69,6 +69,8 @@ data class ResponseMainOrderList(
                 var orderProductId: Int?,
                 @SerializedName("product_id")
                 var product_id: Int?,
+                @SerializedName("size_view_flag")
+                var size_view_flag: Int?,
                 @SerializedName("product_name")
                 var productName: String?,
                 @SerializedName("quantity")

@@ -1,6 +1,7 @@
 package com.lappenfashion.ui.categoriesDetails
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.simplemvvm.utils.Constants
 import com.lappenfashion.R
 import com.lappenfashion.data.model.ResponseMainHome
+import com.lappenfashion.ui.products.ProductsByProductCategoryActivity
 import com.pixplicity.easyprefs.library.Prefs
 
 class SubCategoriesAdapter : RecyclerView.Adapter<SubCategoriesAdapter.ViewHolder> {
@@ -42,29 +44,36 @@ class SubCategoriesAdapter : RecyclerView.Adapter<SubCategoriesAdapter.ViewHolde
         holder.txtSubCategoryName.text = data?.get(position)?.title
 
         holder.txtSubCategoryName.setOnClickListener {
-            if(holder.imgDown.rotation == 360f){
-                Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,data?.get(position)?.subCategoryId.toString())
-                holder.imgDown.rotation = 180f
-                holder.recyclerProductCategory.visibility = View.VISIBLE
-                holder.recyclerProductCategory.layoutManager = LinearLayoutManager(
-                    context,
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
-                holder.recyclerProductCategory.setHasFixedSize(true)
-                var offersAdapter = ProductCategoriesAdapter(
-                    context,
-                    data?.get(position)?.productCategory
-                )
-                holder.recyclerProductCategory.adapter = offersAdapter
-            }else{
-                holder.imgDown.rotation = 360f
-                holder.recyclerProductCategory.visibility = View.GONE
+            if(data?.get(position)?.productCategory!!.size>0){
+                if(holder.imgDown.rotation == 360f){
+                    Prefs.putString(Constants.PREF_SUB_CATEGORY_ID,data?.get(position)?.subCategoryId.toString())
+                    holder.imgDown.rotation = 180f
+                    holder.recyclerProductCategory.visibility = View.VISIBLE
+                    holder.recyclerProductCategory.layoutManager = LinearLayoutManager(
+                        context,
+                        LinearLayoutManager.VERTICAL,
+                        false
+                    )
+                    holder.recyclerProductCategory.setHasFixedSize(true)
+                    var offersAdapter = ProductCategoriesAdapter(
+                        context,
+                        data?.get(position)?.productCategory
+                    )
+                    holder.recyclerProductCategory.adapter = offersAdapter
+                }else{
+                    holder.imgDown.rotation = 360f
+                    holder.recyclerProductCategory.visibility = View.GONE
 
+                }
+            }else{
+                var intent = Intent(context, ProductsByProductCategoryActivity::class.java)
+                Prefs.putString(Constants.PREF_PRODUCT_CATEGORY_ID,
+                    data!!.get(position)?.subCategoryId.toString()
+                )
+                Prefs.putString(Constants.PREF_PRODUCT_TITLE, data?.get(position)!!.title.toString())
+                context.startActivity(intent)
             }
         }
-
-
     }
 
 }

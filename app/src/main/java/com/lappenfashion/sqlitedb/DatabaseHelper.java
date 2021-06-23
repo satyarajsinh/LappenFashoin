@@ -18,6 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String CART_ID = "cart_id";
     public static final String CART_IMAGE = "cart_image";
     public static final String CART_TITLE = "cart_title";
+    public static final String CART_SIZE_FLAG = "cart_size_flag";
     public static final String CART_QTY = "cart_qty";
     public static final String CART_AMOUNT = "cart_amount";
     public static final String CART_SIZE = "CART_SIZE";
@@ -42,6 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             +CART_AMOUNT+" TEXT,"
             +CART_SIZE+" TEXT,"
             +CART_COLOR+" TEXT,"
+            +CART_SIZE_FLAG+" TEXT,"
             +CART_PRODUCT_ID+" TEXT);";
 
     public DatabaseHelper(Context context) {

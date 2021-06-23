@@ -10,7 +10,21 @@
         android:id="@+id/recyclerOrderList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:scrollbars="none">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/txtNoDataFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/_18ssp"
+        android:gravity="center"
+        android:fontFamily="@font/poppins_medium"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:text="No orders found">
+
+    </TextView>
 </LinearLayout>

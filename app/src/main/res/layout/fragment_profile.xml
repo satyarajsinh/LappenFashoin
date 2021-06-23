@@ -170,7 +170,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/relativeAddress"
+                android:id="@+id/relativeTrackOrder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_15sdp"
@@ -179,20 +179,20 @@
                 android:paddingBottom="@dimen/_5sdp">
 
                 <ImageView
-                    android:id="@+id/imgtwo"
+                    android:id="@+id/imgFour"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:padding="@dimen/_5sdp"
-                    android:src="@mipmap/ic_address">
+                    android:src="@mipmap/ic_track_order">
 
                 </ImageView>
 
                 <ImageView
-                    android:id="@+id/imgtwo1"
+                    android:id="@+id/imgFour1"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:visibility="gone"
                     android:layout_marginRight="@dimen/_30sdp"
+                    android:visibility="gone"
                     android:src="@mipmap/ic_light_profile"
                     android:layout_alignParentRight="true">
 
@@ -204,11 +204,11 @@
                     android:paddingLeft="@dimen/_10sdp"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/black"
-                    android:layout_toLeftOf="@id/imgtwo1"
+                    android:layout_toLeftOf="@id/imgFour1"
                     android:fontFamily="@font/poppins_regular"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/imgtwo"
-                    android:text="@string/shipping_address">
+                    android:layout_toRightOf="@id/imgFour"
+                    android:text="@string/my_orders">
 
                 </TextView>
 
@@ -274,7 +274,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/relativeTrackOrder"
+                android:id="@+id/relativeAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_15sdp"
@@ -283,20 +283,20 @@
                 android:paddingBottom="@dimen/_5sdp">
 
                 <ImageView
-                    android:id="@+id/imgFour"
+                    android:id="@+id/imgtwo"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:padding="@dimen/_5sdp"
-                    android:src="@mipmap/ic_track_order">
+                    android:src="@mipmap/ic_address">
 
                 </ImageView>
 
                 <ImageView
-                    android:id="@+id/imgFour1"
+                    android:id="@+id/imgtwo1"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:layout_marginRight="@dimen/_30sdp"
                     android:visibility="gone"
+                    android:layout_marginRight="@dimen/_30sdp"
                     android:src="@mipmap/ic_light_profile"
                     android:layout_alignParentRight="true">
 
@@ -308,11 +308,11 @@
                     android:paddingLeft="@dimen/_10sdp"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/black"
-                    android:layout_toLeftOf="@id/imgFour1"
+                    android:layout_toLeftOf="@id/imgtwo1"
                     android:fontFamily="@font/poppins_regular"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/imgFour"
-                    android:text="@string/track_order">
+                    android:layout_toRightOf="@id/imgtwo"
+                    android:text="@string/shipping_address">
 
                 </TextView>
 

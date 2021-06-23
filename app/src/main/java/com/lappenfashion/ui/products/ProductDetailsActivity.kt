@@ -300,7 +300,8 @@ class ProductDetailsActivity : AppCompatActivity() {
                 productData?.productName!!,
                 productData?.salePrice!!.toString(),
                 productData?.size!!.toString(),
-                productData.colorCode.toString()
+                productData.colorCode.toString(),
+                productData.size_view_flag!!
             )
             dbManager.insertCart(localCart)
 
@@ -526,7 +527,12 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                     }*/
 
-                    txtDetails.text = response.body()?.payload!!.description
+                    if(response.body()?.payload!!.description!=null && response.body()?.payload!!.description != ""){
+                        linearDetails.visibility = View.VISIBLE
+                        txtDetails.text = response.body()?.payload!!.description
+                    }else{
+                        linearDetails.visibility = View.GONE
+                    }
 
                     if (response.body()?.payload?.sizeList?.size!! > 0) {
                         linearSize.visibility = View.VISIBLE
@@ -539,7 +545,8 @@ class ProductDetailsActivity : AppCompatActivity() {
                         var productSizeAdapter = ProductSizeAdapter(
                             this@ProductDetailsActivity,
                             response.body()?.payload!!.sizeList as List<ResponseMainProductDetails.Payload.Size>,
-                            productId
+                            productId,
+                            response.body()?.payload!!.size_view_flag!!
                         )
                         recyclerSize.adapter = productSizeAdapter
                     } else {

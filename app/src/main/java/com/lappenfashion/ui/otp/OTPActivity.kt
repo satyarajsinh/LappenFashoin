@@ -84,6 +84,19 @@ class OTPActivity : AppCompatActivity() {
             }
         }
 
+        txtResendOtpTime.visibility = View.VISIBLE
+        txtResendOtp.isClickable = false
+        object : CountDownTimer(30000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                txtResendOtpTime.setText("seconds remaining: " + millisUntilFinished / 1000)
+            }
+
+            override fun onFinish() {
+                txtResendOtp.isClickable = true
+                txtResendOtpTime.visibility = View.GONE
+                txtResendOtpTime.setText("done!")
+            }
+        }.start()
     }
 
     private fun resendOTP() {

@@ -40,6 +40,8 @@ data class ResponseMainCartNew(
                 var mainImageName: String?,
                 @SerializedName("mrp")
                 var mrp: Int?,
+                @SerializedName("size_view_flag")
+                var size_view_flag: Int?,
                 @SerializedName("product_id")
                 var productId: Int?,
                 @SerializedName("product_name")

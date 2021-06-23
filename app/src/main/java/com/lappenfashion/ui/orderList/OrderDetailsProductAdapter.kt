@@ -46,6 +46,7 @@ class OrderDetailsProductAdapter() :
         val txtQty : TextView = view.findViewById(R.id.txtQty)
         val txtMrp : TextView = view.findViewById(R.id.txtMrp)
         val txtSize : TextView = view.findViewById(R.id.txtSize)
+        val txtSizeOther : TextView = view.findViewById(R.id.txtSizeOther)
         val txtRating : TextView = view.findViewById(R.id.txtRating)
         val cardView : CardView = view.findViewById(R.id.txtId)
         val imgProductImage : ImageView = view.findViewById(R.id.imgProductImage)
@@ -110,7 +111,16 @@ class OrderDetailsProductAdapter() :
         holder.txtProductName.text = data!!.get(position)?.productName.toString()
         holder.txtQty.text = "Qty - "+data!!.get(position)?.quantity.toString()
         holder.txtMrp.text = "₹"+data!!.get(position)?.salePrice.toString()
-        holder.txtSize.text = data!!.get(position)?.size.toString()
+
+        if(data!!.get(position)?.size_view_flag == 1) {
+            holder.txtSize.visibility = View.VISIBLE
+            holder.txtSizeOther.visibility = View.GONE
+            holder.txtSize.text = data!!.get(position)?.size.toString()
+        }else{
+            holder.txtSize.visibility = View.GONE
+            holder.txtSizeOther.visibility = View.VISIBLE
+            holder.txtSizeOther.text = data!!.get(position)?.size.toString()
+        }
 
         holder.txtRating.setOnClickListener {
             context.displayDialog(data!!.get(position)?.product_id)
